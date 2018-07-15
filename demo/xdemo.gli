@@ -1,0 +1,120 @@
+define logical GLI_GKS_CONVEX_SHAPE True
+gks open_ws terminal
+
+list :
+
+xui choice Demos |3D Surface|Irradiance|3D Spectrum|Labels|3D Shade|Satellite|19 GHz|Mountain|Crystal|Movie|Finish
+
+page
+gks set color 0 1.0 1.0 1.0
+gus set colormap uniform
+
+case Demos "3D Surface" then gosub aSurf
+case Demos Irradiance then gosub Irrad
+case Demos "3D Spectrum" then gosub aSpect
+case Demos Labels then gosub Label
+case Demos "3D Shade" then gosub Shade
+case Demos Satellite then gosub Sat
+case Demos "19 GHz" then gosub 19GH
+case Demos Mountain then gosub Mount
+case Demos Crystal then gosub Crys
+case Demos Movie then gosub Movie
+case Demos Finish then goto Quit_all
+
+goto list
+
+Crys :
+	@ 'GLI_DEMO'crystal
+	gks update_ws
+	return
+
+aSurf :
+	@ 'GLI_DEMO'xdemo1
+	gks update_ws
+	return
+
+Irrad : 
+	@ 'GLI_DEMO'irradiance
+	gks update_ws
+	return
+
+aSpect :
+	@ 'GLI_DEMO'xdemo2
+	gks update_ws
+	return
+
+Label :
+	@ 'GLI_DEMO'labels
+	gks update_ws
+	return
+
+Shade :
+	@ 'GLI_DEMO'xdemo3
+	gks update_ws
+	return
+
+Sat :
+	@ 'GLI_DEMO'satf
+	gks update_ws
+	return
+
+19GH :
+	@ 'GLI_DEMO'satsf
+	gks update_ws
+	return
+
+Mount : 
+	@ 'GLI_DEMO'xdemo5
+	gks update_ws
+	return
+
+Movie :
+	@ 'GLI_DEMO'xdemo1
+	gks update_ws
+	sleep 10
+	page
+	@ 'GLI_DEMO'irradiance
+	gks update_ws
+	sleep 10
+	page
+	@ 'GLI_DEMO'xdemo2
+	gks update_ws
+	sleep 10
+	page
+	@ 'GLI_DEMO'labels
+	gks update_ws
+	sleep 10
+	page
+	@ 'GLI_DEMO'xdemo3
+	gks update_ws
+	sleep 10
+	page
+	@ 'GLI_DEMO'satf
+	gks update_ws
+	sleep 10
+	page
+	@ 'GLI_DEMO'satsf
+	gks update_ws
+	sleep 10
+	page
+	@ 'GLI_DEMO'xdemo5
+	gks update_ws
+	sleep 10
+	page
+	@ 'GLI_DEMO'crystal
+	gks update_ws
+	sleep 10
+	page
+	return
+
+
+Quit_all : 
+	gks set text fontprec 3 string
+	gus set colormap uniform
+	gks set text color black
+	gks set pline color black
+	gks set pline linetype solid
+	gks set pline linewidth 1.0
+	gks set fill int_style hollow
+	gks set fill color black
+	exit

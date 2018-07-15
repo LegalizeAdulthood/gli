@@ -1,0 +1,16 @@
+def var x 'p1','p1','p3','p3','p1'
+def var y 'p2','p4','p4','p2','p2'
+gks set text align left half
+gks set text upvec -1 0
+gks set fill color 'p5'
+gks fill x y
+gks polyline x y
+def fun l 'p1' + 0.5
+def fun k 'p4' + 0.8
+gus text l k 'p4'
+gks set text align normal normal
+gks set text upvec 0 1
+del var x
+del var y
+del fun l 
+del fun k

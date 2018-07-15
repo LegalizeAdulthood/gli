@@ -1,0 +1,251 @@
+menu_file						File
+menu_file_create					Create Drawing
+menu_file_open						Open Drawing
+menu_file_save						Save as
+menu_file_close						Close Drawing
+menu_file_read						Read Data from File
+menu_file_write						Write Data to File
+menu_file_image						Read portable image file
+menu_file_import					Import
+menu_file_import_image_file				Image file
+menu_file_import_binary					CGM Binary
+menu_file_import_clear_text				CGM Clear Text
+menu_file_print						Print Drawing
+menu_file_capture					Capture Drawing
+menu_file_exit						Exit Sight
+menu_edit						Edit
+menu_edit_redraw					Redraw
+menu_edit_select					Select
+menu_edit_selectnext					Select next Object
+menu_edit_select_object					Object
+menu_edit_select_previous				Previous Object
+menu_edit_select_next					Next Object
+menu_edit_select_group					Group of Objects
+menu_edit_select_excluded				Excluded
+menu_edit_select_all					All
+menu_edit_deselect					Deselect
+menu_edit_cut						Cut
+menu_edit_paste						Paste
+menu_edit_pop						Pop in Front
+menu_edit_push						Push Behind
+menu_edit_move						Move
+menu_edit_remove					Remove
+menu_edit_pick						Pick
+menu_edit_pick_object					Object
+menu_edit_pick_element					Element
+menu_edit_pick_region					Region
+menu_edit_digitize					Digitize
+menu_edit_digitize_input				Input Area
+menu_edit_digitize_points				Points
+menu_edit_digitize_bars					Bars
+menu_edit_digitize_bars_vertical			Horizontal
+menu_edit_digitize_bars_horizontal			Vertical
+menu_edit_clear						Clear Drawing
+menu_tools						Tools
+menu_tools_line						Line
+menu_tools_line_locate					Locate
+menu_tools_line_data					Data
+menu_tools_spline					Spline
+menu_tools_spline_natural				Natural
+menu_tools_spline_smooth				Smooth
+menu_tools_spline_bspline				B-Spline
+menu_tools_error					Error Bars
+menu_tools_error_vertical				Vertical
+menu_tools_error_horizontal				Horizontal
+menu_tools_marker					Marker
+menu_tools_marker_locate				Locate
+menu_tools_marker_data					Data
+menu_tools_text						Text
+menu_tools_fill						Fill Area
+menu_tools_fill_locate					Locate
+menu_tools_fill_data					Data
+menu_tools_bar						Bar Graph
+menu_tools_bar_locate					Locate
+menu_tools_bar_data					Data
+menu_tools_plot						Plot
+menu_tools_plot_locate					Locate
+menu_tools_plot_data					Data
+menu_tools_axes						Axes
+menu_tools_grid						Grid
+menu_attr						Attributes
+menu_attr_ltype						Line Type
+menu_attr_ltype_solid					Solid
+menu_attr_ltype_dashed					Dashed
+menu_attr_ltype_dotted					Dotted
+menu_attr_ltype_dash_dotted				Dash-Dotted
+menu_attr_ltype_dash_2_dot				Dash, 2 Dots
+menu_attr_ltype_dash_3_dot				Dash, 3 Dots
+menu_attr_ltype_long_dash				Long Dash
+menu_attr_ltype_long_short_dash				Long, short dash
+menu_attr_ltype_spaced_dash				Spaced Dash
+menu_attr_ltype_spaced_dot				Spaced Dot
+menu_attr_ltype_double_dot				Double Dots
+menu_attr_ltype_triple_dot				Triple Dots
+menu_attr_linewidth					Line Width
+menu_attr_linewidth_1pt					1 pt
+menu_attr_linewidth_2pt					2 pt
+menu_attr_linewidth_3pt					3 pt
+menu_attr_linewidth_4pt					4 pt
+menu_attr_linewidth_5pt					5 pt
+menu_attr_linewidth_6pt					6 pt
+menu_attr_linecolor					Line Color
+menu_attr_linecolor_black				Black
+menu_attr_linecolor_white				White
+menu_attr_linecolor_red					Red
+menu_attr_linecolor_green				Green
+menu_attr_linecolor_blue				Blue
+menu_attr_linecolor_cyan				Cyan
+menu_attr_linecolor_yellow				Yellow
+menu_attr_linecolor_magenta				Magenta
+menu_attr_mtype						Marker Type
+menu_attr_mtype_dot					Dot
+menu_attr_mtype_plus					Plus
+menu_attr_mtype_asterisk				Asterisk
+menu_attr_mtype_diagonal_cross				Diagonal Cross
+menu_attr_mtype_circle					Circle
+menu_attr_mtype_solid_circle				Solid Circle
+menu_attr_mtype_square					Square
+menu_attr_mtype_solid_square				Solid Square
+menu_attr_mtype_triangle_up				Triangle up
+menu_attr_mtype_solid_tri_up				Solid Triangle up
+menu_attr_mtype_triangle_down				Triangle down
+menu_attr_mtype_solid_tri_down				Solid Triangle down
+menu_attr_mtype_bowtie					Bowtie
+menu_attr_mtype_solid_bowtie				Solid Bowtie
+menu_attr_mtype_hourglass				Hourglass
+menu_attr_mtype_solid_hglass				Solid Hourglass
+menu_attr_mtype_diamond					Diamond
+menu_attr_mtype_solid_diamond				Solid Diamond
+menu_attr_mtype_star					Star
+menu_attr_mtype_solid_star				Solid Star
+menu_attr_mtype_tri_up_down				Triangle up down
+menu_attr_mtype_solid_tri_right				Solid Triangle left
+menu_attr_mtype_solid_tri_left				Solid Triangle right
+menu_attr_mtype_hollow_plus				Hollow Plus
+menu_attr_mtype_omark					O-Marker
+menu_attr_markersize					Marker Size
+menu_attr_markersize_4pt				4 pt
+menu_attr_markersize_6pt				6 pt
+menu_attr_markersize_8pt				8 pt
+menu_attr_markersize_10pt				10 pt
+menu_attr_markersize_12pt				12 pt
+menu_attr_markersize_14pt				14 pt
+menu_attr_markersize_18pt				18 pt
+menu_attr_markersize_24pt				24 pt
+menu_attr_markersize_36pt				36 pt
+menu_attr_markersize_48pt				48 pt
+menu_attr_markersize_72pt				72 pt
+menu_attr_markercolor					Marker Color
+menu_attr_markercolor_black			$menu_attr_linecolor_black
+menu_attr_markercolor_white			$menu_attr_linecolor_white
+menu_attr_markercolor_red			$menu_attr_linecolor_red
+menu_attr_markercolor_green			$menu_attr_linecolor_green
+menu_attr_markercolor_blue			$menu_attr_linecolor_blue
+menu_attr_markercolor_cyan			$menu_attr_linecolor_cyan
+menu_attr_markercolor_yellow			$menu_attr_linecolor_yellow
+menu_attr_markercolor_magenta			$menu_attr_linecolor_magenta
+menu_attr_textfamily					Text Family
+menu_attr_textfamily_avant_garde			ITC Avant Garde Gothic
+menu_attr_textfamily_avant_garde_normal			Normal
+menu_attr_textfamily_avant_garde_boldface		Bold
+menu_attr_textfamily_avant_garde_italic			Italic
+menu_attr_textfamily_avant_garde_bold_italic		Bold Italic
+menu_attr_textfamily_courier				Courier
+menu_attr_textfamily_courier_normal		$menu_attr_textfamily_avant_garde_normal
+menu_attr_textfamily_courier_boldface		$menu_attr_textfamily_avant_garde_boldface
+menu_attr_textfamily_courier_italic		$menu_attr_textfamily_avant_garde_italic
+menu_attr_textfamily_courier_bold_italic	$menu_attr_textfamily_avant_garde_bold_italic
+menu_attr_textfamily_helvetica				Helvetica
+menu_attr_textfamily_helvetica_normal		$menu_attr_textfamily_avant_garde_normal
+menu_attr_textfamily_helvetica_boldface		$menu_attr_textfamily_avant_garde_boldface
+menu_attr_textfamily_helvetica_italic		$menu_attr_textfamily_avant_garde_italic
+menu_attr_textfamily_helvetica_bold_italic 	$menu_attr_textfamily_avant_garde_bold_italic
+menu_attr_textfamily_lubalin				ITC Lubalin Graph
+menu_attr_textfamily_lubalin_normal		$menu_attr_textfamily_avant_garde_normal
+menu_attr_textfamily_lubalin_boldface		$menu_attr_textfamily_avant_garde_boldface
+menu_attr_textfamily_lubalin_italic		$menu_attr_textfamily_avant_garde_italic
+menu_attr_textfamily_lubalin_bold_italic	$menu_attr_textfamily_avant_garde_bold_italic
+menu_attr_textfamily_schoolbook				New Century Schoolbook
+menu_attr_textfamily_schoolbook_normal		$menu_attr_textfamily_avant_garde_normal
+menu_attr_textfamily_schoolbook_boldface	$menu_attr_textfamily_avant_garde_boldface
+menu_attr_textfamily_schoolbook_italic		$menu_attr_textfamily_avant_garde_italic
+menu_attr_textfamily_schoolbook_bold_italic	$menu_attr_textfamily_avant_garde_bold_italic
+menu_attr_textfamily_souvenir				ITC Souvenir
+menu_attr_textfamily_souvenir_normal		$menu_attr_textfamily_avant_garde_normal
+menu_attr_textfamily_souvenir_boldface		$menu_attr_textfamily_avant_garde_boldface
+menu_attr_textfamily_souvenir_italic		$menu_attr_textfamily_avant_garde_italic
+menu_attr_textfamily_souvenir_bold_italic	$menu_attr_textfamily_avant_garde_bold_italic
+menu_attr_textfamily_symbol				Symbol
+menu_attr_textfamily_times				Times
+menu_attr_textfamily_times_normal		$menu_attr_textfamily_avant_garde_normal
+menu_attr_textfamily_times_boldface		$menu_attr_textfamily_avant_garde_boldface
+menu_attr_textfamily_times_italic		$menu_attr_textfamily_avant_garde_italic
+menu_attr_textfamily_times_bold_italic		$menu_attr_textfamily_avant_garde_bold_italic
+menu_attr_textsize					Text Size
+menu_attr_textsize_8pt					8 pt
+menu_attr_textsize_10pt					10 pt
+menu_attr_textsize_12pt					12 pt
+menu_attr_textsize_14pt					14 pt
+menu_attr_textsize_18pt					18 pt
+menu_attr_textsize_24pt					24 pt
+menu_attr_textalignment					Text Alignment
+menu_attr_textalignment_left				Left Justified
+menu_attr_textalignment_center				Centered
+menu_attr_textalignment_right				Right Justified
+menu_attr_textdirection					Text Direction
+menu_attr_textdirection_right				Right
+menu_attr_textdirection_up				Up
+menu_attr_textdirection_left				Left
+menu_attr_textdirection_down				Down
+menu_attr_textcolor					Text Color
+menu_attr_textcolor_black			$menu_attr_linecolor_black
+menu_attr_textcolor_white			$menu_attr_linecolor_white
+menu_attr_textcolor_red				$menu_attr_linecolor_red
+menu_attr_textcolor_green			$menu_attr_linecolor_green
+menu_attr_textcolor_blue			$menu_attr_linecolor_blue
+menu_attr_textcolor_cyan			$menu_attr_linecolor_cyan
+menu_attr_textcolor_yellow			$menu_attr_linecolor_yellow
+menu_attr_textcolor_magenta			$menu_attr_linecolor_magenta
+menu_attr_fillstyle					Fill Style
+menu_attr_fillcolor					Fill Color
+menu_attr_fillcolor_black			$menu_attr_linecolor_black
+menu_attr_fillcolor_white			$menu_attr_linecolor_white
+menu_attr_fillcolor_red				$menu_attr_linecolor_red
+menu_attr_fillcolor_green			$menu_attr_linecolor_green
+menu_attr_fillcolor_blue			$menu_attr_linecolor_blue
+menu_attr_fillcolor_cyan			$menu_attr_linecolor_cyan
+menu_attr_fillcolor_yellow			$menu_attr_linecolor_yellow
+menu_attr_fillcolor_magenta			$menu_attr_linecolor_magenta
+menu_view						View
+menu_view_viewport					Select Viewport
+menu_view_window					Set Window
+menu_view_orientation					Orientation
+menu_view_orientation_landscape				Landscape
+menu_view_orientation_portrait				Portrait
+menu_view_scale						Scale
+menu_view_scale_linear					Linear
+menu_view_scale_x					X-Log
+menu_view_scale_y					Y-Log
+menu_view_scale_xy					XY-Log
+menu_view_transformation				Transformation
+menu_view_transformation_0				0
+menu_view_transformation_1				1
+menu_view_transformation_2				2
+menu_view_transformation_3				3
+menu_view_transformation_4				4
+menu_view_transformation_5				5
+menu_view_transformation_6				6
+menu_view_transformation_7				7
+menu_view_transformation_8				8
+menu_customize						Customize
+menu_customize_snapgrid					Snap Grid
+menu_customize_snapgrid_off				Off
+menu_customize_snapgrid_25				.25 cm
+menu_customize_snapgrid_50				.5 cm
+menu_customize_snapgrid_100				1 cm
+
+settings_transform					Transformation-Viewports
+settings_window						Window-Settings
+settings_modwindow					modify selected Item
+settings_cli						Command-History and -Interface
+settings_exit						Exit Sight

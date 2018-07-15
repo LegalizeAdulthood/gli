@@ -1,0 +1,47 @@
+read 'GLI_DEMO'spect x y y1 y2 y3 y4
+gks set text fontprec -3 stroke
+gks set text height 0.021
+gks set text color black
+gks set viewport 0.2 0.8 0.2 0.8
+gks set window 300 2500 0 1.1
+gus axes_2d
+gks polyline x y
+gks set pline color blue
+gks polyline x y1
+gks set pline color red
+gks polyline x y2
+gks set pline color green
+gks polyline x y3
+gks set pline color magenta
+gks polyline x y4
+gks set pline color black
+gks set xform ndc
+gks set text align center normal
+gks text 0.5 0.1 Wavelengths (nm)
+gks set text upvec -1 0
+gus text 0.1 0.5 Spectral Irradiance (W/<m\\2>)
+gks set text upvec 0 1
+x := 0.55 0.55 1 1 0.55
+y := 0.55 1 1 0.55 0.55
+gks set fill int_style solid
+gks set fill color cyan
+gks fill_area x y
+gks polyline x y
+gks set text fontprec 3 string
+gks set text height 0.036
+gks text 0.7725 0.9 GLI
+gks set text height 0.018
+gks text 0.7725 0.85 von
+gks set text height 0.021
+gks text 0.7725 0.8 Josef Heinen
+gks text 0.7725 0.75 Institut für Festkörperforschung
+gks text 0.7725 0.7 Forschungszentrum Jülich GmbH
+gks set text height 0.018
+gks text 0.7725 0.65 Tel.: (02461) 61-3912
+gks text 0.7725 0.6 E-Mail: J.Heinen@kfa-juelich.de
+gks set fill color black
+gks set fill int_style hollow
+gks set text align normal normal
+gks set text fontprec -1 stroke
+del var *
+gks set xform wc

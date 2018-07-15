@@ -1,0 +1,88 @@
+page  
+gks set xform ndc
+gks set text font 16 string
+gks set text upvec 0 1
+gks set text height 0.027
+gks set text align left bottom
+gks set text color_index black
+gks set pline color_index black
+
+! Background
+gks set fill color_index yellow
+gks set fill int_style solid
+x:= 0 0 1 1 0
+y:= 0 1 1 0 0
+gks fill x y
+
+! 1.Window
+gks set fill color_index cyan
+a:= 0.09 0.09 0.90 0.90  0.09
+b:= 0.13 0.87 0.87 0.13  0.13
+gks fill a b
+gks set xform wc
+
+!define Symbols
+def var xmin = 0
+def var xmax = 500
+def var ymin = -20
+def var ymax = 550
+READ 'GLI_DEMO'demo4_1.dat X1,Y1
+READ 'GLI_DEMO'demo4_2.dat X2,Y2
+
+
+gks set viewport 0.09 0.9 0.13 0.87
+gks set window xmin xmax ymin ymax
+gus axes_2d 50,50 xmin,ymin 2,2 0.007
+gus axes_2d 50,50 xmax,ymax -2,-2 -0.007
+gks set pmark type square
+gks set pmark color_index blue
+gks set pline color_index blue
+gks polyline x1,y1
+gks polymarker X1,Y1
+gks set pmark type circle
+gks set pmark color_index red
+gks set pline color_index red
+gks polyline x2,y2
+gks polymarker X2,Y2
+gks set pline color_index black
+gks set text upvec 0 1
+gks set xform ndc
+gks set text height 0.027
+gks set text color_index blue
+
+text:
+gks set text color_index black
+gks set text height 0.036
+gks text 0.44 0.87 Pt
+gks text 0.17 0.8 picture-cut enlargement 
+gks set text height 0.027
+gus text 0.80 0.04 T <bracket\K>
+gus text 0.02 0.87 d/{dT}  { {<rho>-<rho\0>}/{<DELTA><rho\irr>}} T 
+gks set text upvec 0 1
+
+! 2. Window
+gks set xform ndc
+gks set fill color_index yellow
+d:= 0.16 0.16 0.61 0.61 0.16
+g:= 0.34  0.79 0.79 0.34  0.34
+gks fill d g
+gks set xform wc
+
+! 
+gks set viewport 0.16,0.61 0.34,0.79
+gks set window 0,200 -2,45
+gus axes_2d 50,10. 0,-2 2,2 0.007
+gus axes_2d 50,10. 200,45 -2,-2 -0.007
+gks set pmark type square
+gks set pmark color_index blue
+gks set pline color_index blue
+gks polyline x1,y1
+gks polymarker X1,Y1
+gks set pmark type circle
+gks set pmark color_index red
+gks set pline color_index red
+gks polyline x2,y2
+gks polymarker x2,y2
+gks set pline color_index black 
+
+del var *

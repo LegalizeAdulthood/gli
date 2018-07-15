@@ -1,0 +1,32 @@
+gks set xform wc
+page
+gks set viewport 0.17 0.83 0.17 0.83
+gks set window 1 100 1 100
+gks set text fontprec -1 stroke
+gks set text height 0.015
+read 'GLI_DEMO'xdemo5 z
+x := 1..100
+y := x
+gus set space 2800 4400 0 90
+gus set colormap geologic
+gus surface x y z colored_mesh
+h := 2800(100)4400
+gus contour x y h z 100 3
+gks set window 0 25 0 25
+gus axes_2d
+gus axes_2d 10 10 25 25 1 1 0.005
+gks set xform ndc
+gks set text fontprec 3 string
+gks set text align center normal
+gks set text height 0.036
+gks text 0.5 0.9 Longs Peak Colorado
+gks set text height 0.027
+gks text 0.5 0.08 Kilometers
+gks set text upvec -1 0
+gks text 0.1 0.5 Kilometers
+gks set xform wc
+gks set text upvec 0 1
+gks set text align normal normal
+gks set text height 0.01
+gus set space 0 1 60 60
+del var *

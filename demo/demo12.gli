@@ -1,0 +1,158 @@
+page
+gks set text align centre bottom
+gks set text font 3 string
+gks set text height 0.021
+gks set pline color black
+gks set xform ndc
+
+gks set fill color_index white
+gks set fill int_style solid
+a:= 0 0 1 1 0
+b:= 0 1 1 0 0
+gks fill a b
+
+
+gks text 0.4 0.9  Competition Results
+gks text 0.4 0.85 Year
+gks text 0.4 0.09 Number of competitions
+
+gks set text align left bottom
+gks set text upvec -1 0 
+
+gks set text align right base
+gks text 0.03 0.8 Result
+gks set xform wc
+
+gks set text upvec 0 1
+gks set viewport 0.1 0.75 0.2 0.8
+gks set window 0,18.5 200,300
+gus axes_2d 1,5 0,200 1,2  0.008
+gus axes_2d 1,5 18.5,300 -1,-2 -0.008
+
+gks set pmark type circle
+read 'GLI_DEMO'demo12_1.dat x y 
+gks set pline linetype solid
+gks polyline x y
+gks polymarker x y
+
+gks set pmark type asterisk
+gks set pmark color_index blue
+read 'GLI_DEMO'demo12_2.dat a b
+gks set pline linetype dashed
+gks set pline color_index blue
+gks polyline a b
+gks polymarker a b
+
+gks set pmark type plus
+gks set pmark color_index red
+read 'GLI_DEMO'demo12_3.dat c d
+gks set pline linetype dotted
+gks set pline color_index red
+gks polyline c d
+gks polymarker c d
+
+gks set pmark type bowtie
+gks set pmark color_index magenta
+read 'GLI_DEMO'demo12_4.dat k l
+gks set pline linetype long_short_dash
+gks set pline color_index magenta
+gks polyline k l
+gks polymarker k l
+
+gks set pmark type diagonal_cross
+gks set pmark color_index green 
+read 'GLI_DEMO'demo12_5.dat m n
+gks set pline linetype dash_2_dot
+gks set pline color_index green
+gks polyline m n 
+gks polymarker m n
+
+gks set pmark type solid_circle
+gks set pmark color_index black
+read 'GLI_DEMO'demo12_6.dat g h
+gks set pline linetype spaced_dash
+gks set pline color_index black
+gks polyline g h
+gks polymarker g h
+
+gks set pmark type square
+gks set pmark color_index blue
+read 'GLI_DEMO'demo12_7.dat i j
+gks set pline linetype double_dot
+gks set pline color_index blue
+gks polyline i j   
+gks polymarker i j
+
+gks set xform ndc
+gks set text align centre bottom
+gks set viewport 0.76 0.95 0.2 0.8
+gks text 0.85 0.84  Legend
+gks text 0.85 0.82     ------
+gks text 0.85 0.75 Rifleman 1
+gks text 0.85 0.666 Rifleman 2
+gks text 0.85 0.583 Rifleman 3
+gks text 0.85 0.50 Rifleman 4
+gks text 0.85 0.416 Rifleman 5
+gks text 0.85 0.333 Rifleman 6
+gks text 0.85 0.25 Rifleman 7
+gks set xform wc 
+gks set window 0,5 0,7
+
+gks set pmark type square
+gks set pmark color_index blue
+x:=1,2,3,4
+y:=0.44,0.44,0.44,0.44
+gks set pline color_index blue
+gks set pline linetype double_dot
+gks polyline x y
+gks polymarker x y
+
+gks set pmark type circle
+gks set pmark color_index black
+y:= 6.2,6.2,6.2,6.2
+gks set pline color_index black
+gks set pline linetype solid
+gks polyline x y
+gks polymarker x y
+
+gks set pmark type bowtie
+gks set pmark color_index magenta
+y:=3.33,3.33,3.33,3.33
+gks set pline color_index magenta
+gks set pline linetype long_short_dash
+gks polyline x y
+gks polymarker x y
+
+gks set pmark type asterisk
+gks set pmark color_index blue
+y:=5.246,5.246,5.246,5.246
+gks set pline color_index blue
+gks set pline linetype dashed
+gks polyline x y
+gks polymarker x y
+
+gks set pmark type plus
+gks set pmark color_index red
+y:=4.293,4.293,4.293,4.293
+gks set pline color_index red
+gks set pline linetype dotted
+gks polyline x y
+gks polymarker x y
+
+gks set pmark type diagonal_cross
+gks set pmark color_index green
+y:=2.346,2.346,2.346,2.346
+gks set pline color_index green
+gks set pline linetype dash_2_dot
+gks polyline x y
+gks polymarker x y
+
+gks set pmark type solid_circle
+gks set pmark color_index black
+y:=1.393,1.393,1.393,1.393
+gks set pline color_index black
+gks set pline linetype spaced_dash
+gks polyline x y
+gks polymarker x y
+
+del var *

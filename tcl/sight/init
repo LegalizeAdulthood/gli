@@ -1,0 +1,44 @@
+#
+# initfile for GLI Sight
+#
+
+
+# files (filename will be appended to $GLI_HOME)
+
+# menu-structure
+MENUDATA	tcl/sight/menu
+TEXTDATA	tcl/doc/sight/text.english
+# module including external procedures
+MODULE		tcl/sight/module.tcl
+# helpfiles
+SHORTHELP	tcl/doc/sight/text.english
+HELP		tcl/doc/sight/help.english
+INDEX		tcl/doc/sight/index
+# bitmap-path
+BITMAPPATH	tcl/sight/bitmaps
+
+
+# constants
+
+# dimensions of gli-display
+DISPLAY_WIDTH 	686
+DISPLAY_HEIGHT 	485
+# button-pads
+MB_PADX 	0
+MB_PADY 	0
+# window-minsize
+MIN_FACTOR	0.84
+# ratio (-1 for none)
+RATIO		1.414213562
+
+
+# labels
+
+# init-procedure to be called BEFORE tk-initializing
+INIT1		initprog_1
+# init-procedure to be called AFTER tk-initializing
+INIT2		initprog_2
+# exit-procedure
+EXIT		exitprog
+# resize-procedure
+RESIZE		resizewindow

@@ -1,0 +1,126 @@
+define logical GLI_GKS_CONVEX_SHAPE True
+
+demo1 :
+	@ 'GLI_DEMO'demo1
+	gosub continue
+
+demo2 :
+	@ 'GLI_DEMO'demo2
+	gosub continue
+
+demo3 :
+	@ 'GLI_DEMO'demo3
+	gosub continue
+
+demo4 :
+	@ 'GLI_DEMO'demo4
+	gosub continue
+
+demo5 :
+	@ 'GLI_DEMO'demo5
+	gosub continue
+
+demo6 :
+	@ 'GLI_DEMO'demo6
+	gosub continue
+
+demo7 :
+	@ 'GLI_DEMO'demo7
+	gosub continue
+
+demo8 :
+	@ 'GLI_DEMO'demo8
+	gosub continue
+	page
+	gks set color 5 0 1 1
+	gks set color 7 1 0 1
+
+demo9 :
+	@ 'GLI_DEMO'demo9
+	gosub continue
+
+demo10 :
+	@ 'GLI_DEMO'demo10
+	gosub continue
+
+demo11 :
+	@ 'GLI_DEMO'demo11
+	gosub continue
+
+demo12 :
+	@ 'GLI_DEMO'demo12
+	gosub continue
+
+demo13 :
+	@ 'GLI_DEMO'demo13
+	gosub continue
+
+demo14 :
+	@ 'GLI_DEMO'demo14
+	gosub continue
+
+demo15 :
+	@ 'GLI_DEMO'demo15
+	gosub continue
+
+demo16 :
+	@ 'GLI_DEMO'demo16
+	gosub continue
+
+demo17 :
+	@ 'GLI_DEMO'demo17
+	gosub continue
+
+demo18 :
+	@ 'GLI_DEMO'demo18
+	gosub continue
+
+gks set color 0 1.0 1.0 1.0
+gus set colormap uniform
+
+Crys :
+	@ 'GLI_DEMO'crystal
+	gosub continue
+
+gks set color 0 1.0 1.0 1.0
+gus set colormap uniform
+
+aSurf :
+	@ 'GLI_DEMO'xdemo1
+	gosub continue
+
+!Irrad : 
+!	@ 'GLI_DEMO'irradiance
+!	gosub continue
+
+aSpect :
+	@ 'GLI_DEMO'xdemo2
+	gosub continue
+
+Label :
+	@ 'GLI_DEMO'labels
+	gosub continue
+
+Shade :
+	@ 'GLI_DEMO'xdemo3
+	gosub continue
+
+Sat :
+	gks clear_ws
+	@ 'GLI_DEMO'satf
+	gosub continue
+
+19GH :
+	gks clear_ws
+	@ 'GLI_DEMO'satsf
+	gosub continue
+
+Mount : 
+	gks clear_ws
+	@ 'GLI_DEMO'xdemo5
+	gosub continue
+
+continue :
+	gks update_ws
+!	sleep 2
+	return

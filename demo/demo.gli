@@ -1,0 +1,207 @@
+define logical GLI_GKS_CONVEX_SHAPE True
+gks open_ws terminal
+
+load 'GLI_DEMO'demo.fdv
+
+
+on f1 then return DO
+on f4 then return EXIT
+
+on e1 then gosub demo1
+on e2 then gosub demo2
+on e3 then gosub demo3
+on e4 then gosub demo4
+on e5 then gosub demo5
+on e6 then gosub demo6
+on e7 then gosub demo7
+on e8 then gosub demo8
+on e9 then gosub demo9
+on e10 then gosub demo10
+on e11 then gosub demo11
+on e12 then gosub demo12
+on e13 then gosub demo13
+on e14 then gosub demo14
+on e15 then gosub demo15
+on e16 then gosub demo16
+on e17 then gosub demo17
+on e18 then gosub demo18
+on e26 then gosub movie
+
+
+disp
+
+exit 
+
+
+
+demo1 :
+	@ 'GLI_DEMO'demo1
+	gosub continue
+	return
+
+demo2 :
+	@ 'GLI_DEMO'demo2
+	gosub continue
+	return
+
+demo3 :
+	@ 'GLI_DEMO'demo3
+	gosub continue
+	return
+
+demo4 :
+	@ 'GLI_DEMO'demo4
+	gosub continue
+	return
+
+demo5 :
+	@ 'GLI_DEMO'demo5
+	gosub continue
+	return
+
+demo5 :
+	@ 'GLI_DEMO'demo5
+	gosub continue
+	return
+
+demo6 :
+	@ 'GLI_DEMO'demo6
+	gosub continue
+	return
+
+demo7 :
+	@ 'GLI_DEMO'demo7
+	gosub continue
+	return
+
+demo7 :
+	@ 'GLI_DEMO'demo7
+	gosub continue
+	return
+
+demo8 :
+	@ 'GLI_DEMO'demo8
+	gosub continue
+	page
+	gks set color 5 0 1 1
+	gks set color 7 1 0 1
+	return
+
+demo9 :
+	@ 'GLI_DEMO'demo9
+	gosub continue
+	return
+
+demo10 :
+	@ 'GLI_DEMO'demo10
+	gosub continue
+	return
+
+demo11 :
+	@ 'GLI_DEMO'demo11
+	gosub continue
+	return
+
+demo12 :
+	@ 'GLI_DEMO'demo12
+	gosub continue
+	return
+
+demo13 :
+	@ 'GLI_DEMO'demo13
+	gosub continue
+	return
+
+demo14 :
+	@ 'GLI_DEMO'demo14
+	gosub continue
+	return
+
+demo15 :
+	@ 'GLI_DEMO'demo15
+	gosub continue
+	return
+
+demo16 :
+	@ 'GLI_DEMO'demo16
+	gosub continue
+	return
+
+demo17 :
+	@ 'GLI_DEMO'demo17
+	gosub continue
+	return
+
+demo18 :
+	@ 'GLI_DEMO'demo18
+	gosub continue
+	return
+
+
+
+continue :
+	gks update_ws
+	inquire yn "Press RETURN to continue ... "
+	return
+
+movie :
+	@ 'GLI_DEMO'demo1
+	gks update_ws
+	sleep 10
+	@ 'GLI_DEMO'demo2
+	gks update_ws
+	sleep 10
+	@ 'GLI_DEMO'demo3
+	gks update_ws
+	sleep 10
+	@ 'GLI_DEMO'demo4
+	gks update_ws
+	sleep 10
+	@ 'GLI_DEMO'demo5
+	gks update_ws
+	sleep 10
+	@ 'GLI_DEMO'demo6
+	gks update_ws
+	sleep 10
+	@ 'GLI_DEMO'demo7
+	gks update_ws
+	sleep 10
+	@ 'GLI_DEMO'demo8
+	gks update_ws
+	sleep 10
+	page
+	gks update_ws
+	gks set color 5 0 1 1
+	gks set color 7 1 0 1
+	@ 'GLI_DEMO'demo9
+	gks update_ws
+	sleep 10
+	@ 'GLI_DEMO'demo10
+	gks update_ws
+	sleep 10
+	@ 'GLI_DEMO'demo11
+	gks update_ws
+	sleep 10
+	@ 'GLI_DEMO'demo12
+	gks update_ws
+	sleep 10
+	@ 'GLI_DEMO'demo13
+	gks update_ws
+	sleep 10
+	@ 'GLI_DEMO'demo14
+	gks update_ws
+	sleep 10
+	@ 'GLI_DEMO'demo15
+	gks update_ws
+	sleep 10
+	@ 'GLI_DEMO'demo16
+	gks update_ws
+	sleep 10
+	@ 'GLI_DEMO'demo17
+	gks update_ws
+	sleep 10
+	@ 'GLI_DEMO'demo18
+	gks update_ws
+	sleep 10 
+	return
+ 

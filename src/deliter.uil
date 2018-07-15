@@ -1,0 +1,269 @@
+module aeliterals
+    version = 'V1.0'
+    names = case_sensitive
+
+value
+    k_file_label_text		: exported "Datei";
+	k_create_label_text	: exported "Zeichnung erstellen...";
+	k_open_label_text	: exported "Zeichnung öffnen...";
+	k_save_label_text	: exported "Speichern als...";
+	k_close_label_text	: exported "Zeichnung schließen";
+	k_read_label_text
+	    : exported "Werte von Datei lesen...";
+	k_write_label_text
+	    : exported "Werte in Datei speichern...";
+	k_read_image_label_text : exported "Image Datei lesen...";
+	k_import_label_text	: exported "Importieren";
+	    k_image_label_text	: exported "Bilddatei";
+	    k_cgm_binary_label_text :
+		exported "CGM Binär";
+	    k_cgm_clear_text_label_text :
+		exported "CGM Klartext";
+	k_print_label_text	: exported "Zeichnung drucken";
+	k_capture_label_text    : exported "Druckdatei erstellen";
+	k_quit_label_text	: exported "Abbrechen";
+	    k_quit_warning_label_text : exported
+		compound_string ("Alle Änderungen gehen verloren.",
+			separate=true) &
+		compound_string ("Bitte bestätigen.");
+	k_exit_label_text	: exported "Beenden";
+    k_edit_label_text		: exported "Bearbeiten";
+	k_redraw_label_text	: exported "Zeichnung neu aufbauen";
+	k_select_label_text	: exported "Auswählen";
+	    k_object_label_text	: exported "Objekt";
+	    k_previous_label_text:
+		exported "Vorheriges Objekt";
+	    k_next_label_text	: exported "Nächstes Objekt";
+	    k_last_label_text	: exported "Letztes Objekt";
+	    k_group_label_text	: exported "Gruppe von Objekten";
+	    k_all_label_text	: exported "Alles";
+	    k_excluded_label_text:
+		exported "Ausschließlich";
+	k_deselect_label_text	: exported "Auswahl aufheben";
+	k_cut_label_text	: exported "Ausschneiden";
+	k_paste_label_text	: exported "Einfügen";
+	k_pop_label_text	: exported "In den Vordergrund setzen";
+	k_push_label_text	: exported "In den Hintergrund schieben";
+	k_move_label_text	: exported "Verschieben";
+	k_remove_label_text	: exported "Löschen";
+        k_pick_label_text	: exported "Aufnehmen";
+	    k_element_label_text
+		: exported "Element";
+	    k_region_label_text	: exported "Bereich";
+        k_digitize_label_text   : exported "Digitalisieren";
+	    k_area_label_text	: exported "Eingabebereich";
+	    k_points_label_text	: exported "Punkte";
+	    k_bars_label_text	: exported "Balken";
+	k_clear_label_text	: exported "Zeichnung löschen";
+     k_tools_label_text		: exported "Zeichnen";
+	k_tool_box_label_text
+	    : exported "Öffne Zeichenhilfen...";
+	k_line_label_text	: exported "Linie";
+	    k_locate_label_text	: exported "Lokalisieren";
+	    k_data_label_text	: exported "Daten";
+	k_spline_label_text	: exported "Spline";
+	    k_natural_label_text: exported "Natürlich";
+	    k_smooth_label_text	: exported "Geglättet";
+	    k_b_spline_label_text
+				: exported "B-Spline";
+	k_error_bars_label_text	: exported "Fehlerbalken";
+	    k_vertical_label_text
+		: exported "Vertikal";
+	    k_horizontal_label_text
+		: exported "Horizontal";
+	k_symbol_label_text	: exported "Symbol";
+	k_text_label_text	: exported "Text";
+	k_fill_area_label_text	: exported "Füllfläche";
+	k_bar_graph_label_text	: exported "Balken";
+	k_plot_label_text	: exported "Bild erstellen";
+	k_axes_label_text	: exported "Achsen...";
+	k_grid_label_text	: exported "Gitter...";
+    k_attributes_label_text	: exported "Attribute";
+	k_attribute_box_label_text
+	    : exported "Öffne Zeichenattribute...";
+	k_linetype_label_text	: exported "Linienart";
+	    k_solid_label_text	: exported "Durchgezogen";
+	    k_dashed_label_text	: exported "Strichliert";
+	    k_dotted_label_text	: exported "Gepunktet";
+	    k_dash_dotted_label_text
+		: exported "Strichpunktiert";
+	    k_dash_2_dot_label_text
+		: exported "Strich, 2 Punkte";
+	    k_dash_3_dot_label_text
+		: exported "Strich, 3 Punkte";
+	    k_long_dash_label_text
+		: exported "Langer Strich";
+	    k_long_short_dash_label_text
+		: exported "Langer, kurzer Strich";
+	    k_spaced_dash_label_text
+		: exported "Mit großen Zwischenräumen strichliert";
+	    k_spaced_dot_label_text
+		: exported "Mit großen Zwischenräumen gepunktet";
+	    k_double_dot_label_text
+		: exported "Zwei Punkte";
+	    k_triple_dot_label_text
+		: exported "Drei Punkte";
+	k_linewidth_label_text	: exported "Linienstärke";
+	    k_1_pt_label_text	: exported "1 pt";
+	    k_2_pt_label_text	: exported "2 pt";
+	    k_3_pt_label_text	: exported "3 pt";
+	    k_4_pt_label_text	: exported "4 pt";
+	    k_5_pt_label_text	: exported "5 pt";
+	    k_6_pt_label_text	: exported "6 pt";
+	k_linecolor_label_text	: exported "Linienfarbe";
+	    k_white_label_text	: exported "Weiß";
+	    k_black_label_text	: exported "Schwarz";
+	    k_red_label_text	: exported "Rot";
+	    k_green_label_text	: exported "Grün";
+	    k_blue_label_text	: exported "Blau";
+	    k_cyan_label_text	: exported "Cyan";
+	    k_yellow_label_text	: exported "Gelb";
+	    k_magenta_label_text
+		: exported "Magenta";
+	k_markertype_label_text	: exported "Markierungsart";
+	    k_dot_label_text	: exported "Punkt";
+	    k_plus_label_text	: exported "Plus";
+	    k_asterisk_label_text
+		: exported "Asterisk";
+	    k_diagonal_cross_label_text
+		: exported "Diagonales Kreuz";
+	    k_circle_label_text	: exported "Kreis";
+	    k_solid_circle_label_text
+		: exported "Gefüllter Kreis";
+	    k_square_label_text	: exported "Quadrat";
+	    k_solid_square_label_text
+		: exported "Gefülltes Quadrat";
+	    k_triangle_up_label_text
+		: exported "Dreieck nach oben";
+	    k_solid_tri_up_label_text
+		: exported "Gefülltes Dreieck nach oben";
+	    k_triangle_down_label_text
+		: exported "Dreieck nach unten";
+	    k_solid_tri_down_label_text
+		: exported "Gefülltes Dreieck nach unten";
+	    k_bowtie_label_text	: exported "Schleife";
+	    k_solid_bowtie_label_text
+		: exported "Gefüllte Schleife";
+	    k_hourglass_label_text
+		: exported "Sanduhr";
+	    k_solid_hourglass_label_text
+		: exported "Gefüllte Sanduhr";
+	    k_diamond_label_text: exported "Karo";
+	    k_solid_diamond_label_text
+		: exported "Gefülltes Karo";
+            k_star_label_text   : exported "Stern";
+            k_solid_star_label_text
+                : exported "Gefüllter Stern";
+            k_tri_up_down_label_text
+                : exported "Dreieck nach oben und unten";
+            k_solid_tri_left_label_text
+                : exported "Gefülltes Dreieck nach links";
+            k_solid_tri_right_label_text
+                : exported "Gefülltes Dreieck nach rechts";
+            k_hollow_plus_label_text
+               : exported "Leeres Plus";
+            k_omark_label_text  : exported "O-Zeichen";
+	k_markersize_label_text	: exported "Markierungsgröße";
+	    k_8_pt_label_text	: exported "8 pt";
+	    k_10_pt_label_text	: exported "10 pt";
+	    k_12_pt_label_text	: exported "12 pt";
+	    k_14_pt_label_text	: exported "14 pt";
+	    k_18_pt_label_text	: exported "18 pt";
+	    k_24_pt_label_text	: exported "24 pt";
+	    k_36_pt_label_text	: exported "36 pt";
+	    k_48_pt_label_text	: exported "48 pt";
+	    k_72_pt_label_text	: exported "72 pt";
+	k_markercolor_label_text: exported "Markierungsfarbe";
+	k_font_label_text	: exported "Schriftart";
+	    k_avant_garde_label_text
+		: exported "ITC Avant Garde Gothic";
+		k_normal_label_text
+		    : exported "Normal";
+		k_bold_label_text
+		    : exported "Fett";
+		k_italic_label_text
+		    : exported "Kursiv";
+		k_bold_italic_label_text
+		    : exported "Fett Kursiv";
+	    k_courier_label_text
+		: exported "Courier";
+	    k_helvetica_label_text
+		: exported "Helvetica";
+	    k_lubalin_label_text
+		: exported "ITC Lubalin Graph";
+	    k_schoolbook_label_text
+		: exported "New Century Schoolbook";
+	    k_souvenir_label_text
+		: exported "ITC Souvenir";
+	    k_symbol_font_label_text
+		: exported "Symbol";
+	    k_times_label_text	: exported "Times";
+	k_textsize_label_text	: exported "Textgröße";
+	k_textalign_label_text	: exported "Textausrichtung";
+	    k_left_label_text	: exported "Linksbündig";
+	    k_center_label_text	: exported "Zentriert";
+	    k_right_label_text	: exported "Rechtsbündig";
+	k_textcolor_label_text	: exported "Textfarbe";
+	k_textdirection_label_text
+	    : exported "Textschreibrichtung";
+	    k_ltoright_label_text
+		: exported "Rechts";
+	    k_up_label_text	: exported "Aufwärts";
+	    k_rtoleft_label_text: exported "Links";
+	    k_down_label_text	: exported "Abwärts";
+	k_fillstyle_label_text	: exported "Füllart";
+	    k_hollow_label_text	: exported "Leer";
+	    k_filled_label_text	: exported "Ausgefüllt";
+	    k_pattern_label_text
+		: exported "Gemustert";
+	    k_hatch_label_text	: exported "Schraffiert";
+	k_fillindex_label_text	: exported "Füllindex";
+	k_fillcolor_label_text	: exported "Füllfarbe";
+    k_view_label_text		: exported "Ansicht";
+        k_viewport_label_text   : exported "Darstellungsfläche auswählen";
+        k_orientation_label_text: exported "Format";
+            k_landscape_label_text
+                : exported "Querformat";
+            k_portrait_label_text
+                : exported "Hochformat";
+	k_window_label_text     : exported "Fenster skalieren";
+	k_scale_label_text	: exported "Skalierungsart";
+	    k_linear_label_text	: exported "Linear";
+		k_flip_none_label_text
+		    : exported "Normal";
+		k_flip_x_label_text
+		    : exported "X spiegeln";
+		k_flip_y_label_text
+		    : exported "Y spiegeln";
+		k_flip_xy_label_text
+		    : exported "XY spiegeln";
+	    k_xlog_label_text	: exported "X Log";
+	    k_ylog_label_text	: exported "Y Log";
+	    k_xylog_label_text	: exported "XY Log";
+	k_xform_label_text	: exported "Transformation auswählen";
+    k_customize_label_text	: exported "Einstellung";
+	k_snap_grid_label_text	: exported "Gitterfunktion";
+	    k_snap_off_label_text
+		: exported "Aus";
+	    k_snap_025_label_text
+		: exported ".25 cm";
+	    k_snap_05_label_text
+		: exported ".5 cm";
+	    k_snap_1_label_text
+		: exported "1 cm";
+    k_help_label_text		: exported "Hilfe";
+
+    k_command_prompt_label_text	: exported "Sight> ";
+
+    k_information_label_text	: exported "Information";
+    k_warning_label_text	: exported "Warnung";
+    k_error_label_text		: exported "Fehler";
+    k_file_selection_label_text	: exported "Datei auswählen";
+    k_filter_label_text		: exported "Dateifilter";
+    k_directory_label_text	: exported "Verzeichnis";
+    k_list_label_text		: exported "Dateien";
+    k_selection_label_text	: exported "Auswahl";
+    k_ok_label_text		: exported "OK";
+    k_cancel_label_text		: exported "Abbrechen";
+
+end module;

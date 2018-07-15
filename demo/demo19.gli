@@ -1,0 +1,40 @@
+    page
+    gks set xform ndc
+    x := 0 1 1 0 0
+    y := 0 0 1 1 0
+    gks set fill int_style solid
+    gks set fill color yellow
+    case color color then gks fill x y
+
+    x := 0 1
+    y := 0.92 0.92
+    gks set pline color black
+    gks set pline linew 2
+    gks polyline x y
+
+    gks set text font -3 string
+    gks set text height 0.027
+    gks set text align center bottom
+    case color color then gks set text color red
+    gks text 0.5 0.94 The Graphics Utility System (GUS)
+
+    gks set text color black
+    gks set text align left bottom
+    gks text 0.02 0.85 · Based on GKS level 0b
+    gks text 0.02 0.8  · Preset transformations (linear transformations
+    gks text 0.04 0.75   and 3D transformations)
+    gks text 0.02 0.7  · 2D and 3D axes with labels along the axes
+    gks text 0.02 0.65 · Grids
+    gks text 0.02 0.6  · Automatic scaling of the axis
+    gks text 0.02 0.55 · Text formatter for display of complex formulas with
+    gks text 0.04 0.5    Greek letters and mathematical symbols
+    gks text 0.02 0.45 · Curve smoothing
+    gks text 0.02 0.4  · Linear regression, robust straight-line fits
+    gks text 0.02 0.35 · Spline Interpolation
+    gks text 0.02 0.3  · Fast Fourier Transformations
+    gks text 0.02 0.25 · Spatial Curves
+    gks text 0.02 0.2  · Overlay and contour diagrams (with hidden-line
+    gks text 0.04 0.15   removal, color selectable)
+    gks text 0.02 0.1  · Menu driven diagram builder (AutoPlot)
+
+    del var *

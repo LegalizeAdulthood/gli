@@ -1,0 +1,1016 @@
+define logical GLI_UIL icons.uil
+gks open_ws terminal 216
+
+gks set ws_viewport 0 0.5 0 0.16
+gks set xform ndc
+gks set pline linewidth 2
+x := 0.1 0.9
+y := 0.5 0.5
+
+define logical GLI_ICON linetype_solid_icon
+gks set pline linetype solid
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON linetype_dashed_icon
+gks set pline linetype dashed
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON linetype_dotted_icon
+gks set pline linetype dotted
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON linetype_dash_dotted_icon
+gks set pline linetype dash_dotted
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON linetype_dash_2_dot_icon
+gks set pline linetype dash_2_dot
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON linetype_dash_3_dot_icon
+gks set pline linetype dash_3_dot
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON linetype_long_dash_icon
+gks set pline linetype long_dash
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON linetype_long_short_dash_icon
+gks set pline linetype Long_short_dash
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON linetype_spaced_dash_icon
+gks set pline linetype spaced_dash
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON linetype_spaced_dot_icon
+gks set pline linetype spaced_dot
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON linetype_double_dot_icon
+gks set pline linetype double_dot
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON linetype_triple_dot_icon
+gks set pline linetype triple_dot
+gks polyline x y
+gks clear_ws
+
+gks set pline linetype solid
+
+define logical GLI_ICON linewidth_1_pt_icon
+gks set pline linewidth 1.0
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON linewidth_2_pt_icon
+gks set pline linewidth 2.0
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON linewidth_3_pt_icon
+gks set pline linewidth 3.0
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON linewidth_4_pt_icon
+gks set pline linewidth 4.0
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON linewidth_5_pt_icon
+gks set pline linewidth 5.0
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON linewidth_6_pt_icon
+gks set pline linewidth 6.0
+gks polyline x y
+gks clear_ws
+
+gks set pline linetype solid
+gks set pline linewidth 17.0
+
+x := 0.0 1.1
+y := 0.5 0.5
+
+define logical GLI_ICON linecolor_white_icon
+gks set pline color white
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON linecolor_black_icon
+gks set pline color black
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON linecolor_red_icon
+gks set pline color red
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON linecolor_green_icon
+gks set pline color green
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON linecolor_blue_icon
+gks set pline color blue
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON linecolor_cyan_icon
+gks set pline color cyan
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON linecolor_yellow_icon
+gks set pline color yellow
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON linecolor_magenta_icon
+gks set pline color magenta
+gks polyline x y
+gks clear_ws
+
+gks set pmark size 2.0
+gks set pmark color black
+
+x := 0.5
+y := 0.5
+
+define logical GLI_ICON markertype_dot_icon
+gks set pmark type dot
+gks polymarker x y
+gks clear_ws
+
+define logical GLI_ICON markertype_plus_icon
+gks set pmark type plus
+gks polymarker x y
+gks clear_ws
+
+define logical GLI_ICON markertype_asterisk_icon
+gks set pmark type asterisk
+gks polymarker x y
+gks clear_ws
+
+define logical GLI_ICON markertype_diagonal_cross_icon
+gks set pmark type diagonal_cross
+gks polymarker x y
+gks clear_ws
+
+define logical GLI_ICON markertype_circle_icon
+gks set pmark type circle
+gks polymarker x y
+gks clear_ws
+
+define logical GLI_ICON markertype_solid_circle_icon
+gks set pmark type solid_circle
+gks polymarker x y
+gks clear_ws
+
+define logical GLI_ICON markertype_square_icon
+gks set pmark type square
+gks polymarker x y
+gks clear_ws
+
+define logical GLI_ICON markertype_solid_square_icon
+gks set pmark type solid_square
+gks polymarker x y
+gks clear_ws
+
+define logical GLI_ICON markertype_triangle_up_icon
+gks set pmark type triangle_up
+gks polymarker x y
+gks clear_ws
+
+define logical GLI_ICON markertype_solid_tri_up_icon
+gks set pmark type solid_tri_up
+gks polymarker x y
+gks clear_ws
+
+define logical GLI_ICON markertype_triangle_down_icon
+gks set pmark type triangle_down
+gks polymarker x y
+gks clear_ws
+
+define logical GLI_ICON markertype_solid_tri_down_icon
+gks set pmark type solid_tri_down
+gks polymarker x y
+gks clear_ws
+
+define logical GLI_ICON markertype_bowtie_icon
+gks set pmark type bowtie
+gks polymarker x y
+gks clear_ws
+
+define logical GLI_ICON markertype_solid_bowtie_icon
+gks set pmark type solid_bowtie
+gks polymarker x y
+gks clear_ws
+
+define logical GLI_ICON markertype_hourglass_icon
+gks set pmark type hourglass
+gks polymarker x y
+gks clear_ws
+
+define logical GLI_ICON markertype_solid_hourglass_icon
+gks set pmark type solid_hglass
+gks polymarker x y
+gks clear_ws
+
+define logical GLI_ICON markertype_diamond_icon
+gks set pmark type diamond
+gks polymarker x y
+gks clear_ws
+
+define logical GLI_ICON markertype_solid_diamond_icon
+gks set pmark type solid_diamond
+gks polymarker x y
+gks clear_ws
+
+define logical GLI_ICON markertype_star_icon
+gks set pmark type star
+gks polymarker x y
+gks clear_ws
+
+define logical GLI_ICON markertype_solid_star_icon
+gks set pmark type solid_star
+gks polymarker x y
+gks clear_ws
+
+define logical GLI_ICON markertype_tri_up_down_icon
+gks set pmark type tri_up_down
+gks polymarker x y
+gks clear_ws
+
+define logical GLI_ICON markertype_solid_tri_left_icon
+gks set pmark type solid_tri_left
+gks polymarker x y
+gks clear_ws
+
+define logical GLI_ICON markertype_solid_tri_right_icon
+gks set pmark type solid_tri_right
+gks polymarker x y
+gks clear_ws
+
+define logical GLI_ICON markertype_hollow_plus_icon
+gks set pmark type hollow_plus
+gks polymarker x y
+gks clear_ws
+
+define logical GLI_ICON markertype_omark_icon
+gks set pmark type omark
+gks polymarker x y
+gks clear_ws
+
+gks set ws_viewport 0 0.75 0 0.75
+gks set pmark type square
+nominalsize = 0.166667
+
+define logical GLI_ICON markersize_4_pt_icon
+gks set pmark size 4*nominalsize
+gks polymarker x y
+gks clear_ws
+define logical GLI_ICON markersize_6_pt_icon
+gks set pmark size 6*nominalsize
+gks polymarker x y
+gks clear_ws
+define logical GLI_ICON markersize_8_pt_icon
+gks set pmark size 8*nominalsize
+gks polymarker x y
+gks clear_ws
+
+define logical GLI_ICON markersize_10_pt_icon
+gks set pmark size 10*nominalsize
+gks polymarker x y
+gks clear_ws
+
+define logical GLI_ICON markersize_12_pt_icon
+gks set pmark size 12*nominalsize
+gks polymarker x y
+gks clear_ws
+
+define logical GLI_ICON markersize_14_pt_icon
+gks set pmark size 14*nominalsize
+gks polymarker x y
+gks clear_ws
+
+define logical GLI_ICON markersize_18_pt_icon
+gks set pmark size 18*nominalsize
+gks polymarker x y
+gks clear_ws
+
+define logical GLI_ICON markersize_24_pt_icon
+gks set pmark size 24*nominalsize
+gks polymarker x y
+gks clear_ws
+
+define logical GLI_ICON markersize_36_pt_icon
+gks set pmark size 36*nominalsize
+gks polymarker x y
+gks clear_ws
+
+define logical GLI_ICON markersize_48_pt_icon
+gks set pmark size 48*nominalsize
+gks polymarker x y
+gks clear_ws
+
+define logical GLI_ICON markersize_72_pt_icon
+gks set pmark size 72*nominalsize
+gks polymarker x y
+gks clear_ws
+
+gks set ws_viewport 0 0.5 0 0.16
+gks set pline linetype solid
+gks set pline linewidth 17.0
+
+x := 0.0 1.1
+y := 0.5 0.5
+
+define logical GLI_ICON markercolor_white_icon
+gks set pline color white
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON markercolor_black_icon
+gks set pline color black
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON markercolor_red_icon
+gks set pline color red
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON markercolor_green_icon
+gks set pline color green
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON markercolor_blue_icon
+gks set pline color blue
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON markercolor_cyan_icon
+gks set pline color cyan
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON markercolor_yellow_icon
+gks set pline color yellow
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON markercolor_magenta_icon
+gks set pline color magenta
+gks polyline x y
+gks clear_ws
+
+gks set text height 0.5
+gks set ws_viewport 0 1.23 0 0.17
+gks set text align center normal
+
+define logical GLI_ICON font_avant_garde_normal_icon
+gks set text fontprec 1 string
+gks text 0.5 0.3 Avant Garde Book
+gks clear_ws
+
+define logical GLI_ICON font_avant_garde_bold_icon
+gks set text fontprec 9 string
+gks text 0.5 0.3 Avant Garde Demi
+gks clear_ws
+
+define logical GLI_ICON font_avant_garde_italic_icon
+gks set text fontprec 17 string
+gks text 0.5 0.3 Avant Garde Book Oblique
+gks clear_ws
+
+define logical GLI_ICON font_avant_garde_bit_icon
+gks set text fontprec 25 string
+gks text 0.5 0.3 Avant Garde Demi Oblique
+gks clear_ws
+
+define logical GLI_ICON font_courier_normal_icon
+gks set text fontprec 2 string
+gks text 0.5 0.3 Courier Medium
+gks clear_ws
+
+define logical GLI_ICON font_courier_bold_icon
+gks set text fontprec 10 string
+gks text 0.5 0.3 Courier Bold
+gks clear_ws
+
+define logical GLI_ICON font_courier_italic_icon
+gks set text fontprec 18 string
+gks text 0.5 0.3 Courier Oblique
+gks clear_ws
+
+define logical GLI_ICON font_courier_bit_icon
+gks set text fontprec 26 string
+gks text 0.5 0.3 Courier Bold Oblique
+gks clear_ws
+
+define logical GLI_ICON font_helvetica_normal_icon
+gks set text fontprec 3 string
+gks text 0.5 0.3 Helvetica Medium
+gks clear_ws
+
+define logical GLI_ICON font_helvetica_bold_icon
+gks set text fontprec 11 string
+gks text 0.5 0.3 Helvetica Bold
+gks clear_ws
+
+define logical GLI_ICON font_helvetica_italic_icon
+gks set text fontprec 19 string
+gks text 0.5 0.3 Helvetica Oblique
+gks clear_ws
+
+define logical GLI_ICON font_helvetica_bit_icon
+gks set text fontprec 27 string
+gks text 0.5 0.3 Helvetica Bold Oblique
+gks clear_ws
+
+define logical GLI_ICON font_lubalin_normal_icon
+gks set text fontprec 4 string
+gks text 0.5 0.3 Lubalin Graph Book
+gks clear_ws
+
+define logical GLI_ICON font_lubalin_bold_icon
+gks set text fontprec 12 string
+gks text 0.5 0.3 Lubalin Graph Demi
+gks clear_ws
+
+define logical GLI_ICON font_lubalin_italic_icon
+gks set text fontprec 20 string
+gks text 0.5 0.3 Lubalin Graph Oblique
+gks clear_ws
+
+define logical GLI_ICON font_lubalin_bit_icon
+gks set text fontprec 28 string
+gks text 0.5 0.3 Lubalin Graph Book Oblique
+gks clear_ws
+
+define logical GLI_ICON font_schoolbook_normal_icon
+gks set text fontprec 5 string
+gks text 0.5 0.3 NC Schoolbook Medium
+gks clear_ws
+
+define logical GLI_ICON font_schoolbook_bold_icon
+gks set text fontprec 13 string
+gks text 0.5 0.3 NC Schoolbook Bold
+gks clear_ws
+
+define logical GLI_ICON font_schoolbook_italic_icon
+gks set text fontprec 21 string
+gks text 0.5 0.3 NC Schoolbook Italic
+gks clear_ws
+
+define logical GLI_ICON font_schoolbook_bit_icon
+gks set text fontprec 29 string
+gks text 0.5 0.3 NC Schoolbook Bold Italic
+gks clear_ws
+
+define logical GLI_ICON font_souvenir_normal_icon
+gks set text fontprec 6 string
+gks text 0.5 0.3 Souvenir Light
+gks clear_ws
+
+define logical GLI_ICON font_souvenir_bold_icon
+gks set text fontprec 14 string
+gks text 0.5 0.3 Souvenir Demi
+gks clear_ws
+
+define logical GLI_ICON font_souvenir_italic_icon
+gks set text fontprec 22 string
+gks text 0.5 0.3 Souvenir Light Italic
+gks clear_ws
+
+define logical GLI_ICON font_souvenir_bit_icon
+gks set text fontprec 30 string
+gks text 0.5 0.3 Souvenir Demi Italic
+gks clear_ws
+
+define logical GLI_ICON font_symbol_normal_icon
+gks set text fontprec 7 string
+gks text 0.5 0.3 Symbol Medium
+gks clear_ws
+
+define logical GLI_ICON font_times_normal_icon
+gks set text fontprec 8 string
+gks text 0.5 0.3 Times Medium
+gks clear_ws
+
+define logical GLI_ICON font_times_bold_icon
+gks set text fontprec 16 string
+gks text 0.5 0.3 Times Bold
+gks clear_ws
+
+define logical GLI_ICON font_times_italic_icon
+gks set text fontprec 24 string
+gks text 0.5 0.3 Times Italic
+gks clear_ws
+
+define logical GLI_ICON font_times_bit_icon
+gks set text fontprec 32 string
+gks text 0.5 0.3 Times Bold Italic
+gks clear_ws
+
+gks set ws_viewport 0 0.8 0 0.3
+gks set text fontprec 1 string
+gks set text align center half
+nominalsize = 1/30
+
+define logical GLI_ICON textsize_8_pt_icon
+gks set text height 8*nominalsize
+gks text 0.5 0.5 8 pt
+gks clear_ws
+
+define logical GLI_ICON textsize_10_pt_icon
+gks set text height 10*nominalsize
+gks text 0.5 0.5 10 pt
+gks clear_ws
+
+define logical GLI_ICON textsize_12_pt_icon
+gks set text height 12*nominalsize
+gks text 0.5 0.5 12 pt
+gks clear_ws
+
+define logical GLI_ICON textsize_14_pt_icon
+gks set text height 14*nominalsize
+gks text 0.5 0.5 14 pt
+gks clear_ws
+
+define logical GLI_ICON textsize_18_pt_icon
+gks set text height 18*nominalsize
+gks text 0.5 0.5 18 pt
+gks clear_ws
+
+define logical GLI_ICON textsize_24_pt_icon
+gks set text height 24*nominalsize
+gks text 0.5 0.5 24 pt
+gks clear_ws
+
+gks set ws_viewport 0 0.8 0 0.3
+gks set text fontprec 1 string
+gks set text height 0.4
+
+define logical GLI_ICON textalign_left_icon
+gks set text align left half
+gks text 0.5 0.5 Left
+gks clear_ws
+
+define logical GLI_ICON textalign_center_icon
+gks set text align center half
+gks text 0.5 0.5 Center
+gks clear_ws
+
+define logical GLI_ICON textalign_right_icon
+gks set text align right half
+gks text 0.5 0.5 Right
+gks clear_ws
+
+gks set text fontprec 1 string
+gks set text align center half
+gks set ws_viewport 0 0.5 0 0.5
+gks set xform ndc
+gks set text height 0.2
+
+define logical GLI_ICON textdirection_ltoright_icon
+gks set text upvec 0 1
+gks text 0.5 0.5 Right
+gks clear_ws
+
+define logical GLI_ICON textdirection_up_icon
+gks set text upvec -1 0
+gks text 0.5 0.5 Up 
+gks clear_ws
+
+define logical GLI_ICON textdirection_rtoleft_icon
+gks set text upvec 0 -1
+gks text 0.5 0.5 Left
+gks clear_ws
+
+define logical GLI_ICON textdirection_down_icon
+gks set text upvec 1 0
+gks text 0.5 0.5 Down
+gks clear_ws
+
+gks set text upvec 0 1
+
+gks set ws_viewport 0 0.5 0 0.16
+gks set pline linetype solid
+gks set pline linewidth 17.0
+
+x := 0.0 1.1
+y := 0.5 0.5
+
+define logical GLI_ICON textcolor_white_icon
+gks set pline color white
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON textcolor_black_icon
+gks set pline color black
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON textcolor_red_icon
+gks set pline color red
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON textcolor_green_icon
+gks set pline color green
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON textcolor_blue_icon
+gks set pline color blue
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON textcolor_cyan_icon
+gks set pline color cyan
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON textcolor_yellow_icon
+gks set pline color yellow
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON textcolor_magenta_icon
+gks set pline color magenta
+gks polyline x y
+gks clear_ws
+
+gks set ws_viewport 0 0.3 0 0.3
+x := 0.1 0.9 0.9 0.1
+y := 0.1 0.1 0.9 0.9
+
+define logical GLI_ICON fillstyle_hollow_icon
+gks set fill int_style hollow
+gks fill x y
+gks clear_ws
+
+define logical GLI_ICON fillstyle_solid_icon
+gks set fill int_style solid
+gks fill x y
+gks clear_ws
+
+define logical GLI_ICON fillstyle_hatch_1_icon
+gks set fill int_style hatch
+gks set fill style 1
+gks fill x y
+gks clear_ws
+
+define logical GLI_ICON fillstyle_hatch_2_icon
+gks set fill int_style hatch
+gks set fill style 2
+gks fill x y
+gks clear_ws
+
+define logical GLI_ICON fillstyle_hatch_3_icon
+gks set fill int_style hatch
+gks set fill style 3
+gks fill x y
+gks clear_ws
+
+define logical GLI_ICON fillstyle_hatch_4_icon
+gks set fill int_style hatch
+gks set fill style 4
+gks fill x y
+gks clear_ws
+
+define logical GLI_ICON fillstyle_hatch_5_icon
+gks set fill int_style hatch
+gks set fill style 5
+gks fill x y
+gks clear_ws
+
+define logical GLI_ICON fillstyle_hatch_6_icon
+gks set fill int_style hatch
+gks set fill style 6
+gks fill x y
+gks clear_ws
+
+define logical GLI_ICON fillstyle_hatch_7_icon
+gks set fill int_style hatch
+gks set fill style 7
+gks fill x y
+gks clear_ws
+
+define logical GLI_ICON fillstyle_hatch_8_icon
+gks set fill int_style hatch
+gks set fill style 8
+gks fill x y
+gks clear_ws
+
+define logical GLI_ICON fillstyle_hatch_9_icon
+gks set fill int_style hatch
+gks set fill style 9
+gks fill x y
+gks clear_ws
+
+define logical GLI_ICON fillstyle_hatch_10_icon
+gks set fill int_style hatch
+gks set fill style 10
+gks fill x y
+gks clear_ws
+
+define logical GLI_ICON fillstyle_pattern_1_icon
+gks set fill int_style pattern
+gks set fill style 1
+gks fill x y
+gks clear_ws
+
+define logical GLI_ICON fillstyle_pattern_2_icon
+gks set fill int_style pattern
+gks set fill style 2
+gks fill x y
+gks clear_ws
+
+define logical GLI_ICON fillstyle_pattern_3_icon
+gks set fill int_style pattern
+gks set fill style 3
+gks fill x y
+gks clear_ws
+
+define logical GLI_ICON fillstyle_pattern_4_icon
+gks set fill int_style pattern
+gks set fill style 4
+gks fill x y
+gks clear_ws
+
+define logical GLI_ICON fillstyle_pattern_5_icon
+gks set fill int_style pattern
+gks set fill style 5
+gks fill x y
+gks clear_ws
+
+define logical GLI_ICON fillstyle_pattern_6_icon
+gks set fill int_style pattern
+gks set fill style 6
+gks fill x y
+gks clear_ws
+
+define logical GLI_ICON fillstyle_pattern_7_icon
+gks set fill int_style pattern
+gks set fill style 7
+gks fill x y
+gks clear_ws
+
+define logical GLI_ICON fillstyle_pattern_8_icon
+gks set fill int_style pattern
+gks set fill style 8
+gks fill x y
+gks clear_ws
+
+define logical GLI_ICON fillstyle_pattern_9_icon
+gks set fill int_style pattern
+gks set fill style 9
+gks fill x y
+gks clear_ws
+
+define logical GLI_ICON fillstyle_pattern_10_icon
+gks set fill int_style pattern
+gks set fill style 10
+gks fill x y
+gks clear_ws
+
+define logical GLI_ICON fillstyle_pattern_11_icon
+gks set fill int_style pattern
+gks set fill style 11
+gks fill x y
+gks clear_ws
+
+define logical GLI_ICON fillstyle_pattern_12_icon
+gks set fill int_style pattern
+gks set fill style 12
+gks fill x y
+gks clear_ws
+
+define logical GLI_ICON fillstyle_pattern_13_icon
+gks set fill int_style pattern
+gks set fill style 13
+gks fill x y
+gks clear_ws
+
+define logical GLI_ICON fillstyle_pattern_14_icon
+gks set fill int_style pattern
+gks set fill style 14
+gks fill x y
+gks clear_ws
+
+define logical GLI_ICON fillstyle_pattern_15_icon
+gks set fill int_style pattern
+gks set fill style 15
+gks fill x y
+gks clear_ws
+
+gks set ws_viewport 0 0.5 0 0.16
+gks set pline linetype solid
+gks set pline linewidth 17.0
+
+x := 0.0 1.0
+y := 0.5 0.5
+
+define logical GLI_ICON fillcolor_white_icon
+gks set pline color white
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON fillcolor_black_icon
+gks set pline color black
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON fillcolor_red_icon
+gks set pline color red
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON fillcolor_green_icon
+gks set pline color green
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON fillcolor_blue_icon
+gks set pline color blue
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON fillcolor_cyan_icon
+gks set pline color cyan
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON fillcolor_yellow_icon
+gks set pline color yellow
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON fillcolor_magenta_icon
+gks set pline color magenta
+gks polyline x y
+gks clear_ws
+
+gks set ws_viewport 0 0.39 0 0.39
+gks set viewport 0.1 0.9 0.1 0.9
+gks set pline color black
+gks set pline linewidth 1
+gks set pmark size .75
+
+define logical GLI_ICON line_icon
+gks set xform ndc
+x := 0.1 0.3 0.5 0.7 0.9
+y := 0.4 0.8 0.6 0.9 0.3
+gks polyline x,y
+gks clear_ws
+
+define logical GLI_ICON spline_icon
+x := 0.1 0.5 0.9
+y := 0.4 0.6 0.2
+gus spline x,y
+gks polymarker x y
+gks clear_ws
+
+define logical GLI_ICON smooth_spline_icon
+x := 0.1 0.3 0.5 0.7 0.9
+y := 0.4 0.8 0.6 0.9 0.3
+gus spline x y -1
+gks polymarker x y
+gks clear_ws
+
+define logical GLI_ICON b_spline_icon
+x := .03 .13 .5 .8 .93 .43 .4 .5 .95
+y := .88 .3 .05 .22 .75 .85 .6 .2 .15
+gus spline x,y,-2
+gks polymarker x y
+gks clear_ws
+
+define logical GLI_ICON bar_graph_icon
+gks set xform wc
+x := 0.1 0.3 0.5 0.7 0.9
+y := 0.5 0.1 0.8 0.2 0.4
+gks set fill int_style hollow
+gus bar_graph x y
+gks clear_ws
+
+define logical GLI_ICON v_error_bars_icon
+gks set xform ndc
+x := .2 .2
+y := .3 .7
+gks polyline x y
+x := x+0.6
+gks polyline x y
+x := .2 .8
+y := .5 .5
+gks polyline x y
+gks polymarker .5 .5
+gks clear_ws
+
+define logical GLI_ICON h_error_bars_icon
+y := .2 .2
+x := .3 .7
+gks polyline x y
+y := y+0.6
+gks polyline x y
+y := .2 .8
+x := .5 .5
+gks polyline x y
+gks polymarker .5 .5
+gks clear_ws
+
+define logical GLI_ICON symbol_icon
+x := 0.1 0.3 0.5 0.7 0.9
+y := 0.4 0.8 0.6 0.9 0.3
+gks polymarker x,y
+gks clear_ws
+
+define logical GLI_ICON text_icon
+gks set text align center half
+gks set text height 0.6
+gks text 0.5 0.5 A
+gks clear_ws
+
+define logical GLI_ICON fill_area_icon
+x := 0.1 0.3 0.5 0.7 0.9
+y := 0.4 0.8 0.6 0.9 0.3
+gks set fill int hollow
+gks fill_area x,y
+gks clear_ws
+
+define logical GLI_ICON plot_icon
+gks set xform wc
+x := 0.1 0.3 0.5 0.7 0.9
+y := 0.5 0.1 0.8 0.2 0.4
+gus axes_2d .2 .2 0 0 -1 -1 -0.025
+gus polyline x y
+gks clear_ws
+
+define logical GLI_ICON axes_icon
+gus axes_2d .2 .2 0 0 -1 -1 -0.025
+gks clear_ws
+
+define logical GLI_ICON grid_icon
+gus grid .2 .2 0 0 1 1
+gks clear_ws
+
+define logical GLI_ICON locate_icon
+gks set xform wc
+x := 0.1 0.3
+y := 0.7 0.9
+gks polyline x y
+x := 0.3 0.5
+y := 0.9 0.7
+gks polyline x y
+x := 0.5 0.6
+y := 0.7 0.8
+gks polyline x y
+x :=0.6 0.8
+y :=0.8 0.2
+gks polyline x y
+x := 0.8 0.2
+y := 0.2 0.4
+gks polyline x y
+x :=0.2 0.3
+y :=0.4 0.5
+gks polyline x y
+x := 0.3 0.1
+y := 0.5 0.7
+gks polyline x y
+gks clear_ws
+
+define logical GLI_ICON data_icon
+gks set text align normal normal
+gks set text height 0.14
+x := 0.5 0.5  
+y := 0.9 0.1
+gks polyline x y
+x := 0.1 0.9
+y := 0.7 0.7
+gks polyline x y
+gks set text align center half
+gks text 0.35 0.85 X
+gks text 0.75 0.85 Y
+gks set pmark type dot
+x := 0.3 0.3 0.3 0.7 0.7 0.7
+y := 0.6 0.5 0.4 0.6 0.5 0.4
+gks polymarker x y
+gks clear_ws
+

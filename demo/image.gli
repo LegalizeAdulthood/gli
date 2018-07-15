@@ -1,0 +1,31 @@
+loop:
+
+!The main loop for all
+
+xui choice Images |Animated Mountain|Medical Images|Imaging|Exit
+case Images "Animated Mountain" then gosub Animated
+case Images "Medical Images" then gosub Imagery
+case Images "Imaging" then gosub Image_demo
+case Images Exit then goto End
+
+goto loop
+
+!The subroutines
+
+Image_demo:
+	@'GLI_DEMO'imaging
+	page
+	return
+
+Animated:
+	@'GLI_DEMO'mountain
+	page
+	return
+
+Imagery:
+	@'GLI_DEMO'medical
+	page
+	return
+
+End:
+	exit

@@ -1,0 +1,162 @@
+!this is an utility to mix colors using 3 sliders: R G B
+!The user can use the percentage returned to implement custom colors
+!using GKS SET COLOR_REF
+
+	gks open_ws terminal	!open a window
+	gks set xform ndc	!establish coordinate system
+
+!draw red slider
+	ytmp := -0.02(.001)0.02	!generate the arc ends
+	tmpy := 0.02(-.001)-0.02	!generate pts in opposite order
+	r = 0.02
+	xtmp := sqrt(r**2-ytmp**2)
+	btmp := -xtmp+0.1	!translate the slider location
+	xtmp := xtmp+0.55
+	ytmp := ytmp+0.4
+	tmpy := tmpy+0.4
+	xbody := 0.1,0.55	!right hand side of body
+	ybody := 0.38,0.38
+	xslider := xtmp btmp xbody
+	minx := min(xslider)
+	maxx := max(xslider)
+	yslider := ytmp tmpy ybody
+	gks set fill color_index white
+	rslider := yslider
+	gks set pline color red
+	gks fill_area xslider,rslider
+	gks polyline xslider,rslider
+	lastred := 0
+	red := 0
+	gks set text color_index red
+	gus text .2 .32 'lastred'
+	gus text .07 .43 RED
+
+!draw green slider
+	gslider := yslider+0.2	!shift slider up
+	gks set fill color_index white
+	gks set pline color green
+	gks fill_area xslider,gslider
+	gks polyline xslider,gslider
+	lastgreen := 0
+	green := 0
+	gks set text color_index green
+	gus text .2 .52 'lastgreen'
+	gus text .07 .63 GREEN
+
+!draw blue slider
+	bslider := gslider+0.2	!shift slider up
+	gks set fill color_index white
+	gks set pline color blue
+	gks fill_area xslider,bslider
+	gks polyline xslider,bslider
+	lastblue := 0
+	blue := 0
+	gks set text color_index blue
+	gus text .2 .72 'lastblue'
+	gus text .07 .83 BLUE
+
+!draw button
+	x := .7 .9 .9 .7 .7
+	xedge := .7 .705 .905 .905 .9 .9 .7	!define shadow behind button
+	y1edge := .7 .705 .705 .605 .6 .7 .7
+	y1 := .6 .6 .7 .7 .6	!define the two button outlines
+	gks set fill int_style solid
+
+!draw button 1
+	gks set fill color_index cyan
+	gks fill_area x,y1
+	gks polyline x,y1
+	gks set text expfac .8
+	gks set text color black
+	gus text .74 .63 DONE
+	gks polyline xedge,y1edge
+	gks set fill color_index black
+	gks fill_area xedge,y1edge
+
+!draw the colorized square
+	gks set pline color black
+	boxx := .7 .9 .9 .7 .7
+	boxy := .1 .1 .3 .3 .1
+	gks polyline boxx,boxy
+
+!loop, checking the sliders, updating the color square
+Continue:
+	gks request locator xcoord,ycoord
+	IF xcoord < 0.7 OR xcoord > 0.9 THEN goto Halfway	!check sliders
+	IF ycoord > 0.6 AND ycoord < 0.7 THEN gosub Done
+Halfway:
+	IF ycoord < 0.38 OR xcoord > 0.82 THEN goto Continue
+	IF xcoord > 0.08 AND xcoord < 0.57 THEN gosub CheckSliders
+	goto Continue
+
+CheckSliders:
+	IF ycoord > 0.38 AND ycoord < 0.42 THEN gosub RedSlider
+	IF ycoord > 0.58 AND ycoord < 0.62 THEN gosub GreenSlider
+	IF ycoord > 0.78 AND ycoord < 0.82 THEN gosub BlueSlider
+	gks set color_rep 7 red green blue
+	gks set fill color_index magenta	!really new color
+	gks fill_area boxx boxy
+	gks set pline color black
+	gks polyline boxx boxy
+	Return
+
+Done:
+	gks set fill color_index blue
+	gks fill_area x,y1
+	gks polyline x,y1
+	gks set text color_index white
+	gus text .74 .63 DONE
+	gks close_ws
+	EXIT
+	Return
+
+RedSlider:					!update the red slider
+	gks set fill color_index white		!"clear" the slider
+	gks fill_area xslider,rslider
+	fillx := btmp xcoord xcoord
+	filly := tmpy .38 .42
+	gks set fill color_index red
+	gks fill_area fillx filly		!fill up with "fluid"
+	gks set pline color red
+	gks polyline xslider,rslider		!redraw outline
+	red := (xcoord-minx)/(maxx-minx)	!calc ratio fill
+	gks set text color_index white
+	gus text .2 .32 'lastred'
+	gks set text color_index red
+	gus text .2 .32 'red'
+	lastred := red
+	Return
+
+GreenSlider: !subroutine to update the green slider
+	gks set fill color_index white		!"clear" the slider
+	gks fill_area xslider,gslider
+	fillx := btmp xcoord xcoord
+	filly := tmpy+0.2 .58 .62
+	gks set fill color_index green
+	gks fill_area fillx filly
+	gks set pline color green
+	gks polyline xslider,gslider		!redraw outline
+	green := (xcoord-minx)/(maxx-minx)	!calc ratio fill
+	gks set text color_index white
+	gus text .2 .52 'lastgreen'
+	gks set text color_index green
+	gus text .2 .52 'green'
+	lastgreen := green
+	Return
+
+BlueSlider:					!update the blue slider
+	gks set fill color_index white		!"clear" the slider
+	gks fill_area xslider,bslider
+	fillx := btmp xcoord xcoord
+	filly := tmpy+0.4 .78 .82
+	gks set fill color_index blue
+	gks fill_area fillx,filly		!fill up with "fluid"
+	gks set pline color blue
+	gks polyline xslider,bslider		!redraw outline
+	blue := (xcoord-minx)/(maxx-minx)	!calc ratio fill
+	gks set text color_index white
+	gus text .2 .72 'lastblue'
+	gks set text color_index blue
+	gus text .2 .72 'blue'
+	lastblue := blue
+	Return

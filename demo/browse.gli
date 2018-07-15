@@ -1,0 +1,51 @@
+set tcl
+#
+: define logical GLI_GKS_CONVEX_SHAPE True
+: gks open_ws terminal
+#
+proc demo {script} {
+  init
+  @ 'GLI_DEMO'$script
+}
+#
+proc init {} {
+  global w
+  : gks emergency_close
+  : gks open_gks
+  : gks set xform wc
+  : gks set viewport  0.2,0.9 0.2,0.9
+  : gks set asf individual
+  : gks set pmark size  2
+  : gks set pmark type asterisk
+  : gks set text font 3 string
+  : gks set text height 0.027
+  : define logical GKSconid $w
+  : gks open_ws terminal 212
+  }
+#
+wm title . "GLI Tcl/Tk Demonstration"
+#
+option add *background lightblue
+option add *foreground navyblue
+option add *activeForeground red
+option add *font -adobe-times-bold-r-normal--12-120-75-75-p-67-iso8859-1
+#
+button .ascii -text "ASCII Character Set" -command {demo ascii.gli}
+button .pie -text "Simple Pie Chart" -command {demo pie.gli}
+button .bars -text "Simple Bar Graph" -command {demo bars.gli}
+button .greek -text "Greek Letters" -command {demo greek.gli}
+button .fill -text "GKS Fill Styles" -command {demo fillstyles.gli}
+button .surfcont -text "Surface Plot" -command {demo surfcont.gli}
+button .face -text "Face Plot" -command {demo face.gli}
+button .rancon -text "Random Contours" -command {demo rancon.gli}
+button .flat -text "Light Shading" -command {demo flat.gli}
+button .exit -text "Quit" -command {: exit}
+pack .ascii .pie .bars .greek .fill .surfcont .rancon .flat .exit \
+-ipadx 2m  -fill x
+#
+canvas .w -width 500 -height 500 -background white
+pack .w -side left
+#
+update
+#
+set w \"[winfo screen .w]![winfo id .w]\"

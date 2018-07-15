@@ -1,0 +1,15 @@
+gks set xform wc
+gks set text height 0.018
+read 'GLI_DEMO'demo6.dat x y1 y2 y3 y4
+gks set window 1973 1985 0 80
+gks set viewport 0.1 0.9 0.1 0.9
+gus axes_2d 1 1 1973 0 1 5
+gks set fill int solid
+gks set fill color red
+gus bar_graph x-0.15 y4
+gks set fill color yellow
+gus bar_graph x+0.15 y1
+gks set fill color green
+gus bar_graph x-0.05 y2
+gks set fill color blue
+gus bar_graph x+0.05 y3

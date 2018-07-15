@@ -1,0 +1,50 @@
+gks set xform ndc
+gks set pline color black
+gks set pline linetype solid
+gks set pline linewidth 1
+gks set fill color black
+gks set fill int solid
+x := 0 1 1 0
+y := 0 0 1 1
+gks fill x y
+
+gks set text color white
+gks set text font 3 string
+gks set text height 0.031
+gks set text align center cap
+gks text .5 .98 Longs Peak Elevation Data
+
+read 'GLI_DEMO'xdemo5 z
+x := 1..100
+y := 1..100
+h := 2800(100)4400
+f = (z-2800)/(4400-2800)*72
+zz := f
+
+gus set colormap geologic
+
+gks set xform wc
+gks set viewport 0.12 0.92 0.05 1
+gks set window 1 100 1 100
+
+gus set space 0 100000 60 60
+gus surface x y zz z_shaded_mesh
+
+gus set space 2000 4400 60 60
+gks set pline color white
+gus surface x y z mesh
+gks set pline color red
+gus contour x y h z
+
+gks set pline color white
+gks set text font 3 string
+x := 0..25
+x := x*1.6
+y := 0..25
+y := y*1.6
+gus autoscale_3d x y z
+gus axes_3d
+gks set pline color black
+gks set text color black
+gks set text fontprec 3 string
+

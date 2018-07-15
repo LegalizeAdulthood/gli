@@ -1,0 +1,21 @@
+gks set pline color black
+gks set viewp 0.2 0.8 0.2 0.8
+x := 0..255
+gks cell x 16
+x := 0 1
+y := x
+gks set viewp 0.2 0.8 0.2 0.8
+gks polyl x y
+gks set viewp 0 1 0 1
+gks polyl x y
+y := 1-x
+gks set viewp 0.2 0.8 0.2 0.8
+gks polyl x y
+gks set viewp 0 1 0 1
+gks polyl x y
+x := 0 1 1 0 0
+y := 0 0 1 1 0
+gks set pline color red
+gks polyline x y
+gks set viewport 0.2 0.8 0.2 0.8
+gks polyline x y

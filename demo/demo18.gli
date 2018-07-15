@@ -1,0 +1,33 @@
+	page
+	gks set xform wc
+	gks set text color black
+	gks set text font 3 string
+	gks set text align left half
+	gus set text_slant 0
+
+! Background
+	gks set xform ndc
+	a := 0 0 1 1 0
+	b := 0 1 1 0 0
+	gks set fill color cyan
+	gks set fill int_style solid
+        gks fill a b 
+
+! text
+	gks set text height 0.036
+	gus text 0.1 0.87 Sums
+	gus text 0.1 0.71 Integrals
+	gus text 0.1 0.55 Equations
+	gus text 0.1 0.39 Roots
+	gus text 0.1 0.23 Sets
+	gks set text height 0.027
+	gus text 0.4 0.87 f = <sum\{ <f\k> e**{(k)}}\k = 0\N - 1> = <sum\{ <f\k> E**k e**{(0)}}\k = 0\N - 1>
+	gus text 0.4 0.7 <s\x> = <integral\ e**{- x**2 }/{1 + x**2} dx>
+	gus text 0.4 0.53 <PHI><par\x,i> = <par\<b\i\<par\i>> - <sum\<a\ik\<par\i>> <x\k>\k=i+1\n>> 1/{<a\ii\<par\i>>}
+	gus text 0.4 0.36 <<norm\ <x\\\\<right_arrow>> >\2> = <root\ <sum\  <x\i>**2 <DELTA>x\i=1\n>>
+	gks set text height 0.021
+	gus text 0.4 0.23 <brace\ <par\ <i\1> ,..., <i\k> > | <i\<nu>> <IN> <bracket\1 , n> ; <i\<nu>> <NEQ> <i\<mu>> ; <nu> <NEQ> <mu> >
+	gks set xform wc
+	gks set text font 3 string
+
+	del var *

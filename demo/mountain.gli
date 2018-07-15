@@ -1,0 +1,63 @@
+! Display message       
+	gks open_ws wk1 210
+	gks set ws_viewport 0.15 0.25 0.11 0.21
+	u := 0 0 1 1 0
+	v := 0 1 1 0 0
+	gks set xform ndc
+	gks set fill int_style solid
+	gks set color 7 .5 .8 .9
+	gks set fill color magenta
+	gks fill_area u v
+	gks set text height 0.036
+	gks set text align center normal
+	gks text 0.5 0.5 Creating and Storing Images...
+	gks set xform wc
+	gks set fill color cyan
+	gks deactivate_ws wk1
+
+        gks open_ws term 217
+        gks set ws_viewport 0 0.14 0 0.14
+! define variables        
+        read 'GLI_DEMO'xdemo5.dat z
+        x := 1..100
+        y := 1..100
+        gks set xform wc
+        gks set window 1 100 1 100
+        gks set viewport  0.15 0.85 0.15 0.85
+        gus set color glowing
+        rot := 15
+
+!loop and capture images
+loop:
+        gus set space 2400 5000 rot 60
+	gks set text align center normal
+	gks set xform ndc
+	gks fill_area u v
+	gks set text height 0.036
+	gks text 0.5 0.9 Animated Mountain
+	gks set text height 0.027
+	gks set xform wc
+	gks set text align normal normal
+        gus surface x y z shaded_mesh
+	gus axes_3d
+        gks clear_ws
+        rot := rot+5
+        if rot<75 then goto loop
+
+	gks close_ws wk1
+	gks deactivate_ws term
+!Display mouse message
+	gks open_ws wk1 210
+	gks set ws_viewport 0.155 0.255 0.01 0.11
+	@'GLI_DEMO'mouse
+	gks deactivate_ws wk1
+	gks activate_ws term
+	gks set ws_viewport 0.01 0.15 0.01 0.15
+        gks close_ws term
+
+!Clean up after you are done animating
+	gks close_ws wk1
+	gus set space 0 1 60 60
+	gks set xform wc
+	gks set fill color black
+	gks set fill int_style hollow

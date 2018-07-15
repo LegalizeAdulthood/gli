@@ -1,0 +1,5459 @@
+1 $ (DCL, csh)
+ Allows you to communicate with your operating system to execute system
+ specific routines and user application programs.
+
+ On a VMS system the (DCL) command requires TMPMBX or PRMMBX user
+ privilege to create a process.
+
+ Format
+  $[command]
+
+ Parameters
+ command
+  Specifies an operating system command string of 132 characters or less.
+
+ Examples
+     VMS:                               UNIX:
+  1. gli> $                             gli> $
+     $ show default                     % pwd
+       $DISK4:[SMITH]                   /usr/users/smith
+     $ logout                           % exit
+       Process SMITH_1 logged out at    gli>
+       14-JUL-1987 12:50:27.53
+     gli>
+  2. gli> $dir *.gli                    gli> $ls *.gli
+     Directory $DISK4:[SMITH]           spectrum.gli
+     SPECTRUM.GLI; 1                    gli>
+     Total of 1 file, 2 blocks.
+     gli>
+
+1 @ (Command procedure)
+ Executes a GLI command procedure.
+
+ Format
+  @filename [p1,p2,..,p8]
+
+ Parameters
+ file-name
+  Specifies the macro to be excuted. If a file type is not specified,
+  the system uses the default type of .GLI. No wild card characters
+  (* or %) are allowed in the file name.
+ [p1,p2,..,p8]
+  Specifies from one to eight optional parameters to pass to the
+  macro. The parameters assign character string values
+  to the symbols named P1, P2, and so on in the order of entry,
+  to a maximum of eight(P8). The symbols are local to the specified
+  macro.
+
+ Description
+  Use command procedures to catalog frequently used sequences of
+  commands. A command procedure can contain:
+    o  Any valid GLI command.
+    o  Comment lines.
+    o  Labeled subroutines.
+    o  Request to execute another macro.
+
+  To execute a macro, type an at sign(@) followed by the name of the file
+  containing the macro and any related parameters. If the macro is in a 
+  separate directory, provide the absolute path to the macro.
+
+  For more information, see HINTS Command_procedures.
+
+1 APPEND
+ Appends one or more data items to an output file.
+
+ Format
+  APPEND filename data-spec,...
+
+ Parameters
+ filename
+  Specifies the name of the output file to be written. If you do not
+  specify a file type, the system uses the default file type of DAT.
+  No wild card characters (* or %) are allowed in the file name.
+ data_spec
+  Data specification.
+  
+ A data specification may be:
+   o  A constant.
+   o  A subrange or range specification.
+   o  The name of a variable or function.
+   o  An arithmetic expression.
+
+ For more information, see Data_item
+
+1 CALCULATE
+ Displays the result of an arithmetic expression.
+
+ Format
+  CALCULATE expression
+
+ Parameter
+ expression
+  Any valid arithmetic expression.
+
+ Example
+   gli> cal sin(1)
+     0.841471
+   gli>
+   gli> x := 2.719
+   gli> calc gamma (2*x-x**2)
+     11.6067
+   gli>
+
+ For more information, see Data_item
+
+1 CASE
+ Tests the value of the specified symbol in a macro with a provided string.
+ If the strigns match, the command executes the instructions in the THEN
+ clause.
+
+ Format
+  CASE symbol-name choice THEN command
+
+ Parameters
+ symbol-name
+  Defines a 1 through 31 character alphanumeric string name for
+  the symbol. The symbol name must begin with an alphabetic character.
+ choice
+  Specifies a character string value to be compared with the symbol.
+  A character string can have from 0 through 255 characters. 
+ command
+  Any GLI command.
+
+1 COM
+ Connects to a serial line.
+
+ Format
+  COM [-d[isplaycontrols]] [-v[erbose]] [-<speed>] [device]
+      [command] [response]
+
+ Parameters
+ displaycontrols
+  Displays control characters.
+ verbose
+  Enables verbose output.
+ speed
+  Sets the serial line's baud rate to the specified value, if possible
+  (9600 by default).
+ device
+  Selects a device (/dev/tty00 by default).
+ command
+  Specifies a command string to be send to the serial line.
+ response
+  Specifies a response string to wait for.
+
+1 DEFINE
+ Defines logical symbols (such as command abbreviations), arithmetic
+ functions or variables.
+
+ Format
+  DEFINE option
+
+    Options
+      FUNCTION
+      SYMBOL
+      VARIABLE
+
+2 FUNCTION
+ Associates an arithmetic expression with the specified function.
+
+ Format
+  DEFINE FUNCTION function-name expression
+
+ Parameters
+ function-name
+  Defines a 1 through 31 character alphanumeric string name for
+  the function. The function name must begin with an alphabetic
+  character.
+ expression
+  Any valid function expression.
+
+ Description
+  DEFINE FUNCTION creates an arithmetic function for use in GLI. The
+  function is computed each time it is referenced, and the resulting 
+  value is then made available to the expression that contains the
+  function reference.
+
+  A list of all currently defined functions may be generated using
+  the SHOW FUNCTION command. To delete a function use the DELETE
+  FUNCTION command.
+  command.
+
+ Examples
+  1. gli> def fun f  arctan(x)+1
+     gli>
+  2. gli> def fun g = (sqrt(1-sin(x/pi)**2)-ln(1))*2 + f
+     gli>
+
+ For more information, see Data_item
+
+2 SYMBOL
+ Assigns a symbol string to the specified symbol.
+
+ Format
+  DEFINE SYMBOL symbol-name expression
+
+ Parameters
+ symbol-name
+  Defines a 1 through 31 character alphanumeric string name for
+  the symbol. The symbol name must begin with an alphabetic character.
+  Symbols can be abbreviated using the wild card character (*) in the
+  symbol name.
+ expression
+  Specifies a character string value to be equated to the symbol.
+  A character string can consist of 0 to 255 alphanumeric and special
+  characters. If the DEFINE SYMBOL command is not used, the expression
+  must be enclosed in quotation marks.
+
+ Examples
+  1. gli> def sym data = temp.dat
+     gli> read 'data' x,y
+  2. gli> def sym  en*ter = def var
+     gli>
+
+ A list of all currently defined symbols may be generated using the
+ SHOW SYMBOL command.
+
+2 VARIABLE
+ Creates a variable and assign one or more values to it.
+
+ Format
+  DEFINE VARIABLE variable-name = data
+
+ Parameters
+ variable-name
+  Defines a 1 through 31 character alphanumeric string name for
+  the variable. The variable name must begin with an alphabetic
+  character.
+ data
+  One or more data items separated by comma(s) or blank(s).
+
+ Examples
+  1. gli> def var frequency = 1.2,3.456  12.34,1.2e+1
+     gli>
+  2. gli> def var time = 0(0.1)10, 20..100
+     gli>
+  3. gli> subrange := 10..100
+     gli> x := 0.1(0.01)1 1(0.1)10 subrange
+     gli>
+
+ A list of all currently defined variables may be generated using the
+ SHOW VARIABLE command.
+
+ For more information, see Data_item
+
+1 DELETE
+ Deletes symbols, functions, or deallocates variables.
+
+ Format
+  DELETE option
+
+    Options
+      FUNCTION
+      SYMBOL
+      VARIABLE
+
+2 FUNCTION
+ Deletes one or more functions.
+
+ Format
+  DELETE FUNCTION function-name,...
+
+ Parameter
+ function-name
+  Specifies one or more function names which are to be removed from
+  the function table. The function name can have from 1 to 31 alphanumeric
+  characters. The function name must begin with an alphabetic character.
+
+  The function name may contain wildcard characters (* or %).
+
+ Examples
+  1. gli> del fun f
+     gli>
+  2. gli> del fun *
+     gli>
+
+2 SYMBOL
+ Removes one or more symbols from GLI.
+
+ Format
+  DELETE SYMBOL symbol-name,...
+
+ Parameter
+ symbol-name
+  Specifies one or more symbol names which are to be removed from the
+  local symbol table. The symbol name can have from 1 to 31 alphanumeric
+  characters. The symbol name must begin with an alphabetic character.
+
+  The symbol name may contain wildcard characters.
+
+ Examples
+  1. gli> del sym data
+     gli>
+  2. gli> del sym en*ter
+     gli>
+
+2 VARIABLE
+ Deletes one or more variables.
+
+ Format
+  DELETE VARIABLE variable-name,...
+
+ Parameter
+ variable-name
+  Specifies one or more variable names which are to be deleted. The
+  variable name can have from 1 to 31 alphanumeric characters. The variable
+  name must begin with an alphabetic character.
+
+  The variable name may contain wildcard characters.
+
+ Examples
+   1. gli> del var frequency
+      gli>
+   2. gli> del var time
+      gli>
+
+1 DISPLAY
+ Display a menu or submenu loaded by the LOAD command. 
+
+ Format
+  DISPLAY [key]
+
+ Parameter
+ key
+  Option specifying the index of the menu to be displayed.
+
+1 DO
+ Executes more than one GLI command defined in a symbol.
+
+ Format
+  DO command1;command2;command3;...
+
+ Parameter
+ command
+  Any valid GLI command string or strings. Multiple strings are separated
+  by semicolons.
+
+ Example
+  gli> define symbol graph = do gks polyline x y;gks polymarker x y
+
+1 EXIT
+ Terminates execution of a macro or quits the GLI program.
+
+ Format
+  EXIT [file-name]
+
+ Parameter
+ file-name
+  Specifies the journal file name (GLI.JOU by default). Wild card
+  characters are not allowed in the file specification.
+
+ DESCRIPTION
+ When used on the GLI command line (gli>), EXIT terminates your GLI
+ session and does the following:
+  o Saves all GLI commands issued during that session to the journal
+    file GLI.JOU, unless otherwise specified, and then closes that file.
+  o Deletes all symbols, variables and functions.
+  o Closes the Graphics Kernal System(GKS).
+
+1 GKS
+ Invokes the GKS (Graphical Kernel System) command language interpreter,
+ allowing you to use GKS commands to control graphical primitives.
+
+ Format
+  GKS parameter
+
+ Parameter
+ parameter
+  Any valid GKS command(s). Refer to the GKS chapter for a complete list
+  of GKS commands.
+
+2 CELL_ARRAY
+ A cell array is generated using the current world coordinate
+ rectangle, the color index array, and the dimensions of the color
+ index array.
+
+ Format
+  GKS CELL_ARRAY array [dimension_x] [first_color last_color]
+
+ Parameters
+ array
+  Data specification for the color index array.
+ dimension_x
+  X dimension of the original data.
+ first_color
+  Minimum color index value
+ last_color
+  Maximum color index value
+
+ A data specification may be:
+  o A subrange or range specification.
+  o The name of a variable or function.
+  o An arithmetic expression.
+
+ For more information, see Data_item
+
+ Example
+   gli> ci := 1..256
+   gli> gks cell_array ci 16
+
+2 CLEAR_WS
+ Clears the display space.
+
+ Example
+   gli>
+     .
+     .
+     .
+   gli> gks clear_ws
+   gli> 
+
+2 CLOSE_GKS
+ Closes the Graphical Kernel System (GKS).
+
+ Format
+  GKS CLOSE_GKS
+
+ Example
+   gli>
+     .
+     .
+     .
+   gli> gks close_gks
+   gli>
+
+2 CLOSE_SG
+ Closes an open GKS segment.
+
+ Format
+  GKS CLOSE_SG
+
+ Example
+   gli> gks close_sg
+  
+ The GKS CLOSE_SG command closes an open GKS segment. Once a segment
+ is closed, aditional primitives can not be added to it.
+
+2 CLOSE_WS
+ Deactivates and closes a graphical workstation.
+
+ Format
+  GKS CLOSE_WS [name]
+
+ Parameter
+ name
+  Graphics device name. The available device names are:
+    TERMINAL            Command Terminal
+    CGM_FILE            CGM File
+    FIGURE_FILE         Figure File (VAX DOCUMENT, TEX, DECwrite
+			FrameMaker)
+    METAFILE            GKSM Metafile
+    PLOTTER             Plotter
+    LASER_PRINTER       Graphics Printer
+    WISS                Workstation Independent Segment Storage
+
+2 COPY_SG
+ Copies a segment to all open workstations.
+
+ Format
+  GKS COPY_SG
+
+ Example
+   gli> gks open_ws wiss 5
+     .
+     .
+     .
+   gli> gks clear_ws
+   gli> gks copy_sg
+
+2 CREATE_SG
+ Creates a GKS segment, which is a collection of output primitives
+ and attribute settings.
+
+ Format
+  GKS CREATE_SG
+
+ Example
+   gli> gks create_sg
+     .
+     .
+     .
+   gli> gks close_sg
+
+2 EMERGENCY_CLOSE
+ Closes GKS in a rapid and orderly fashion.
+
+ Format
+  GKS EMERGENCY_CLOSE
+
+ Example
+   gli> gks emergency_close
+   gli>
+
+2 FILL_AREA
+ Generates a closed polygon filed according to the current interior
+ style.
+
+ Format
+  GKS FILL_AREA x-data y-data
+
+ Parameters
+ x-data, y-data
+  Data specification. 
+
+ A data specification may be:
+   o  A subrange or range specification.
+   o  The name of a variable or function.
+   o  An arithmetic expression.
+
+ For more information, see Data_item
+
+ Example
+   gli> x := 0.1,0.9,0.9
+   gli> y := 0.1,0.1,0.9
+   gli> gks fill x,y
+
+2 INQUIRE
+ Inquiry functions return values from the various GKS state lists
+ or description tables.
+
+3 GKS_STATE
+ Returns the GKS state list.
+
+ Format
+  GKS INQUIRE GKS_STATE
+
+ Example
+   gli> gks inquire gks_state
+   GKS state on Thu Feb 13 15:20:57 1992
+
+	 POLYLINE  Linetype: Solid
+		   Linewidth scale factor: 1.00
+		   Color: Black
+       POLYMARKER  Marker Type: Asterisk
+		   Marker Size Scale Factor: 2.00
+		   Color: Black
+	     TEXT  Font: Helvetica Medium
+		   Precision: String
+		   Expansion factor: 1.00
+		   Spacing factor: 0.00
+		   Color: Black
+		   Height: 0.021
+		   Text Up Vector: (0.00, 1.00)
+		   Path: Right
+		   Alignment: (Normal, Normal)
+	FILL AREA  Interior Style: Hollow
+		   Style Index: 1
+		   Color: Black
+   TRANSFORMATION  Number: 1,  Clipping: on
+		   Viewport: (0.2, 0.9, 0.2, 0.9)
+		   Window: (0, 1, 0, 1)
+   gli>
+
+3 WS_CONNTYPE
+ Queries the connection and type of all open workstations.
+
+ Format
+  GKS INQUIRE WS_CONNTYPE
+
+ Examples
+   gli> gks inquire ws_conntype
+   GKS Workstation connections on Tue Feb 18 17:02:58 1992
+
+
+	Workstation ID  Stream ID       Type
+
+	      16             7            62
+	      14             1             5
+	       1             0           210
+
+		Total of 3 workstations.
+   gli>
+
+3 WS_TYPE
+ Returns the available GKS workstation types. 
+
+ Format
+  GKS INQUIRE WS_TYPE
+
+ Example
+   gli> gks inquire ws_type
+   GKS available workstation types on Thu Feb 13 15:17:38 1992
+
+     Type           Size       Unit     Device Units
+
+      200       0.000, 1.000  meters     1012, 835
+      204       0.280, 0.180  meters     1024, 780
+      207       0.280, 0.180  meters     1024, 780
+       82       0.256, 0.190  meters     1024, 780
+	.
+	.
+	.
+	7       0.000, 1.000  meters   -32767, 32767
+	5       0.000, 1.000  meters   -32767, 32767
+
+	     Total of 19 workstations.
+   gli>
+
+2 OPEN_GKS
+ Opens the Graphical Kernel System (GKS).
+
+ Format
+  GKS OPEN_GKS
+
+ This command is part of the GLI startup procedure and thus executed
+ when entering GLI.
+
+ Example
+   gli> gks open_gks
+   gli>
+     .
+     .
+     .
+
+2 OPEN_WS
+ Opens and activates a graphical workstation.
+
+ Format
+  GKS OPEN_WS name [ws-type]
+
+ Parameters
+ name
+  Graphics device name. The available device names are:
+    TERMINAL            Terminal                  GLI_CONID
+    CGM_FILE            CGM File                  GLI_CGM
+    FIGURE_FILE         Figure File               GLI_FIG
+    METAFILE            GKSM Metafile             GLI_MF
+    PLOTTER             Plotter                   GLI_PL
+    LASER_PRINTER       Laser Printer             GLI_LW
+    WISS                Workstation Independent
+			Segment Storage
+ ws-type
+  Workstation type. The available workstation types are:
+   2         GKSM Output Metafile
+   5         Workstation Independent Segment Storage (WISS)
+   7, 8      CGM Binary, Clear Text (Computer Graphics Metafile)
+   16, 17    DIGITAL VT330, VT340 Video Terminal                    
+   38	     DIGITAL LN03 PLUS
+   41	     VAX UIS
+   51, 53    HP-GL Graphics Plotter
+   61, 62    PostScript, Color PostScript Printer   
+   63, 64    Display PostScript w\ CompuServe GIF dump (b/w, color)
+   72        TEK401x Series Terminal
+   82        TEK42xx Series Terminal
+   92        DEC LJ250 Companion Color Printer
+   101, 102  Portable Document Format (normal, compressed)
+   103, 104  Portable BitMap (72, 75 dpi)
+   201       TAB 132/15-G Terminal
+   204       MONTEREY MG200 Display Terminal
+   207       IBM PC
+   210, 211  X Display
+   214       X Display w\ Sun rle rasterfile dump
+   215, 218  X Display w\ Compuserve GIF dump (87a, 89a)
+   217       X Display w\ frame buffer
+   
+2 POLYLINE
+ Generates a polyline, starting from the first data point and ending
+ at the last data point.
+
+ Format
+  GKS POLYLINE x-data y-data
+
+ Parameters
+ x-data, y-data
+  Data specification.
+
+ A data specification may be:
+   o  A subrange or range specification.
+   o  The name of a variable or function.
+   o  An arithmetic expression.
+
+ For more information, see Data_item
+
+ Example
+   gli> x := 0.1,0.9,0.7,0.7,0.9
+   gli> y := 0.5,0.5,0.6,0.4,0.5
+   gli> gks polyline x,y
+
+2 POLYMARKER
+ Generates a sequence of polymarkers starting from the first data point
+ and ending at the last data point.
+
+ Format
+  GKS POLYMARKER x-data y-data
+
+ Parameters
+ x-data, y-data
+  Data specification.
+
+ A data specification may be:
+   o  A subrange or range specification.
+   o  The name of a variable or function.
+   o  An arithmetic expression.
+
+ For more information, see Data_item
+
+ Example
+   gli> x := 0.1,0.9,0.7,0.7,0.9
+   gli> y := 0.5,0.5,0.6,0.4,0.5
+   gli> gks polymarker x,y
+
+2 REQUEST
+ Reads a logical input value from a specified logical input device.
+ GKS waits until the input is entered by the operator or a cancel
+ action is performed by the operator (i.e. by entering CTRL/Z).
+
+3 LOCATOR
+ Returns a position in world coordinates.
+
+ Format
+  GKS REQUEST LOCATOR x-var y-var
+
+ Parameters
+ x-var, y-var
+  Specifies a 1-31 alphanumeric character variable name.
+
+ Example
+   gli> gks request locator x,y
+   gli> gks polymarker x,y
+   gli>
+     .
+     .
+     .
+
+3 STROKE
+ Returns a sequence of points in world coordinates.
+
+ Format
+  GKS REQUEST STROKE x-var y-var
+
+ Parameters
+ x-var, y-var
+  Specifies a 1-31 alphanumeric character variable name.
+
+ Example
+   gli> gks request stroke x,y
+   gli> gks polymarker x,y
+   gli>
+     .
+     .
+     .
+
+2 SET
+ Sets transformation parameters or graphical output primitive
+ attributes.
+
+3 ASF (aspect source flags)
+ Determines how output primitive attributes are to be applied to
+ output primitives.
+
+ Format
+  GKS SET ASF flag
+
+ Parameters
+ flag
+  aspect source flag (BUNDLED,INDIVIDUAL)
+
+3 CLIPPING
+ The clipping indicator in the GKS state list is set to the specified
+ value.
+
+ Format
+  GKS SET CLIPPING switch
+
+ Parameters
+ switch
+   OFF   disable clipping against the current window
+   ON    enable clipping against the current window
+
+3 COLOR
+ Defines the current color index entries in the GKS state list.
+
+ Format
+  GKS SET COLOR index red green blue
+
+ Parameters
+ index
+  Entry numbers for the GKS color indices (from 0 to 79).
+ red, green, blue
+  Intensities of red, green, and blue defining color (each in range
+  0 to 1).
+
+ GKS SET COLOR defines the colors used in the color index for subsequent
+ output primitives.
+
+3 FILL
+ Sets fill area attributes. The attributes that may be changed are
+ interior style, style index and color index.
+
+4 COLOR_INDEX
+ Sets the current fill area color index entry in the GKS state list.
+
+ Format
+  GKS SET FILL COLOR_INDEX index
+
+ Parameter
+ index
+  Color indices 0 to 7 are WHITE, BLACK, RED, GREEN, BLUE, CYAN,
+  YELLOW, MAGENTA. Color indices greater than 7 are workstation
+  dependent.
+
+4 INT_STYLE
+ Sets the current fill area interior style entry in the GKS state list.
+
+ Format
+  GKS SET FILL INT_STYLE style
+
+ Parameter
+ style
+  HOLLOW    No filling, only draw the bounding polyline.
+  SOLID     Fill the interior of the polygon.
+  PATTERN   Fill the interior of the polygon using the style
+	    index as a pattern index.
+  HATCHED   Fill the interior of the polygon using the style
+	    index as a hatch style.
+
+ Example
+   gli> gli set fill int_style solid
+   gli> gks fill_area x,y
+
+3 PLINE
+ Sets polyline attributes. The attributes that may be changed are
+ linetype, linewidth scale factor and color index.
+
+4 COLOR_INDEX
+ Sets the current polyline color index entry in the GKS state list.
+
+ Format
+  GKS SET PLINE COLOR_INDEX color
+
+ Parameter
+ color
+  Color indices 0 to 7 are WHITE, BLACK, RED, GREEN, BLUE, CYAN,
+  YELLOW, MAGENTA. Color indices greater than 7 are workstation
+  dependent.
+
+4 LINETYPE
+ Sets the current line type entry in the GKS state list.
+
+ Format
+  GKS SET PLINE LINETYPE line-type
+
+ Parameter
+ line-type
+  The linetype values produce lines as indicated
+    SOLID                
+    DASHED              - - - - - -
+    DOTTED              . . . . . .
+    DASH_DOTTED         - . - . - . 
+    DASH_2_DOT          - .. - .. - 
+    DASH_3_DOT          - ... - ... 
+    LONG_DASH           -- -- -- --
+    LONG_SHORT_DASH     -- - -- - --
+    SPACED_DASH         -  -  -  -  
+    SPACED_DOT          .  .  .  . 
+    DOUBLE_DOT          .. .. .. .. 
+    TRIPLE_DOT          ... ... ... 
+
+ The linetype specifies a sequence of line segments and gaps which
+ are repeated to draw a polyline.
+
+4 LINEWIDTH
+ Sets the current line width entry in the GKS state list.
+
+ Format
+  GKS SET PLINE LINEWIDTH scale-factor
+
+ Parameter
+ scale-factor
+  a scale factor applied to the nominal line width.
+
+ The linewidth is calculated as a nominal linewidth multiplied by the
+ linewidth scale factor. This value is mapped by the workstation to
+ the nearest available linewidth.
+
+3 PMARK
+ Sets polymarker attributes. The attributes that may be changed are
+ markertype, marker size scale factor and color index.
+
+4 COLOR_INDEX
+ Sets the current marker color index entry in the GKS state list.
+
+ Format
+  GKS SET PMARK COLOR_INDEX index
+
+ Parameter
+ index
+  Color indices 0 to 7 are WHITE, BLACK, RED, GREEN, BLUE, CYAN,
+  YELLOW, MAGENTA. Color indices greater than 7 are workstation
+  dependent.
+
+4 SIZE
+ Sets the current marker size entry in the GKS state list.
+
+ Format
+  GKS SET PMARK SIZE scale-factor
+
+ Parameter
+ scale-factor
+  a scale factor applied to the nominal marker size.
+
+ The marker size is calculated as a nominal size multiplied by the
+ marker size scale factor. Marker type 1 is always displayed as the
+ smallest displayable dot.
+
+4 TYPE
+ Sets the current marker type entry in the GKS state list.
+
+ Format
+  GKS SET PMARK TYPE marker-type
+
+ Parameter
+ marker-type
+  marker type values produce centered symbols as indicated
+    DOT              .
+    CROSS            +
+    ASTERISK         *
+    CIRCLE           o
+    DIAGONAL_CROSS   x
+    SOLID_CIRCLE     filled circle
+    TRIANGLE_UP      hollow triangle pointing upward
+    SOLID_TRI_UP     filled triangle pointing upward
+    TRIANGLE_DOWN    hollow triangle pointing downward
+    SOLID_TRI_DOWN   filled triangle pointing downward
+    SQUARE           hollow square
+    SOLID_SQUARE     filled square
+    BOWTIE           hollow bow tie
+    SOLID_BOWTIE     filled bow tie
+    HGLASS           hollow hourglass
+    SOLID_HGLASS     filled hourglass
+    DIAMOND          diamond
+    SOLID_DIAMOND    solid diamond
+    TRI_UP_DOWN      triangles pointing up and down
+    SOLID_TRI_LEFT   solid triangle pointing left
+    SOLID_TRI_RIGHT  solid triangle pointing right
+    HOLLOW_PLUS      hollow plus
+    OMARK            o marker
+
+3 TEXT
+ Sets text attributes The attributes that may be changed are
+ text font and precision, character height, character up vector,
+ character expansion factor, text path, character spacing, text
+ alignment and color index.
+
+4 ALIGN
+ Sets the current text alignment entries in the GKS state list.
+
+ Format
+   GKS SET TEXT ALIGN hor-align ver-align
+
+ Parameters
+ hor-align              ver-align
+  NORMAL                 NORMAL
+  LEFT (justify)         TOP (cursor top)
+  CENTER (justify)       CAP
+  RIGHT (justify)        HALF (cursor center)
+			 BASE
+			 BOTTOM (cursor bottom)
+
+ The text alignment is initially set to NORMAL.
+
+4 COLOR_INDEX
+ Sets the current text color index entry in the GKS state list.
+
+ Format
+  GKS SET TEXT COLOR_INDEX index
+
+ Parameter
+ index
+  Color indices 0 to 7 are WHITE, BLACK, RED, GREEN, BLUE, CYAN,
+  YELLOW, MAGENTA. Color indices greater than 7 are workstation
+  dependent.
+
+4 EXPFAC
+ Sets the current character expansion factor entry in the GKS state
+ list.
+
+ Format
+  GKS SET TEXT EXPFAC factor
+
+ The expansion factor is initially set to 1.
+
+ Example
+   gli> gks set text expfac 3
+   gli> gks text 0.5 0.5 Text example
+
+4 FONTPREC
+ Sets the current text font and precision entries in the GKS state list.
+
+ Format
+  GKS SET TEXT FONTPREC font prec
+
+ Parameters
+ font
+   -1                Standard      -5,-13,-14  Script    -19  Anglo-Saxon
+   -6                Mathematical  -16,-11,-8  Italics   -22  Cartographic
+   -3,-12,-6,-9,-15  Roman         -17         German    -20  Scientific
+   -4,-10,-7         Greek         -18         Gothic    -21  Symbolic
+ prec
+  STRING  (string precision)
+  CHAR    (character precision)
+  STROKE  (stroke precision)
+
+4 HEIGHT
+ Sets the current character height entry in the GKS state list.
+
+ Format
+  GKS SET TEXT HEIGHT value
+
+ The text height is initially set to 0.01 (i.e. 1% of the height of
+ the default window).
+
+ Example
+   gli> gks set text height 0.03
+   gli> gks text 0.5 0.5 Text example
+
+ In this example the GKS text height is changed to 0.03 world
+ coordinate units.
+
+4 PATH
+ Set the current text path entry in the GKS state list.
+
+ Format
+  GKS SET TEXT PATH text-path
+
+ Parameter
+ text-path
+				
+   RIGHT       right               d
+   LEFT        tfel            p   o
+   UP                          u   w
+   DOWN                            n
+
+ The text path is initially set to RIGHT.
+
+4 UPVEC
+ Sets the current character up vector entry in the GKS state list.
+
+ Format
+  GKS SET TEXT UPVEC x-value y-value
+
+ The character up vector is initially set to (0,1).
+
+ Example
+   gli> gks set text upvec 1 1
+   gli> gks text 0.5 0.5 Charup (1,1)
+
+ In this example the GKS character up vector is changed so that text
+ is displayed with a 45 degree angle of rotation.
+
+3 VIEWPORT
+ Sets the limits of the normalized device coordinate space in the GKS 
+ state list.
+
+ Format
+  GKS SET VIEWPORT x-min x-max y-min y-max
+
+ Parameters
+ x-min,x-max, y-min,y-max
+  Data specifications.
+
+ A data specification may be:
+   o  A constant.
+   o  A subrange or range specification.
+   o  The name of a variable or function.
+   o  An arithmetic expression.
+
+ For more information, see Data_item
+
+ Example
+   gli> gks set viewport 0.2,0.9 0.2,0.9
+   gli>
+     .
+     .
+     .
+  
+3 WINDOW
+ Sets the limits of the world coordinate space in the GKS state list.
+
+ Format
+  GKS SET WINDOW x-min x-max y-min y-max
+
+ Parameters
+ x-min,x-max, y-min,y-max
+  Data specifications.
+
+ A data specification may be:
+   o  A constant.
+   o  A subrange or range specification.
+   o  The name of a variable or function.
+   o  An arithmetic expression.
+
+ For more information, see Data_item
+
+ Example
+   gli> gks set window 0,3.1415 -1,1
+   gli>
+     .
+     .
+     .
+
+3 WS_VIEWPORT
+ Sets the workstation viewport limits in the GKS workstation 
+ state list.
+
+ Format
+  GKS SET WS_VIEWPORT x-min x-max y-min y-max
+
+ Parameters
+ x-min,x-max, y-min,y-max
+  Data specifications.
+
+ A data specification may be:
+   o  A constant.
+   o  A subrange or range specification.
+   o  The name of a variable or function.
+   o  An arithmetic expression.
+
+ For more information, see Data_item
+
+ Example
+   gli> gks set ws_viewport 0,0.297 0,0.21
+   gli>
+     .
+     .
+     .
+
+3 WS_WINDOW
+ Sets the workstation window limits in the GKS workstation list.
+
+ Format
+  GKS SET WS_WINDOW x-min x-max y-min y-max
+
+ Parameters
+ x-min,x-max, y-min,y-max
+  Data specifications.
+
+ A data specification may be:
+   o  A constant.
+   o  A subrange or range specification.
+   o  The name of a variable or function.
+   o  An arithmetic expression.
+
+ For more information, see Data_item
+
+ Example
+   gli> gks set ws_window 0,0.5 0.5,1
+   gli>
+     .
+     .
+     .
+
+3 XFORM
+ Sets the normalization transformation type in the GKS state list.
+
+ Format
+  GKS SET XFORM type
+
+ Parameters
+ type
+   NDC   normalized device coordinates [0,1]x[0,1]
+   WC    world coordinates
+
+2 TEXT
+ Generates a character string using the current text attributes in the
+ GKS state list.
+
+ Format
+  GKS TEXT x-pos y-pos string
+
+ Parameters
+ x-pos, y-pos
+  World coordinate position of the text string.
+ string
+  Specifies a 1-80 character string.
+
+ Example
+   gli> gks set text height 0.04
+   gli> gks text 0.1 0.5 TEXT: 0.04 WC units
+      
+1 GOSUB
+ Transfers control to a labeled subroutine.
+ The RETURN command terminates the GOSUB subroutine.
+
+ Format
+  GOSUB label
+
+ Parameters
+ label
+  A valid label (1 through 31 alphanumeric characters, terminated by a
+  colon, and without blanks, first item on the line) in the macro.
+
+ Example
+   ! Create a simple plot
+   message Reading file DATA.DAT
+   read data.dat x y
+   gosub axes
+   gks polyline x y
+   exit
+   axes:  ! Plot a pair of axes
+   gus autoscale_2d x y
+   gus axes_2d
+   return
+
+   This sample command procedure shows how to use the GOSUB command to
+   transfer control to labeled subroutines. The GOSUB command transfers
+   control to the subroutine labeled AXES. The subroutine is terminated
+   by the RETURN command.
+
+1 GOTO
+ Transfers control to a labeled statement in a macro.
+
+ Format
+  GOTO label
+
+ Parameters
+ label
+  A valid label (1 through 31 alphanumeric characters, terminated by a
+  colon) in the macro. A label may not contain embedded blanks and must
+  be the first item on the line. When the GOTO command is executed, control
+  passes to the command folowing the specified label.
+
+ Example
+   case p1 plot then goto plot
+   case p1 exit then exit
+     .
+     .
+     .
+   exit
+   plot:
+   axes
+   gks polyline x y
+   exit
+     .
+     .
+     .
+
+In this example, the CASE command checks the first parameter passed to the
+command procedure; if this parameter is the string PLOT, the GOTO command
+is executed and control is passed to the line labeled PLOT. Otherwise, the
+procedure continues executing until the EXIT command is encountered.
+ 
+1 GRSOFT
+ Invokes the GRSOFT command language interpreter.
+ 
+ Format
+  GRSOFT [command-string]
+
+ Parameter
+ command-string
+  Any valid GRSOFT command.
+ 
+1 GRIDIT
+ Constructs a regular grid from the irregularly distributed points
+ given by x, y, and z-data.
+
+ Format
+  GRIDIT x-data y-data z-data [resolution_x] [resolution_y]
+
+ Parameters
+ x-data, y-data, z-data
+  Specifies variable names for the irregularly distributed points to be
+  gridded.
+ resolution_x, resolution_y
+  Optional integers specifying the size of the grid to which the data is
+  to be fitted. The default value for both parameters is 40, describing a
+  40 by 40 grid.
+
+1 GUS
+ Invokes the GUS (Graphic Utility System) command language interpreter.
+ 
+ Format
+  GUS [command-string]
+
+ Parameter
+ command-string
+  Any valid GUS command.
+
+2 AUTOPLOT
+ Invoke the GUS AUTOPLOT interface.
+
+ Format
+  GUS AUTOPLOT
+
+ To create a simple chart you merely:
+    o  Fill in the menu.
+    o  Press <PLOT> (PF1).
+
+ Example
+   gli> gus autoplot
+
+2 AUTOSCALE_2D
+ Resets the boundaries of the World Coordinate space, according to the
+ current two-dimensional data specifications.
+
+ Format
+  GUS AUTOSCALE_2D x-data,y-data
+
+ Parameters
+ x-data, y-data
+  Data specifications.
+
+ A data specification may be:
+   o  A subrange or range specification.
+   o  The name of a variable or function.
+   o  An arithmetic expression.
+
+ For more information, see Data_item
+
+ Example
+   gli> read data x,y
+   gli> gus autoscale_2d x,y
+   gli> gus axes_2d
+   gli> gus polyline x,y
+
+2 AUTOSCALE_3D
+ Resets the boundaries of the World Coordinate space, according to the
+ current three-dimensional data specifications.
+
+ Format
+  GUS AUTOSCALE_3D x-data y-data z-data
+
+ Parameters
+ x-data, y-data, z-data
+  Data specifications.
+  
+ A data specification may be:
+   o  A subrange or range specification.
+   o  The name of a variable or function.
+   o  An arithmetic expression.
+
+ For more information, see Data_item
+
+ Example
+   gli> read data x,y,z
+   gli> gus autoscale_3d x,y,z
+   gli> gus axes_3d
+   gli> gus curve x,y,z
+
+2 AXES_2D
+ Draw a pair of labeled coordinate axes, with linearly or
+ logarithmically spaced tick marks.
+
+ Format
+  GUS AXES_2D x-tick y-tick x-org y-org major-x major-y tick-size
+
+ Parameters
+ x-tick, y-tick
+  The length of the interval between tick marks for both axes.
+ x-org, y-org
+  The coordinates of the origin (point of intersection) of the two
+  axes.
+ major-x, major-y
+  Unitless integer values which specify the number of minor tick
+  intervals between major tick marks. Values of 0 or 1 imply no
+  minor ticks.
+ tick-size
+  The length of the minor tick marks, end to end. Major tick marks
+  are twice as long as minor tick marks. This parameter is interpreted
+  in normalized device coordinates.
+
+ Tick marks are positioned along each axis such that major tick marks
+ fall on the axes origin (whether visible or not). Axes and tick marks
+ are drawn using solid lines.
+
+ All command parameters may optionally be omitted.
+
+ Examples
+ 1. gli> gus axes_2d 0.1,0.1 0,0 2,2 -0.02
+    gli>
+
+2 AXES_3D
+ Draws three labeled coordinate axes, with linearly or
+ logarithmically spaced tick marks.
+
+ Format
+  GUS AXES_3D x-tick y-tick z-tick x-org y-org z-org
+	      major-x major-y major-z tick-size
+
+ Parameters
+ x-tick, y-tick, z-tick
+  The length of the interval between tick marks for the axes.
+ x-org, y-org, z-org
+  The coordinates of the origin (point of intersection) of the three
+  axes.
+ major-x, major-y, major-z
+  Unitless integer values which specify the number of minor tick
+  intervals between major tick marks. Values of 0 or 1 imply no
+  minor ticks.
+ tick-size
+  The length of the minor tick marks, end to end. Major tick marks
+  are twice as long as minor tick marks. This parameter is interpreted
+  in normalized device coordinates.
+
+ Tick marks are positioned along each axis such that major tick marks
+ fall on the axes origin (whether visible or not). Axes and tick marks
+ are drawn using solid lines.
+
+ All command parameters may optionally be omitted.
+
+ Examples
+ 1. gli> gus axes_3d 0.1,0.1,0.1 0,0,0 2,2,2 -0.02
+    gli>
+
+2 BAR_GRAPH
+ Creates a bar graph.
+
+ Format
+  GUS BAR_GRAPH x-data y-data [width]
+
+ Parameters
+ x-data, y-data
+  Data specification.
+ width
+  Bar width.
+
+ A data specification may be:
+   o  A subrange or range specification.
+   o  The name of a variable or function.
+   o  An arithmetic expression.
+   o  A constant.
+
+ For more information, see Data_item
+
+ Example
+   gli> read distr x y
+   gli> gus bar_graph x y
+
+2 CONTOUR
+ Draw contours of a function f(x,y) of two variables whose values
+ are specified over a rectangular mesh.
+ 
+ Format
+  GUS CONTOUR x-data y-data h-data z-data [dimension_x] [major-h]
+
+ Parameters
+ x-data, y-data
+  Mesh data specifications.
+ h-data
+  Contour height data specification.
+ z-data
+  Z data specification.
+ dimension_x
+  X dimension of the original data.
+ major-h
+  Unitless integer value which specifies the number of dotted contour
+  lines between solid contour lines.
+
+ A data specification may be:
+   o  A subrange or range specification.
+   o  A constant.
+   o  The name of a variable or function.
+   o  An arithmetic expression.
+
+ All points will be transformed according to the corresponding settings
+ for SCALE (transformation type) and SPACE (three-dimensional space).
+
+ For more information, see Data_item
+
+ Example
+   gli> x := -0.7(0.7)3.5
+   gli> y := x
+   gli> h := -8..8
+   gli> f = (sin(2*x)*sin(y)-sin(x)*sin(2*y)+cos(4*x)+cos(4*y)*4
+   gli> gus contour x,y,h,f
+
+2 CURVE
+ Simulates a three-dimensional curve using the data given.
+
+ Format
+  GUS CURVE x-data y-data z-data [primitive]
+
+ Parameters
+ x-data, y-data, z-data
+  Data specifications.
+
+ A data specification may be:
+   o  A subrange or range specification.
+   o  A constant.
+   o  The name of a variable or function.
+   o  An arithmetic expression.
+
+ primitive
+  Optional output primitive (POLYLINE,POLYMARKER).
+
+ All points will be transformed according to the corresponding settings
+ for SCALE (transformation type) and SPACE (three-dimensional space).
+
+ For more information, see Data_item
+
+ Example
+   gli> read data x,y,z
+   gli> gus curve x,y,z
+
+2 FFT
+ Computes the Fast Fourier Transform of a real number sequence.
+
+ Format
+  GUS FFT y-data
+
+ Parameters
+ y-data
+  Data specification.
+
+ A data specification may be:
+   o  A subrange or range specification.
+   o  The name of a variable or function.
+   o  An arithmetic expression.
+
+ For more information, see Data_item
+
+ Example
+   gli> read data y
+   gli> gus fft y
+
+2 GRID
+ Draws a grid.
+
+ Format
+  GUS GRID x-tick,y-tick,x-org,y-org,major-x,major-y
+
+ Parameters
+ x-tick,y-tick
+  The length of the interval between grid lines.
+ x-org,y-org
+  The coordinates of the origin (point of intersection) of the grid.
+ major-x,major-y
+  Unitless integer values specifying the number of minor grid lines
+  between major grid lines. Values of 0 or 1 imply no grid lines.
+
+ Example
+  gli>gus grid .25 .25 0 0 5 5
+
+2 HISTOGRAM
+ Draws a histogram with up to forty cells.
+
+ Format
+  GUS HISTOGRAM x-data
+
+ Parameters
+ x-data
+  Data specifications.
+
+ A data specification may be:
+   o  A subrange or range specification.
+   o  The name of a variable or function.
+   o  An arithmetic expression.
+
+ For more information, see Data_item
+
+ Example
+   gli> read distr x
+   gli> gus histogram x
+
+2 INVERSE_FFT
+ Computes and draws the inverse Fast Fourier Transformation of a real
+ number sequence.
+
+ Format
+  GUS INVERSE_FFT x-data y-data
+
+ Parameters
+ x-data, y-data
+  Data specifications.
+
+ A data specification may be:
+   o  A subrange or range specification.
+   o  The name of a variable or function.
+   o  An arithmetic expression.
+
+ For more information, see Data_item
+
+ Example
+   gli> read data x,y
+   gli> gus set log
+   gli> gus fft x,y
+   gli> gus set nolog
+     .
+     .
+     .
+   gli> read gus.dat x,y
+   gli> gus inverse_fft x,y
+
+2 LINFIT
+ Generates a robust straight line fit, starting from the first data point
+ and ending at the last data point.
+
+ Format
+  GUS LINFIT x-data y-data
+
+ Parameters
+ x-data, y-data
+  Data specifications.
+
+ A data specification may be:
+   o  A subrange or range specification.
+   o  The name of a variable or function.
+   o  An arithmetic expression.
+
+ All points will be transformed and/or smoothed according to the
+ corresponding settings for SCALE (transformation type) and
+ SMOOTHING (smoothing level).
+
+ For more information, see Data_item
+
+ Example
+   gli> x := .1,.2,.3,.6,.8
+   gli> y := .5,.1,.8,.2,.4
+   gli> gus linfit x,y
+
+2 LINREG
+ Generates a linear least square fit, starting from the first data point
+ and ending at the last data point.
+
+ Format
+  GUS LINREG x-data y-data,...
+
+ Parameters
+ x-data, y-data
+  Data specifications.
+
+ A data specification may be:
+   o  A subrange or range specification.
+   o  The name of a variable or function.
+   o  An arithmetic expression.
+
+ All points will be transformed and/or smoothed according to the
+ corresponding settings for SCALE (transformation type) and
+ SMOOTHING (smoothing level).
+
+ For more information, see Data_item
+
+ Example
+   gli> x := .1,.2,.3,.6,.8
+   gli> y := .5,.1,.8,.2,.4
+   gli> gus linreg x,y
+ 
+2 PIE_CHART
+ Draws a pie chart from a dataset.
+
+ Format
+  GUS PIE_CHART data
+
+ Parameters
+ data
+  The data for the slices.
+
+ A data specification may be:
+   o  A subrange or range specification.
+   o  The name of a variable or function.
+   o  An arithmetic expression.
+
+ For more information, see Data_item
+
+2 PLOT
+ Produces an XY graph from two-dimensional data.
+
+ Format
+  GUS PLOT x-data y-data
+
+ Parameters
+ x-data, y-data
+  Data specifications.
+
+ A data specification may be:
+   o  A subrange or range specification.
+   o  The name of a variable or function.
+   o  An arithmetic expression.
+
+ All points will be transformed and/or smoothed according to the
+ corresponding settings for SCALE (transformation type) and
+ SMOOTHING (smoothing level).
+
+ For more information, see Data_item
+
+2 POLYLINE
+ Generates a sequence of connected straight lines, starting from the
+ first data point and ending at the last data point.
+
+ Format
+  GUS POLYLINE x-data y-data,...
+
+ Parameters
+ x-data, y-data
+  Data specifications.
+
+ A data specification may be:
+   o  A subrange or range specification.
+   o  The name of a variable or function.
+   o  An arithmetic expression.
+
+ All points will be transformed and/or smoothed according to the
+ corresponding settings for SCALE (transformation type) and
+ SMOOTHING (smoothing level).
+
+ For more information, see Data_item
+
+ Example
+   gli> x := .1,.9,.7,.7,.9
+   gli> y := .5,.5,.6,.4,.5
+   gli> gus polyline x,y
+
+2 POLYMARKER
+ Generates a sequence of markers (polymarkers) to identify the given
+ data points.
+
+ Format
+  GUS POLYMARKER x-data y-data
+
+ Parameters
+ x-data, y-data
+  Data specifications.
+
+ A data specification may be:
+   o  A subrange or range specification.
+   o  The name of a variable or function.
+   o  An arithmetic expression.
+
+ For more information, see Data_item
+
+ Example
+   gli> x := .1,.9,.7.,7,.9
+   gli> y := .5,.5,.6,.4,.5
+   gli> gus polymarker x,y
+
+2 SET
+ Defines or changes, for the current GLI session, characteristics or
+ transformation parameters associated with input/output primitives
+ supplied by GUS.
+
+3 COLORMAP
+ Changes the colormap.
+ 
+ Format
+  GUS SET COLORMAP colormap
+
+ Command Parameters
+ colormap
+  UNIFORM
+  TEMPERATURE
+  GRAYSCALE
+  GLOWING
+  RAINBOW
+  GEOLOGIC
+  GREENSCALE
+  CYANSCALE
+  BLUESCALE
+  MAGENTASCALE
+  REDSCALE
+  FLAME
+
+3 LOG
+ Controls whether results from smoothing, spline, linear regression
+ or FFT utilities are written to a file in your default directory (GUS.DAT).
+
+ Format
+  GUS SET [NO]LOG
+
+3 SCALE
+ Sets the type of transformation to be used for subsequent GUS output
+ primitives.
+
+ Format
+  GUS SET SCALE scale [flip]
+
+ Parameters
+ scale
+  LINEAR    normal (linear) axes
+  X_LOG     logarithmic X-axis
+  Y_LOG     logarithmic Y-axis
+  XY_LOG    logarithmic X-axis, logarithmic Y-axis
+  Z_LOG     logarithmic Z-axis
+  XZ_LOG    logarithmic X-axis, logarithmic Z-axis
+  YZ_LOG    logarithmic Y-axis, logarithmic Z-axis
+  XYZ_LOG   logarithmic axes
+ flip
+  NONE      normal axes
+  FLIP_X    flip X-axis
+  FLIP_Y    flip Y-axis
+  FLIP_XY   flip X-axis, flip Y-axis
+  FLIP_Z    flip Z-axis
+  FLIP_XZ   flip X-axis, flip Z-axis
+  FLIP_YZ   flip Y-axis, flip Z-axis
+  FLIP_XYZ  flip all axes
+
+ Example
+   gli> gus set scale xy_log
+   gli> gus axes_2d
+
+3 SMOOTHING
+ Sets the smoothing level used for subsequent GUS output primitives.
+ The y-ordinates should contain a sequence of observed values of a
+ function at equally spaced intervals to be smoothed.
+
+ Format
+  GUS SET SMOOTHING smoothing
+
+ Parameters
+ smoothing
+  Smoothing level (1-20).
+
+ The smoothing procedure is a non-linear one. The algorithm is by
+ J.W. Tukey and Alberto Tubillio.
+
+ Example
+   gli> gus set smoothing 5
+   gli> gus polymarker x y
+   gli> gus spline x y
+
+3 SPACE
+ Sets the abstract Z-space used for mapping three-dimensional GUS
+ output primitives into the current GKS world coordinate space.
+
+ Format
+  GUS SET SPACE z-min z-max rotation tilt
+
+ Parameters
+ z-min,z-max
+  Minimum and maximum values for the Z-axis.
+ rotation,tilt
+  Angles for the rotation and tilt of the axes.
+
+ All command parameters may optionally be omitted.
+
+ Example
+   gli> gus set space -2,2 30 45
+   gli> gus axes_3d
+
+3 WS_VIEWPORT
+ Sets the orientation and the size of the workstation viewport.
+
+ Format
+  GUS SET WS_VIEWPORT window size [orientation]
+
+ Parameters
+ window
+  Workstation window.
+    FULL          full viewport
+    UPPER_HALF    upper half
+    LOWER_HALF    lower half
+    UPPER_LEFT    upper left quarter
+    UPPER_RIGHT   upper right quarter
+    LOWER_LEFT    lower left quarter
+    LOWER_RIGHT   lower right quarter
+ size
+  Workstation viewport size (A3,A4,A5).
+ orientation
+  Workstation orientation (landscape, portrait).
+
+ Example
+   gli> gus set ws_viewport full a4
+   gli>
+
+2 SPLINE
+ A cubic spline fit is generated, starting from the first data point and 
+ ending at the last data point.
+
+ Format
+  GUS SPLINE x-data y-data
+
+ Parameters
+ x-data, y-data
+  Data specifications.
+
+ A data specification may be:
+   o  A subrange or range specification.
+   o  The name of a variable or function.
+   o  An arithmetic expression.
+
+ All points will be transformed and/or smoothed according to the
+ corresponding settings for SCALE (transformation type) and
+ SMOOTHING (smoothing level).
+
+ For more information, see Data_item
+
+ Example
+   gli> x := .1,.2,.3,.6,.8
+   gli> y := .5,.1,.8,.2,.4
+   gli> gus spline x,y
+
+2 SURFACE
+ Construct a three-dimensional surface plot for the points given by
+ (x-data, y-data, function(x-data,y-data)).
+ 
+ Format
+  GUS SURFACE x-data y-data z-data [option [dimension_x]] 
+
+ Parameters
+ x-data, y-data, z-data
+  Data specifications.
+
+ A data specification may be:
+   o  A subrange or range specification.
+   o  The name of a variable or function.
+   o  An arithmetic expression.
+ 
+ option
+  Optional display option (LINES,MESH,FILLED_MESH,Z_SHADED_MESH,
+  COLORED_MESH,CELL_ARRAY,SHADED_MESH). 
+
+ dimension_x
+  X dimension of the original data.
+
+ All points will be transformed according to the corresponding settings
+ for SCALE (transformation type) and SPACE (three-dimensional space).
+
+ For more information, see Data_item
+
+ Example
+   gli> x := -1(0.1)1
+   gli> y := x
+   gli> f = exp(-x**2-y**2)
+   gli> gus surface x,y,f
+
+2 TEXT
+ Generates a character string starting at the given location. You may
+ define the string to create mathematical symbols and Greek letters.
+
+ Format
+  GUS TEXT x-pos y-pos string
+
+ Parameters
+ x-pos, y-pos
+  Data items specifying the starting position.
+ string
+  Specifies a 1-80 character string.
+
+ Examples
+ 1. gli> gus text 0.5 0.5 f(x) = {(x - 3) * <par\x^2 - 1>}/{(x - 1) * (x + 1)}
+    This examples shows how to output a broken rational function.
+ 2. gli> gus text 0.5 0.5 <integral\1/x dx\x_0\x_1>
+    This examples shows how to output an integral expression.
+ 3. gli> gus text 0.5 0.5 <sum\<x\i\2>\i=1\n>
+    This examples shows how to output a sum.
+ 4. gli> gus text 0.5 0.5 <brace\1, 1/2, 1/4, 1/8, 1/16, ...>
+    This examples shows how to output fractional expressions.
+ 5. gli> gus text 0.5 0.5 <root\x_old\3>
+    This examples shows how to output a root expression.
+      
+2 TITLES_3D
+ Draws given titles at the three coordinate axes.
+
+ Format
+  GUS TITLES_3D x-title y-title z-title
+
+ Parameters
+ x-title, y-title, z-title
+  Specifies title strings for the three axes.
+
+ All command parameters may optionally be omitted.
+
+ Examples
+ 1. gli> gus titles_3d X-Axis Y-Axis Z-Axis
+    gli>
+
+1 HELP
+ The HELP command invokes the GLI HELP Facility to display information
+ about a GLI command or topic. In response to the "Topic?" prompt, you can:
+
+    Type INTRODUCTION if you are not familiar with the GLI.
+
+    Type the name of the command or topic for which you need help.
+
+    Type HINTS if you are not sure of the name of the command or topic
+    for which you need help.
+
+    Type a question mark (?) to redisplay the most recently displayed text.
+
+    Press the RETURN key one or more times to exit from HELP.
+
+ You can abbreviate any topic name, although ambiguous abbreviations result
+ in all matches being displayed.
+
+ Format
+  HELP [topic[subtopic]...]
+
+ Example
+   gli> help
+     .
+     .
+     .
+   Topic?
+
+ In this example, the HELP command is entered without any parameters. This
+ produces  display of the HELP topics available from the HELP library.
+
+1 IF
+ Tests the value of the specified expression in a macro
+ and executes the commands in the THEN clause if the expresssion is true.
+
+ Format
+  IF condition THEN command
+
+ Parameters
+ condition
+  Boolean expression. Expressions in IF commands are automatically evaluated
+  durign execution of the command. The command interpreter does not execute
+  an IF command when it contains an undefined symbol. Instead, the command
+  interpreter issues a warning message and executes the next command in the
+  macro.
+ command
+  The GLI command to be executed, when the result of the expression is true.
+
+ Example
+   count := 0
+   loop:
+   count := count+1
+      .
+      .
+      .
+   if count<=10 then goto loop
+   exit
+
+ This command shows how to establish a loop in a macro, using
+ a variable named COUNT and an IF statement. The IF statement checks the
+ value of COUNT and performs an EXIT command when the value of COUNT is
+ greater than 10.
+
+1 IMAGE
+ Invokes the IMAGE command interpreter. Using IMAGE commands you can:
+
+  o  display an image
+  o  export or import image data to or from GLI variables
+  o  apply colortables to an image
+  o  stretch or compress an image
+  o  flip an image around the horizontal or vertical axes
+  o  rotate an image in 90 degree steps
+  o  filter an image
+  o  enhance the edges of an image
+  o  invert an image
+
+ Format
+  IMAGE [command]
+
+ Parameter
+ command
+  Any valid IMAGE command.
+
+2 CONTRAST
+ Changes the contrast of an image.
+
+ Format
+  IMAGE CONTRAST source dest level
+
+ Parameters
+ source
+  The name of an existing image for which the contrast is to be
+  changed.
+ dest
+  The name of the resulting image.
+ level
+  A contrast value within the range -1.0 to 1.0.
+
+ A contrast value of 0 leaves the image alone, less than zero reduces
+ the contrast, and greater than zero increases the contrast.
+
+2 COPY
+ Creates a new image by making a copy of an old image.
+
+ Format
+  IMAGE COPY source dest
+
+ Parameters
+ source
+  The name of the existing image to be copied.
+ dest
+  The name of the output image into which the input is
+  copied.
+
+2 CUT
+ Copies a region of an existing image into an output image.
+
+ Format
+  IMAGE CUT source dest x-min x-max y-min y-max
+
+ Parameters
+ source
+  The name of the existing image from which the specified
+  region is to be copied.
+ dest
+  The name of the output image into which the region is
+  copied.
+ x-min x-max y-min y-max
+  Variables specifying a rectangular region of the input image to be
+  copied.
+
+2 DELETE
+ Delete an image.
+
+ Format
+  IMAGE DELETE name
+
+ Parameters
+ name
+  Specifies the name of the image to be deleted.
+
+2 DISPLAY
+ Display an image.
+
+ Format
+  IMAGE DISPLAY name
+
+ Parameters
+ name
+  The name of the image to be displayed.
+
+2 EDGE
+ Detects edges in a PGM (Portable GrayMap) image.
+
+ Format
+  IMAGE EDGE source dest
+
+ Parameters
+ source
+  The name of an existing image to which the edge detection
+  algorithm is applied.
+ dest
+  The name of the resulting image.
+
+ The edge detection technique used is to take the Pythagorean sum of two
+ Sobel gradient operators at 90 degrees to each other.
+
+2 ENHANCE
+ Edge enhances an image.
+
+ Format
+  IMAGE ENHANCE source dest level
+
+ Parameters
+ source
+  The name of an existing image that is to be edge enhanced.
+ dest
+  The name of the resulting edge enhanced image.
+ level
+  A level of enhancement within the range 0.0 to 1.0.
+
+ A level of 0 means no enhancement of edges and a level of 1 means
+ full enhancement of edges.
+
+ The edge enhancing technique is taken from two 1976 papers by J. F. Jarvis,
+ et al.
+
+2 EXPORT
+ Export the contents of an image to a GLI variable. 
+
+ Format
+  IMAGE EXPORT image variable
+
+ Parameters
+ image
+  The name of the existing image to be exported.
+ variable
+  The name of the variable that will contain the image data.
+
+ The variable will contain the gray values for each pixel in the image
+ within the range 0.0 to 1.0.
+
+2 FLIP
+ Flips an image around the horizontal or vertical axes.
+
+ Format
+  IMAGE FLIP source dest direction
+
+ Parameters
+ source
+  The name of the image to be flipped.
+ dest
+  The name of the flipped output image.
+ direction
+  VERTICAL      flip the image around the vertical axis.
+  HORIZONTAL    flip the image around the horizontal axis.
+
+2 GAMMA
+ Performs a gamma correction on an image. Using a gamma correction 
+ function, you can adjust image brightness and contrast. 
+
+ Format
+  IMAGE GAMMA source dest value
+
+ Parameters
+ source
+  The name of an existing image to which the gamma correction
+  is applied.
+ dest
+  The name of the resulting gamma corrected image.
+ value
+  The value for the gamma correction.
+
+ A gamma value of 1 leaves the image alone, less than one darkens it, 
+ and greater than one lightens it. For color images like PPM or PCM the 
+ gamma correction is applied to the RGB channels. The gamma value should
+ be greater than 0.
+
+2 GRADIENT
+ Calculates the derivative or gradient of an image to sharpen its
+ edges or high spatial frequency components.
+
+ Format
+  IMAGE GRADIENT direction source dest
+
+ Parameters
+ direction
+  XDIRECTION	specifies differentiation in X-direction 
+  YDIRECTION	specifies differentiation in Y-direction
+ source
+  The name of an existing image to which the gradient function
+  is applied.
+ dest
+  The name of the resulting image.
+
+2 HISTOGRAM
+ Spreads the intensity distribution of an image by equalizing the
+ intensity histograms. Using the histogram equalization function,
+ you can improve the information content of an image.
+
+ Format
+  IMAGE HISTOGRAM source dest
+
+ Parameters
+ source
+  The name of an existing image to which the histogram
+  equalization is applied.
+ dest
+  The name of the histogram equalized image.
+
+2 IMPORT
+ Import the contents of a GLI variable to an image.
+
+ Format
+  IMAGE IMPORT image variable x-dimension
+
+ Parameters
+ image
+  The name of the image to be created.
+ variable
+  The name of the GLI variable containing the image data.
+ x-dimension
+  The X-dimension of the image data.
+
+ The resulting image will be of type PGM with a maximum graylevel of 255.
+
+2 INVERT
+ Inverts an image.
+
+ Format
+  IMAGE INVERT source dest
+
+ Parameters
+ source
+  The name of the image to be inverted.
+ dest
+  The name of the inverted image.
+
+ For color images the RGB channels are inverted producing a negative like
+ image.
+
+2 MEDIAN
+ Performs a median cut on an image. Using a median cut you can reduce
+ the noise often found in scanned or digitized images.
+
+ Format
+  IMAGE MEDIAN source dest
+
+ Parameters
+ source
+  The name of the image to be filtered.
+ dest
+  The name of the filtered image.
+
+ The median cut will produce an image that looks smoother. It can
+ also remove small errors from an image. The original colors and gray
+ levels of the image are modified. A decrease in overall image
+ sharpness may result from a median cut.
+  
+2 NORMALIZE
+ Contrast enhance an image by normalizing its intensity values to fill 
+ the full range of available intensity levels.
+
+ Format
+  IMAGE NORMALIZE source dest
+
+ Parameters
+ source
+  The name of the image to be normalized.
+ dest
+  The name of the normalized image.
+  
+2 PBM
+ Convert an image into a portable bitmap image (PBM).
+
+ Format
+  IMAGE PBM source dest [level]
+
+ Parameters
+ source
+  The name of the image to be converted.
+ dest
+  The name of the converted image.
+ level
+  Specifies a threshold value for the final output pixels.
+
+ The threshold value should be within the range 0.0 to 1.0. If you omit
+ this parameter a default value of 0.5 will be used.
+
+2 PCM
+ Convert an image into a portable colormap image (PCM).
+
+ Format
+  IMAGE PCM source dest [ncolors]
+
+ Parameters
+ source
+  The name of the image to be converted.
+ dest
+  The name of the converted image.
+ ncolors
+  Specifies the maximum number of colors to be used.
+
+ The maximum number of color should be in the range 1-256. If you omit
+ this parameter a default value of 256 is assumed. A color quantization
+ using an octree algorithm is performed, if required.
+
+2 PGM
+ Convert an image into a portable graymap image (PGM).
+
+ Format
+  IMAGE PGM source dest [maxgray]
+
+ Parameters
+ source
+  The name of the image to be converted.
+ dest
+  The name of the converted image.
+ ncolors
+  Specifies the maximum gray level to be used.
+
+ The maximum gray level should be in the range 0-255. If you omit
+ this parameter a default value of 255 is assumed.
+
+2 PPM
+ Convert an image into a portable pixmap image (PPM).
+
+ Format
+  IMAGE PPM source dest
+
+ Parameters
+ source
+  The name of the image to be converted.
+ dest
+  The name of the converted image.
+
+2 READ
+ Reads an image from a file.
+
+ Format
+  IMAGE READ file name
+
+ Parameters
+ file
+  The name of the input file to be read.
+ name 
+  The name of the image to be read.
+
+ Four different image formats are supported:
+
+   o  PBM (Portable BitMap)
+   o  PGM (Portable GrayMap)
+   o  PPM (Portable PixMap)
+   o  PCM (Portable ColorMap)
+
+2 RENAME
+ Renames an image.
+
+ Format
+  IMAGE RENAME old new
+
+ Parameters
+ old
+  The name of the existing image to be renamed.
+ new
+  The new name of the renamed image.
+
+2 RGB_GAMMA
+ Performs a gamma correction on the RGB channels of an image to
+ correct images with a non-linear color response.
+
+ Format
+  IMAGE RGB_GAMMA source dest rvalue gvalue bvalue
+
+ Parameters
+ source
+  The name of the image to which the gamma correction
+  is  applied.
+ dest
+  The name of the gamma corrected image.
+ rvalue
+  The value for the gamma correction on the red channel.
+ gvalue
+  The value for the gamma correction on the green channel.
+ bvalue
+  The value for the gamma correction on the blue channel.
+
+ A gamma value of 1 leaves the image alone, less than one darkens it, 
+ and greater than one lightens it. The gamma values should be greater
+ than 0.
+
+2 ROTATE
+ Rotates an image by some angle.
+
+ Format
+  IMAGE ROTATE source dest angle [antialias]
+
+ Parameters
+ source
+  The name of the image to be rotated.
+ dest
+  The name of the rotated output image.
+ angle
+  Specifies an angle in the range 0-360 degrees.
+ antialias
+  ON	turns antialiasing on
+  OFF   turns antialiasing off (default)
+
+ The rotation of the image is done by three shear operations. Setting
+ antialising on will avoid jagged edges and similar artifacts. However,
+ it also means that the original colors or gray levels in the image are
+ modified. Therefor PBM and PCM images are promoted to PGM and PPM images.
+ To prevent this you should switch off antialising. The dimensions of the 
+ new image will be bigger or equal to the dimensions of the source image
+ depending on the specified angle.
+
+2 SCALE
+ Scales an image to the specified dimensions.
+
+ Format
+  IMAGE SCALE source dest width height
+
+ Parameters
+ source
+  The name of an existing image to be scaled.
+ dest
+  The name of the resulting image.
+ width
+  The width of the scaled image.
+ height
+  The height of the scaled image.
+
+ After enlarging an image the you may find it useful to smooth the
+ resulting image with a median filter.
+
+2 SET
+ Defines or changes the attributes of images.
+
+3 COLOR
+ Changes the colortable of a portable colormap (PCM) image.
+
+ Format
+  IMAGE SET COLOR image colortable
+
+ Parameters
+ image
+  The name of an existing image for which the colortable is
+  to be changed.
+ colortable
+  Specifies one of the following colormaps:
+   UNIFORM
+   TEMPERATURE
+   GRAYSCALE
+   GLOWING
+   RAINBOW
+   GEOLOGIC
+   GREENSCALE
+   CYANSCALE
+   BLUESCALE
+   MAGENTASCALE
+   REDSCALE
+   FLAME
+
+2 SHEAR
+ Shears (or deforms) an image by some angle.
+
+ Format
+  IMAGE SHEAR direction source dest angle [antialias]
+
+ Parameters
+ direction
+  XDIRECTION	specifies shearing in X-direction 
+  YDIRECTION	specifies shearing in Y-direction
+ source
+  The name of the image to be sheared.
+ dest
+  The name of the sheared image.
+ angle
+  Specifies an angle in the range from -90 to 90 degrees.
+
+ When shearing in the X direction, a positive angle produces this:
+
+	 +-------+  +-------+
+	 |       |   \       \
+	 |  OLD  |    \  NEW  \
+	 |       |     \       \
+	 +-------+      +-------+
+
+ While a negative angle would distort the image in the opposite
+ direction:
+
+	 +-------+      +-------+
+	 |       |     /       /
+	 |  OLD  |    /  NEW  /
+	 |       |   /       /
+	 +-------+  +-------+
+
+ When shearing in the Y direction, a positive angle produces this:
+
+			+ 
+		       /|     
+		      / | 
+		     /  |    
+	 +-------+  +   +              
+	 |       |  |  /      
+	 |  OLD  |  | /   NEW       
+	 |       |  |/             
+	 +-------+  +                
+
+ While a negative angle would distort the image in the opposite
+ direction:
+
+	 +-------+  +              
+	 |       |  |\          
+	 |  OLD  |  | \   NEW                 
+	 |       |  |  \      
+	 +-------+  +   +       
+		     \  |                  
+		      \ |                  
+		       \|                  
+			+
+
+ The angle should not get too close to 90 or -90, or the resulting image
+ will be unreasonably wide or tall.
+
+ Setting antialising ON will avoid jagged edges and similar artifacts. 
+ However, it also means that the original colors or gray levels in the 
+ image are modified. Therefore PBM and PCM images are promoted to PGM and 
+ PPM images. To prevent this you should switch OFF antialising.
+
+2 SHOW
+ Displays information about all images.
+
+ Format
+  IMAGE SHOW
+
+2 WRITE
+ Writes an image to a file.
+
+ Format
+  IMAGE WRITE file name [format]
+
+ Parameters
+ file
+  The name of the output file to be written to.
+ name 
+  The name of the image to be written to a file.
+ format
+  ASCII		plain byte format
+  BINARY	RAWBIT format (default)
+  COMPRESSED	compressed (adaptive Lempel-Ziv coded) format
+
+ Four different image formats are supported:
+
+   o  PBM (Portable BitMap)
+   o  PGM (Portable GrayMap)
+   o  PPM (Portable PixMap)
+   o  PCM (Portable ColorMap)
+
+2 Formats
+ The image system supports four different types of image formats. The
+ PPM format for 24-Bit color images, the PCM format for 8-Bit color
+ images, the PGM for 8-Bit grayscale images, and the PBM format for
+ monochrome images.
+
+3 PPM
+ The PPM (Portable PixMap) format is an image format for 24-Bit 
+ color images. It is fully compatible with the PPM format of the
+ PBMplus package.
+
+ The definition of PPM format is as follows:
+
+  o A "magic number" for identifying the file type.  A PPM file's 
+    magic number are the two characters "P3".
+
+  o Whitespace (blanks, TABs, CRs, LFs).
+
+  o A width, formatted as ASCII characters in decimal notation.
+
+  o Whitespace.
+
+  o A height, again in ASCII decimal.
+
+  o Whitespace.
+
+  o The maximum color component value, again in ASCII decimal. In 
+    contrast to the PBMplus package the image system support only a
+    maximum color component value of 255.
+
+  o Whitespace.
+
+  o Width * height pixels, each group of three ASCII decimal values 
+    corresponding to three colors (red, green, blue) are considered a
+    pixel. Allowed intensity values are between 0 and the
+    specified maximum value, starting at the top left corner 
+    of the pixmap, proceeding in normal English reading order.
+    A value of 0 means that color is off, and the maximum 
+    value means that color is at maximum intensity.
+
+  o Characters from a "#" to the next end of line are ignored (comments).
+
+  o No line should be longer than 70 characters.
+
+ There is also a variant on the format called RAWBIT format. This variant 
+ is different in the following ways:
+
+   o The "magic number" is "P6" instead of "P3".
+
+   o The pixel values are stored as plain bytes, instead of ASCII decimal.
+
+   o Whitespace is not allowed in the pixel area, and only a single 
+     character of whitespace (typically a newline) is allowed after the 
+     maximum value.
+
+   o RAWBIT files are smaller and many times faster to read and write.
+
+4 Example
+ Here is an example of a small image in the PPM format:
+
+  P3			# magic number for PPM format
+  # example.PPM
+  2 4			# 2x4 pixels
+  15                    # maximum color component value
+   0  0  0    0  0  0   # pixmap
+   0  0  0    0 15  7 
+   0  0  0    0  0  0 
+  15  0 15    0  0  0 
+
+3 PCM
+ The PCM (Portable ColorMap) format is an image format for 8 Bit 
+ color images containing a color table with a maximum of 256
+ color entries.
+
+ The definition of PCM format is as follows:
+
+  o A "magic number" for identifying the file type.  A PCM file's 
+    magic number are the two characters "P7".
+
+  o Whitespace (blanks, TABs, CRs, LFs).
+
+  o A width, formatted as ASCII characters in decimal.
+
+  o Whitespace.
+
+  o A height, in ASCII decimal.
+
+  o Whitespace.
+
+  o The number of colors used in the colortable, again in ASCII decimal.
+
+  o Whitespace.
+
+  o The colortable, consisting of RGB triples. Each RGB triple consists
+    of three integer numbers between 0 and 255. An integer value
+    of 0 means that the color is off, and a value of 255 means that
+    the color is at maximum intensity.
+
+  o Width * height pixels, each three ASCII decimal values between 0 
+    and the number of colors minus one, starting at the top left corner 
+    of the pixmap, proceeding in normal English reading order. Each 
+    value is an index specifying a color in the colortable.
+
+  o Characters from a "#" to the next end of line are ignored (comments).
+
+  o No line should be longer than 70 characters.
+
+ Programs that read this format should be as lenient as possible, 
+ accepting anything that looks remotely like a pixmap.
+
+ There is also a variant on the format called RAWBIT format. This variant 
+ is different in the following ways:
+
+  o The "magic number" is "P8" instead of "P7".
+
+  o The values of the colortable and the pixel values are stored as 
+    plain bytes, instead of ASCII decimal.
+
+  o Whitespace is not allowed in the pixels area, and only a single 
+    character of whitespace (typically a newline) is allowed after the 
+    maximum value. There must not be any spaces between the colortable and
+    pixel values
+
+  o RAWBIT files are smaller and many times faster to read and write.
+
+4 Example
+ Here is an example of an image in PCM format:
+
+  P7		# magic number for PCM format
+  # example.PCM
+  4 4		# 4x4 pixels 
+  5		# 5 colors are used
+  0   0   0	# colortable
+  255 0   0
+  0   255 0
+  0   0   255
+  255 255 255
+  0   1   2   3	# pixmap
+  3   0   1   2
+  2   3   0   1 
+  1   2   3   0     
+
+3 PGM
+ The portable graymap format is a lowest common denominator grayscale
+ file format.  The definition is as follows:
+
+  o A "magic number" for identifying the file type.  A PGM file's magic
+    number are the two characters "P2".
+
+  o Whitespace (blanks, TABs, CRs, LFs).
+
+  o A width, formatted as ASCII characters in decimal.
+
+  o Whitespace.
+
+  o A height, again in ASCII decimal.
+
+  o Whitespace.
+
+  o The maximum gray value, again in ASCII decimal. In contrast to 
+    the PBMplus package the image system supports only a maximum gray
+    value of 255.
+
+  o Whitespace.
+
+  o Width * height gray values, each in ASCII decimal, between 0 and the 
+    specified maximum value, separated by whitespace. Values start at the
+    top left corner of the graymap, proceeding in normal English reading
+    order.  A value of 0 means black, and the maximum value means white.
+
+  o Characters from a "#" to the next end of line are ignored (comments).
+
+  o No line should be longer than 70 characters.
+
+ Programs that read this format should be as lenient as possible, 
+ accepting anything that looks remotely like a graymap.
+
+ There is also a variant on the format called RAWBIT format. This variant 
+ is different in the following ways:
+
+  o The "magic number" is "P5" instead of "P2".
+
+  o The gray values are stored as plain bytes, instead of ASCII decimal.
+
+  o No whitespace is allowed in the gray section, and only a single 
+    character of whitespace (typically a newline) is allowed after the 
+    maximum value.
+
+  o The files are smaller and many times faster to read and write.
+
+4 Example
+ Here is an example of a graymap in this format:
+
+  P2			# magic number for PGM format
+  # example.PGM
+  24 7			# 6x7 pixels
+  15			# maximum gray level
+  0  0  0  0  0  0	# pixmap
+  0  3  3  3  3  0  
+  0  3  0  0  0  0  
+  0  3  3  3  0  0  
+  0  3  0  0  0  0  
+  0  3  0  0  0  0  
+  0  0  0  0  0  0  
+
+3 PBM
+ The portable bitmap format is a lowest common denominator monochrome
+ file format. The definition is as follows:
+
+  o A "magic number" for identifying the file type.  A PBM file's magic
+    number are the two characters "P1".
+
+  o Whitespace (blanks, TABs, CRs, LFs).
+
+  o A width, formatted as ASCII characters in decimal.
+
+  o Whitespace.
+
+  o A height, again in ASCII decimal.
+
+  o Whitespace.
+
+  o Width * height bits, each either '1' or '0', starting at the top left
+    corner of the bitmap, proceeding in normal English reading order.
+
+  o The character '1' means black, '0' means white.
+
+  o Whitespace in the bits section is ignored.
+
+  o Characters from a "#" to the next end of line are ignored (comments).
+
+  o No line should be longer than 70 characters.
+
+ Programs that read this format should be as lenient as possible, 
+ accepting anything that looks remotely like a bitmap.
+
+ There is also a variant on the format called RAWBIT format. This variant 
+ is different in the following ways:
+
+  o The "magic number" is "P4" instead of "P1".
+
+  o The bits are stored eight per byte, high bit first, low bit last.
+
+  o No whitespace is allowed in the bits section, and only a single 
+    character of whitespace (typically a newline) is allowed after 
+    the height.
+
+  o RAWBIT files are eight times smaller and many times faster to read and
+    write.
+
+4 Example
+ Here is an example of an image in PBM format:
+
+  P1				# magic number for PBM format
+  # example.PBM
+  13 7			        # 13x7 pixels
+  0 0 0 0 0 0 0 0 0 0 0 0 0	# pixmap
+  0 1 1 1 1 0 0 1 1 1 1 0 0
+  0 1 0 0 0 0 0 1 0 0 0 0 0
+  0 1 1 1 0 0 0 1 1 1 0 0 0
+  0 1 0 0 0 0 0 1 0 0 0 0 0
+  0 1 0 0 0 0 0 1 1 1 1 0 0
+  0 0 0 0 0 0 0 0 0 0 0 0 0
+
+1 IMPORT
+ Imports a graphics file.
+
+ Format
+  IMPORT file-name format interface
+
+ Parameters
+ file-name
+  Specifies the name of the graphics file to be processed.
+  No wild cards are allowed in the file name.
+ format
+  Graphics file format (TEK, CGM_BINARY, CGM_CLEAR_TEXT)
+ interface
+  Graphics interface (GKS, SIGHT)  
+
+1 INITIALIZE
+ Initializes the GLI system and invokes the STARTUP.GLI command file.
+ INITIALIZE performs the following actions:
+   o  Delete all symbols, variables and functions.
+   o  Close the Graphical Kernel System (GKS).
+   o  Invoke the system wide GLI startup procedure.
+   o  Invoke the user's GLI startup procedure.
+
+ Example
+   gli> initialize
+   gli>
+
+1 INQUIRE
+ Requests interactive assignment of a value for a symbol during the
+ execution of a command procedure.
+
+ Format
+  INQUIRE symbol-name [prompt-string]
+
+ Parameters
+ symbol-name
+  Specifies a 1 through 31 alphanumeric character symbol to be given
+  a value.
+ prompt-string
+  Specifies the prompt to be displayed at the terminal when the
+  INQUIRE command is executed.
+
+ If you do not specify a prompt string, the command interpreter uses
+ the symbol name to prompt for a value.
+
+1 LEARN
+ Collects subsequent commands for a SAVE operation thereby creating a
+ macro.
+
+ Format
+  LEARN
+
+ Example
+   gli> learn
+   gli>
+     .
+     .
+     .
+   gli> save plot.gli
+
+ This example creates a command procedure, named PLOT.GLI, with the
+ commands following the LEARN command.
+
+1 LOAD
+ Loads a Form Driver menu description from the specified fiel and establishes
+ a communication environment for subsequent DISPLAY commands.
+
+ Format
+  LOAD file-name [display]
+
+ Parameters
+ file-name
+  Specifies the name of the menu description file to be loaded. If you
+  do not specify a file type, the system uses the default file type of FDV.
+  No wild cards (* or %) are allowed in the file name.
+ display
+  Specifies the name of the terminal which should be used for input and
+  output operations. the default is TT.
+
+ Example
+   gli> load gus_autoplot
+   gli> on f4 then exit
+   gli> display
+
+ This example loads the system wide menu description for the AUTOPLOT menu.
+
+1 MESSAGE
+ Displays a character string on the screen.
+
+ Format
+  MESSAGE message
+
+ Parameters
+  message
+ Message text to be dsiplayed. If no menu is currently displayed (see the
+ FORM DRIVER chapter), GLI will write the message on the current command 
+ line.
+
+1 ON
+ Executes a command upon the occurrence of the specified Form Driver event
+ within a macro.
+
+ Format
+  ON event THEN command
+
+ Parameters
+ event
+  Event specification. E1-E8 represent user-defined events 1 to 8,
+  F1-F4 the function keys PF1 to PF4, REFRESH and CTRL_Z the standard
+  Form Driver events.
+ command
+  Any valid GLI command.
+
+ Example 
+   on f1 then read 'p1' x,y
+   on f4 then quit
+   display
+
+1 PIPE
+ Opens a pipe for command input.
+
+ Format
+  PIPE command
+
+ Parameters
+ command
+  Specifies an operating system command string of 132 characters or less.
+
+1 PRINT
+ Prints one or more variables.
+
+ Format
+  PRINT data-spec,...
+
+ Parameters
+ data-spec
+  Data specification.
+  
+ A data specification may be:
+   o  A subrange or range specification.
+   o  The name of a variable or function.
+   o  An arithmetic expression.
+
+ For more information, see Data_item
+
+ Example
+   gli> x := 1 2 3 4
+   gli> print sin(x) x
+    0.841471 1
+    0.909297 2
+    0.14112 3
+    -0.756802 4
+
+   gli>
+
+1 QUIT
+ Exits from GLI and returns control to the calling process. The
+ following actions are performed:
+   o  Close the journal file.
+   o  Delete all symbols, variables and functions.
+   o  Close the Graphical Kernel System (GKS).
+
+ Format
+  QUIT
+
+1 READ
+ Reads an input file and assign its contents to the specified
+ variables.
+
+ Format
+  READ file-name var-name,...
+
+ Parameters
+ file-name
+  Specifies the name of the input file to be read. If you do not
+  specify a file type, the system uses the default file type of DAT.
+  No wild cards (* or %) are allowed in the file name.
+ var-name
+  Specifies a 1-31 alphanumeric character variable name.
+
+ Example
+   gli> read data.dat x,y
+     100 lines read from file data.dat
+     Textual information has been ignored (2 records)
+   gli>
+ 
+1 RECOVER
+ Reads the GLI.JOU file and repeats all the instructions it contains.
+
+ Format
+  RECOVER
+
+ Example
+   gli> CTRL/Y
+     Interrupt
+
+   $ gli
+
+     G L I
+     VAX version 4.5 (VMS)
+     patchlevel 4.5.30, 13 Apr 2012
+			
+     Copyright @ 1986-1998, Josef Heinen, Jochen Werner, Gunnar Grimm
+     Copyright @ 1995, ZAM, Forschungszentrum Juelich GmbH (GR-Software)
+		
+     Send bugs and comments to J.Heinen@FZ-Juelich.de
+	
+   gli> recover
+     .
+     .
+     .
+   gli>
+
+1 REDIM
+ Re-sample an array to given dimensions.
+ 
+ Format
+  REDIM array start_x dimension_x start_y dimension_y x1 xn y1 yn
+
+ Parameters
+ array
+  Data specification for the array to be re-sampled.
+ start_x dimension_x start_y dimension_y
+  Integers specifying the dimensions of the original array.
+ x1, xn, y1, yn
+  Integers specifying the dimensions of the re-sampled array.
+
+1 RETURN
+ Terminates a labeled subroutine in a macro and returns control to the
+ subroutine caller.
+
+ Format
+  RETURN [status]
+
+ Parameter
+ status
+  Optional status code to be returned to the Form Driver. The possible
+  status codes are NORMAL, ERROR, DO, SAVE, UNSAVE, RETURN, REWIND,
+  QUIT, EXIT and RETAIN.
+
+ Example
+ 1. gosub plot
+    exit
+    plot: read data x y
+	  gks polyline x y
+	  return
+
+ The GOSUB command transfers control to the subroutine labeled PLOT. 
+ After the subroutine is executed, the RETURN command transfers control 
+ back to the command following the calling GOSUB statement. The proce-
+ dure then exits.
+
+ 2. on f4 then gosub plot
+    load menu
+    display
+    exit
+    plot: read data x y
+	  gks polyline x y
+	  return quit
+
+ The DISPLAY command transfers control to the Form Driver. When the PF4 
+ key is pressed the Form Driver transfers control to the subroutine 
+ labeled PLOT. After the subroutine is executed, the RETURN command 
+ transfers control back to the Form Driver. The Form Driver then trans-
+ fers control to the command following the DISPLAY statement. The
+ procedure then exits.
+
+1 RPC
+ Allows you to communicate with a user written application based upon
+ Sun Remote Procedure Call (RPC) technology.
+
+ Format
+  RPC command [var-name,...]
+
+ Parameters
+ command
+  Specifies a command string of 132 characters or less.
+ var-name
+  Specifies a 1-31 alphanumeric character variable name.
+
+ Example
+     gli> RPC "READB data.bin" X Y
+
+1 SAVE
+ Saves the contents of the GLI.JOU file in a file other than the default.
+
+ Format
+  SAVE file-name
+
+ Parameters
+ file-name
+  Any valid VMS or UNIX file name. If you do not specify a file type,
+  the system uses the default file type of GLI. No wild cards are allowed
+  in the file name.
+
+ Example
+   gli>
+     .
+     .
+     .
+   gli> save linear.gli
+
+ This example saves the journal file to a file named LINEAR.GLI.
+
+1 SET
+ Defines or changes, for the current GLI session or batch job,
+ characteristics associated with files and devices.
+
+ Format
+  SET option
+
+    Options
+      ANSI
+      DEFAULT
+      [NO]LOG
+      PROMPT
+      [NO]TCL
+      TEK
+      [NO]VERIFY
+
+2 ANSI
+ Puts a terminal into ANSI mode.
+
+ Format
+  SET ANSI
+
+2 DEFAULT
+ Sets your default device and directory name.
+
+ Format
+  SET DEFAULT [device-name[:][directory-name]
+
+ Parameters
+ device-name [:]
+  The name of the device you want to go to.
+ directory-name
+  The name of the directory you want to go to. A directory name must
+  be enclosed in brackets. Use the minus sign to specify the next
+  higher directory from the current default. You must either specify
+  the device-name parameter or the directory-name parameter.
+
+ Examples
+ 1. gli> set default [smith]
+
+ The SET DEFAULT command in this example changes the default directory
+ to [SMITH]. The default disk device does not change.
+
+ 2. gli> set default /usr/users/smith
+
+ The SET DEFAULT command in this example sets your default to the 
+ /usr/users/smith subdirectory.
+
+2 LOG
+ Controls whether logging informations is displayed at the terminal.
+
+ Format
+  SET [NO]LOG
+
+ Example
+   gli> set log
+   gli> @plot
+     .
+     .
+     .
+   gli> set nolog
+
+  In this example, the SET LOG command turns logging on. When the command
+  procedure PLOT.GLI is executed, the logging information is displayed
+  at the terminal. Then the SET NOLOG command turns off logging.
+
+2 PROMPT
+ Replaces the default GLI prompt with the specified string.
+
+ Format
+  SET PROMPT prompt
+
+ Parameters
+  prompt
+ Specifies a new prompt string.
+
+ Example
+   gli> set prompt What's next?
+   What's next?
+     .
+     .
+     .
+   What's next? SET PROMPT
+   gli>
+
+ The SET PROMPT command in this example replaces the GLI prompt (gli>)
+ with the phrase "What's next?". When you see the prompt on the screen,
+ you can enter any GLI command.
+
+2 TCL
+ Controls whether GLI checks for incoming TCL commands each time
+ the internal interval timer expires. Once a TCL interpreter has been
+ registered with the SET TCL command, another application can use the
+ TCL send protocol to cause GLI to execute commands.
+
+ Format
+   SET [NO]TCL
+
+2 TEK
+ Puts the terminal into 4010/4014 mode.
+
+ Format
+  SET TEK
+
+2 VERIFY
+ Displays the command lines in the macro as they are executed, allowing
+ for verification.
+
+ Format
+  SET [NO]VERIFY
+
+ Example
+   gli> set verify
+   gli> @plot
+     .
+     .
+     .
+   gli> set noverify
+
+ In this example, the SET VERIFY command turns command verification on.
+ When the macro PLOT.GLI is executed, the command lines are 
+ displayed at the terminal. Then the SET NOVERIFY command turns off
+ command verification.
+
+1 SHOW
+ Displays information about symbols, variables, or functions.
+
+ Format
+  SHOW option
+
+    Options
+      FUNCTION
+      SYMBOL
+      VARIABLE
+
+2 FUNCTION
+ Displays the expression for a specified function.
+
+ Format
+  SHOW FUNCTION function-name,...
+
+ Parameter
+ function-name
+  Specifies one or more function names for which expressions are to be
+  displayed. The function name can have from 1 to 31 alphanumeric
+  characters. The function name must begin with an alphabetic character.
+
+  If you do not specify the function name parameter, the SHOW FUNCTION
+  command displays all functions currently defined.
+
+  The function name may contain wild card (* or %) characters.
+
+ Example
+   gli> show function
+     F = sin(1/x)*x
+     G = 1/f**2+f
+
+     Total of 2 functions.
+   gli>
+
+2 SYMBOL
+ Displays the value for a specified symbol.
+
+ Format
+  SHOW SYMBOL symbol-name,...
+
+ Parameter
+ symbol-name
+  Specifies one or more symbol names for which equivalent values are
+  to be displayed. The symbol name can have from 1 to 31 alphanumeric
+  characters. The symbol name must begin with an alphabetic character.
+
+  If you do not specify the symbol name parameter, the SHOW SYMBOL
+  command displays all symbols currently defined.
+
+  The symbol name may contain wild card (* or %) characters.
+
+ Example
+   gli> show symbol
+     AUTO*PLOT = "gus autoplot"
+     AXE*S = "gus axes_2d"
+
+     Total of 2 symbols.
+   gli>
+
+2 VARIABLE
+ Displays information about all variables currently defined.
+
+ Format
+  SHOW VARIABLE variable-name,...
+
+ Parameter
+ variable-name
+  Specifies one or more variable names for which information is
+  to be displayed. The variable name can have from 1 to 31 alphanumeric
+  characters. The variable name must begin with an alphabetic character.
+
+  If you do not specify the variable name parameter, the SHOW VARIABLE
+  command displays all variables currently defined.
+
+  The variable name may contain wild card (* or %) characters.
+
+ Example
+   gli> x := 0(0.1)10
+   gli> y := sin(x)
+   gli> show variable
+     X (101 values, 1676 bytes)
+     Y (101 values, 1676 bytes)
+
+     Total of 2 variables, 202 values, 3352 bytes.
+   gli>
+
+1 SIGHT
+ Invokes the SIGHT (Simple Interactive Graphics Handling Tool) command 
+ language interpreter. 
+
+2 AXES
+ Draw a pair of labeled coordinate axes, with linearly or
+ logarithmically spaced tick marks.
+
+ Format
+  SIGHT AXES x-tick y-tick x-org y-org major-x major-y tick-size
+
+ Parameters
+ x-tick, y-tick
+  The length of the interval between tick marks for both axes.
+ x-org, y-org
+  The coordinates of the origin (point of intersection) of the two
+  axes.
+ major-x, major-y
+  Unitless integer values which specify the number of minor tick
+  intervals between major tick marks. Values of 0 or 1 imply no
+  minor ticks.
+ tick-size
+  The length of the minor tick marks, end to end. Major tick marks
+  are twice as long as minor tick marks. This parameter is interpreted
+  in normalized device coordinates.
+
+ Tick marks are positioned along each axis such that major tick marks
+ fall on the axes origin (whether visible or not). Axes and tick marks
+ are drawn using solid lines.
+
+ All command parameters may optionally be omitted.
+
+ Examples
+ 1. gli> sight axes
+    gli>
+ 2. gli> sight axes 0.1,0.1 0,0 2,2 -0.02
+    gli>
+
+2 CAPTURE
+ Captures the drawing in an encapsulated PostScript file (GLI.EPS).
+
+ Format
+  SIGHT CAPTURE
+ 
+ Example
+   gli> sight capture
+   gli>
+
+2 CLEAR
+ Clears the current drawing and deletes all objects.
+
+ Example
+   gli>
+     .
+     .
+     .
+   gli> sight clear
+   gli> 
+
+2 CLOSE_DRAWING
+ Saves the current drawing to a file.
+
+ Format
+  SIGHT CLOSE_DRAWING file-name
+
+ Parameter
+ file-name
+  Specifies the name of the drawing to be saved. If you omit the file type,
+  the system uses the default file type of SIGHT. No wild cards are allowed
+  in the file name.
+
+ Example
+   gli> 
+     .
+     .
+     .
+   gli> sight close_drawing drawing.sight
+   gli>
+
+2 CLOSE_SEGMENT
+ Closes the current segment.
+
+ Format
+  SIGHT CLOSE_SEGMENT 
+
+2 CLOSE_SIGHT
+ Closes the Simple Interactive Graphics Handling Tool (SIGHT) and 
+ returns the user to GLI in the state GLI was in when SIGHT was started.
+
+ Format
+  SIGHT CLOSE_SIGHT
+
+ Example
+    gli>
+      .
+      .
+      .
+    gli> sight close_sight
+    gli>
+
+2 CREATE_DRAWING
+ Creates a new drawing, and clears the current drawing.
+
+ Format
+  SIGHT CREATE_DRAWING file-name
+
+ Parameter
+ file-name
+  Specifies the name of the file which is used when SIGHT CLOSE_DRAWING
+  is called without a file name. If you omit the file type,
+  the system uses the default file type of SIGHT. No wild cards are allowed
+  in the file name.
+ 
+ Example
+   gli> sight create_drawing drawing.sight
+   gli>
+     .
+     .
+     .
+   gli> sight close_drawing
+   gli>
+
+2 CUT
+ Deletes the current selection and copies it to the SIGHT clipboard.
+
+ Format
+  SIGHT CUT x-pos y-pos
+
+ Parameters
+ x-pos, y-pos
+  Data items specifying the reference point for the selection.
+
+ Example
+   gli> sight cut 0.1 0.1
+     .
+     .
+     .
+   gli> sight paste 0.5 0.5
+   gli> 
+
+2 DESELECT
+ Deselects all currently selected objects.
+
+ Format
+  SIGHT DESELECT
+
+ Example
+   gli> sight deselect
+   gli> 
+
+2 DIGITIZE
+ Reads data from a real or simulated digitizing tablet.
+
+ Select DIGITIZE INPUT AREA to define the input area of the digitizing
+ tablet.
+
+ Select DIGITIZE POINTS to input X and Y data by selecting points on
+ the digitizing tablet.
+
+ Select DIGITIZE BARS to input X and Y data with associated error
+ determination arrays.
+
+2 ERROR_BARS
+ Compute and display the error detemination values at the specified
+ points.
+
+ Format
+  SIGHT ERROR_BARS
+
+ Example
+   gli> sight error_bars
+   gli>
+
+2 EXIT
+ Closes SIGHT.
+
+2 FILL
+ Fills the defined polygon, according to the current interior style.
+
+ Format
+  SIGHT FILL x-data y-data
+
+ Parameters
+ x-data, y-data
+  Data specification. 
+
+ A data specification may be:
+   o  A subrange or range specification.
+   o  The name of a variable or function.
+   o  An arithmetic expression.
+
+ For more information, see Data_item
+
+ Example
+   gli> x := 0.1,0.9,0.9
+   gli> y := 0.1,0.1,0.9
+   gli> sight fill x,y
+
+2 FORMAT
+ Defines the page size for printing your drawing.
+
+ Parameters
+  A3- 0.42 x 0.297 meters (16.54 x 11.69 inches)
+  A4- 0.297 x 0.21 meters (11.69 x 8.27 inches)
+
+2 GRID
+ Draw a grid.
+
+ Format
+  SIGHT GRID x-tick y-tick x-org y-org major-x major-y
+
+ Parameters
+ Same as the parameters of the call to AXES, except that there is no
+ tick-size parameter
+
+ All command parameters may optionally be omitted.
+
+2 IMPORT
+ Reads in a CGM metafile, either in clear text or binary.
+
+2 INQUIRE
+ The inquiry function displays information about a selected object.
+ To inquire the attributes for an object, first select the object and
+ then call the inquire function.
+
+ Format
+  SIGHT INQUIRE
+
+ Example
+   gli> sight select object
+   gli> sight inquire
+
+2 MOVE
+ Moves all currently selected objects.
+
+ Format
+  SIGHT MOVE x-old y-old x-new y-new
+
+ Parameters
+  x-old,y-old  x-new,y-new
+  Data items specifying the translation vector.
+
+ Example
+   gli> sight clear
+   gli> sight text 0 0 Test the move function...
+   gli> sight select object 0 0
+   gli> sight move 0 0 0.5 0.5
+   gli>
+
+2 OPEN_DRAWING
+ Open a saved SIGHT drawing and displays its contents on the screen.
+
+ Format
+  SIGHT OPEN_DRAWING file-name 
+
+ Parameters
+ file-name
+  Specifies the name of the drawing to be opened. If you omit the file type,
+  the system uses the default file type of SIGHT. No wild cards are allowed
+  in the file name.
+   
+ Example
+   gli> sight open_drawing drawing.sight
+     .
+     .
+     .
+   gli>
+
+2 OPEN_SEGMENT
+ Opens a new segment. Using segments allows grouped objects to be
+ manipulated as one object.
+
+ Format
+  SIGHT OPEN_SEGMENT 
+
+2 OPEN_SIGHT
+ Opens the Simple Interactive Graphics Handling Tool (SIGHT) and saves
+ the current graphics context.
+
+ Format
+  SIGHT OPEN_SIGHT
+
+ Example
+   gli> sight open_sight
+   gli>
+     .
+     .
+     .
+
+2 ORIENTATION
+ Defines the page orientation for printing your drawing.
+
+2 PASTE
+ Copies the contents of the SIGHT clipboard into the drawing at the 
+ specified location.
+
+ Format
+  SIGHT PASTE x-pos y-pos
+
+ Parameters
+ x-pos, y-pos
+  Data items specifying the insertion point for the paste operation.
+
+ Example
+   gli> sight cut 0.1 0.1
+     .
+     .
+     .
+   gli> sight paste 0.5 0.5
+   gli> 
+
+2 PICK_DATA
+ Selects a single object and transfers object related data to GLI.
+ The type of data that is transferred depends on the selection.
+
+ Format
+  SIGHT PICK_DATA x-pos y-pos
+
+ Parameters
+ x-pos, y-pos
+  Data items specifying the selection position. If you omit these
+  parameters SIGHT will request a selection position using the default
+  locator input device.
+
+   Object       |  Transferred Data
+   ---------------------------------------------------------------------
+   POLYLINE,    |
+   POLYMARKER,  |
+   SPLINE,      |
+   FILL_AREA    |  Variables X and Y for the points
+   ERROR_BAR    |  Variables X and Y for the points, variables E1 and E2
+		|  for the error bar values
+   TEXT         |  Variables X and Y for the position, symbol TEXT for
+		|  the text string
+
+ Example
+   gli> sight text 0.5 0.5 String to be picked...
+   gli> sight pick_data 0.5 0.5
+   gli> calculate x
+     0
+   gli> calculate y
+     0.5
+   gli> show symbol text
+     TEXT = "String to be picked..."
+
+     Total of 1 symbol.
+   gli> 
+
+2 PLOT
+ Produce a graph of XY data. The SIGHT PLOT command automatically
+ scales and labels the axes to produce readily interpretable graphs.
+ A line is generated, starting from the first point and ending at the
+ last point using the current line attributes in the SIGHT state
+ list.
+
+ Format
+  SIGHT PLOT x-data y-data
+
+ Parameters
+ x-data, y-data
+  Data specifications.
+
+ A data specification may be:
+   o  A subrange or range specification.
+   o  The name of a variable or function.
+   o  An arithmetic expression.
+
+2 POP_IN_FRONT
+ Moves selected objects in front of other objects. 
+
+ Format
+  SIGHT POP_IN_FRONT
+
+2 POLYLINE
+ A sequence of connected straight lines is generated, starting from
+ the first point and ending at the last point using the current
+ polyline attributes from the SIGHT state list.
+
+ Format
+  SIGHT POLYLINE x-data y-data
+
+ Parameters
+ x-data, y-data
+  Data specification.
+
+ A data specification may be:
+   o  A subrange or range specification.
+   o  The name of a variable or function.
+   o  An arithmetic expression.
+
+ For more information, see Data_item
+
+ Example
+   gli> x := 0.1,0.9,0.7,0.7,0.9
+   gli> y := 0.5,0.5,0.6,0.4,0.5
+   gli> sight polyline x,y
+
+2 POLYMARKER
+ A sequence of markers is generated to identify all the given positions
+ using the current polymarker attributes from the SIGHT state list.
+
+ Format
+  SIGHT POLYMARKER x-data y-data
+
+ Parameters
+ x-data, y-data
+  Data specification.
+
+ A data specification may be:
+   o  A subrange or range specification.
+   o  The name of a variable or function.
+   o  An arithmetic expression.
+
+ For more information, see Data_item
+
+ Example
+   gli> x := 0.1,0.9,0.7,0.7,0.9
+   gli> y := 0.5,0.5,0.6,0.4,0.5
+   gli> sight polymarker x,y
+
+2 PRINT
+ Prints the drawing. Before you can print, your system must be set up
+ so SIGHT can send information to the printer.
+
+ Format
+  SIGHT PRINT
+
+ Example
+   gli> sight print
+   gli>
+  
+2 PUSH_BEHIND
+ Moves selected objects behind other objects. 
+
+ Format
+  SIGHT PUSH_BEHIND 
+
+2 QUIT
+ Closes sight.
+
+ Format
+  SIGHT QUIT
+
+2 READ_DATA_FROM_FILE
+ Opens a file and assigns variables to the data read in.
+
+ SIGHT allows you to select files from any directory. By default,
+ SIGHT uses the  current directory and dislays files with the .DAT
+ extension.
+
+2 REDRAW
+ Clears the screen and redraws the graph. 
+
+ Format
+  SIGHT REDRAW
+
+ Example
+   gli> sight redraw
+   gli>
+
+2 REMOVE
+ Deletes selected objects without copying them to the SIGHT clipboard. 
+
+ Format
+  SIGHT REMOVE
+
+ Example
+   gli> sight select all
+   gli> sight remove
+   gli>
+
+2 SAVE_AS
+ Saves the current file under a filename other than the default.
+
+ Select SAVE AS to save a SIGHT drawing under a different filename.
+
+2 SELECT 
+ Select an object or group of objects in the drawing. Selected objects
+ are surrounded by dashed lines.
+
+3 ALL
+ Selects all objects in the drawing.
+
+ Format
+  SIGHT SELECT ALL
+
+ Example
+   gli> sight select all
+   gli> 
+
+3 EXCLUDED
+ Select all but the previously selected objects.
+
+ Format
+  SIGHT SELECT EXCLUDED
+
+ Example
+   gli> sight select excluded
+   gli> 
+
+3 GROUP
+ Select all objects which are completely within a user defined 
+ rectangle.
+
+ Format
+  SIGHT SELECT GROUP x-min x-max y-min y-max
+
+ Parameters
+ x-min,x-max, y-min,y-max
+  Data items specifying a selection rectangle. If you omit these
+  parameters SIGHT will request a selection rectangle using the default
+  locator input device.
+
+ Example
+   gli> sight select group 0 1 0 1
+   gli> 
+
+3 LAST
+ Deselect the current object and select the last created object.
+
+ Format
+  SIGHT SELECT LAST
+
+ Example
+   gli> sight select last
+   gli> 
+
+3 NEXT
+ The select previous function deselects the current object and selects
+ the next object.
+
+ Format
+  SIGHT SELECT NEXT
+
+ Example
+   gli> sight select next
+   gli> 
+
+3 OBJECT
+ The select object function selects a single object. If the object 
+ is already selected, it will be deselected. If the object is part of a 
+ segment you may have to select it several times.
+
+ Format
+  SIGHT SELECT OBJECT x-pos y-pos
+
+ Parameters
+ x-pos, y-pos
+  Data items specifying the selection position. If you omit these
+  parameters SIGHT will request a selection position using the default
+  locator input device.
+
+ Example
+   gli> sight text 0.5 0.5 Test string
+   gli> sight select object 0.5 0.5
+   gli> sight set textcolor red
+
+3 PREVIOUS
+ Deselect the current object and select the previous object.
+
+ Format
+  SIGHT SELECT PREVIOUS
+
+ Example
+   gli> sight select previous
+   gli> 
+
+2 SELECT XFORM
+ Select the transformation number. Allows multiple transformations to be
+ used in the SIGHT environment.
+
+ Format
+  SIGHT SELECT XFORM number
+
+ Parameter
+  number
+ One to eight transformations may be selected.
+
+ Example
+   gli> sight select xform 2
+   gli>
+
+2 SET
+ Sets transformation parameters or graphical output primitive
+ attributes.
+
+3 CLIPPING
+ The clipping indicator in the SIGHT state list is set to the specified
+ value. To change the clipping indicator for an existing object, first
+ select the object and then change the clipping indicator.
+
+ Format
+  SIGHT SET CLIPPING switch
+
+ Parameters
+ switch
+   OFF   disable clipping against the current window
+   ON    enable clipping against the current window
+
+3 FILLCOLOR
+ The current fill area color entry in the SIGHT state list is set to the 
+ value specified by the parameter. To change the color for an existing 
+ object, first select the object and then change the fill color.
+
+ Format
+  SIGHT SET FILLCOLOR color
+
+ Parameter
+ color
+  The available colors are WHITE, BLACK, RED, GREEN, BLUE, CYAN,
+  YELLOW, MAGENTA.
+
+3 FILLSTYLE
+ The current fill area style entry in the SIGHT state list is set to the 
+ value specified by the parameter. To change the fill style for an existing
+ object, first select the object and then change the fill style. 
+
+ Format
+  SIGHT SET FILLSTYLE style
+
+ Parameter
+ style
+  HOLLOW    No filling, only draw the bounding polyline.
+  SOLID     Fill the interior of the polygon.
+  PATTERN   Fill the interior of the polygon using the style
+	    index as a pattern index.
+  HATCHED   Fill the interior of the polygon using the style
+	    index as a hatch style.
+
+ Example
+   gli> sight set fillstyle solid
+   gli> sight fill x,y
+
+3 LINECOLOR
+ The current line color entry in the SIGHT state list is set to the
+ value specified by the parameter. To change the line color for an 
+ existing object, first select the object and then change the line color.
+
+ Format
+  SIGHT SET LINECOLOR color
+
+ Parameter
+ color
+  The available colors are WHITE, BLACK, RED, GREEN, BLUE, CYAN,
+  YELLOW, MAGENTA.
+
+3 LINETYPE
+ The current linetype entry in the SIGHT state list is set to the
+ value specified by the parameter. To change the linetype for an 
+ existing object, first select the object and then change the linetype.
+
+ Format
+  SIGHT SET LINETYPE line-type
+
+ Parameter
+ line-type
+  The  values produce lines as indicated
+    SOLID                
+    DASHED              - - - - - -
+    DOTTED              . . . . . .
+    DASH_DOTTED         - . - . - . 
+    DASH_2_DOT          - .. - .. - 
+    DASH_3_DOT          - ... - ... 
+    LONG_DASH           -- -- -- --
+    LONG_SHORT_DASH     -- - -- - --
+    SPACED_DASH         -  -  -  -  
+    SPACED_DOT          .  .  .  . 
+    DOUBLE_DOT          .. .. .. .. 
+    TRIPLE_DOT          ... ... ... 
+
+ The linetype specifies a sequence of line segments and gaps which
+ are repeated to draw a polyline.
+
+3 LINEWIDTH
+ The current line width entry in the SIGHT state list is set to the
+ value specified by the parameter. To change the line width for an 
+ existing object, first select the object and then change the line width.
+
+ Format
+  SIGHT SET LINEWIDTH scale-factor
+
+ Parameter
+ scale-factor
+  The available line widths are 1pt, 2pt, 3pt and 4pt.
+
+3 MARKERCOLOR
+ The current polymarker color entry in the SIGHT state list is
+ set to the value specified by the parameter. To change the marker color
+ for an existing object, first select the object and then change the marker
+ color.
+
+ Format
+  SIGHT SET MARKERCOLOR color
+
+ Parameter
+ color
+  The available colors are WHITE, BLACK, RED, GREEN, BLUE, CYAN,
+  YELLOW, MAGENTA.
+
+3 MARKERSIZE
+ The current marker size scale factor entry in the SIGHT state list
+ is set to the value specified by the parameter. To change the marker
+ size for an existing object, first select the object and then change the
+ marker size.
+
+ Format
+  SIGHT SET MARKERSIZE scale-factor
+
+ Parameter
+ scale-factor
+  The available marker sizes are 6pt, 8pt, 10pt, 12pt, 14pt, 18pt,
+  36pt and 72pt.
+
+3 MARKERTYPE
+ The current marker type entry in the SIGHT state list is set to the
+ value specified by the parameter. To change the marker type for an 
+ existing object, first select the object and then change the marker type.
+
+ Format
+  SIGHT SET MARKERTYPE marker-type
+
+ Parameter
+ marker-type
+  Marker type values produce centred symbols as indicated
+    DOT              .
+    CROSS            +
+    ASTERISK         *
+    CIRCLE           o
+    DIAGONAL_CROSS   x
+    SOLID_CIRCLE     filled circle
+    TRIANGLE_UP      hollow triangle pointing upward
+    SOLID_TRI_UP     filled triangle pointing upward
+    TRIANGLE_DOWN    hollow triangle pointing downward
+    SOLID_TRI_DOWN   filled triangle pointing downward
+    SQUARE           hollow square
+    SOLID_SQUARE     filled square
+    BOWTIE           hollow bowtie
+    SOLID_BOWTIE     filled bowtie
+    HGLASS           hollow hourglass
+    SOLID_HGLASS     filled hourglass
+    DIAMOND          diamond
+    SOLID_DIAMOND    solid diamond
+    TRI_UP_DOWN      triangles pointing up and down
+    SOLID_TRI_LEFT   solid triangle pointing left
+    SOLID_TRI_RIGHT  solid triangle pointing right
+    HOLLOW_PLUS      hollow plus
+    O-MARKER         o marker
+
+3 SCALE
+ Defines the type of transformation to be used for producing output
+ primitives.
+
+ Format
+  SIGHT SET SCALE scale [flip]
+
+ Parameter
+ scale
+  LINEAR    normal (linear) scale
+  X_LOG     logarithmic X-scale
+  Y_LOG     logarithmic Y-scale
+  XY_LOG    logarithmic X-scale, logarithmic Y-scale
+  CURRENT   as is
+ flip
+  NONE      normal axes
+  FLIP_X    flip X-axis
+  FLIP_Y    flip Y-axis
+  FLIP_XY   flip X-axis, flip Y-axis
+  CURRENT   as is
+
+ Example
+   gli> sight set scale y_log
+     .
+     .
+     .
+  gli> 
+
+3 TEXTCOLOR
+ The current text color entry in the SIGHT state list is set to the value 
+ specified by the parameter. To change the color for an existing object, 
+ select the object, and then change the text color.
+
+ Format
+  SIGHT SET TEXTCOLOR color
+
+ Parameter
+ color
+  The available colors are WHITE, BLACK, RED, GREEN, BLUE, CYAN,
+  YELLOW, MAGENTA.
+
+3 TEXTFONT
+ The current text font in the SIGHT state list is set to the value
+ specified by the parameter. To change the text font for an existing
+ object, first select the object and then change the text font.
+
+ Format
+  SIGHT SET TEXTFONT font
+
+ Parameter
+ font
+   The available text fonts are AVANT_GARDE, COURIER, HELVETICA,
+   LUBALIN-GRAPH, SCHOOLBOOK, SOUVENIR, SYMBOL, and TIMES.
+
+3 TEXTDIRECTION 
+ The current text writing direction entry in the SIGHT state list is set
+ to the value specified by the parameter. To change the text direction of 
+ an existing object, first select the object and then change the text
+ direction.
+
+ Format
+  SIGHT SET TEXTDIRECTION direction 
+
+ Parameter
+ direction 
+   The available text directions are RIGHT, UP, LEFT and DOWN.
+
+ Example
+   gli> sight set textdirection up
+   gli> sight text 0.5 0.5 Text Direction Up
+
+ This example illustrates how to display a text with a 90-degree angle
+ of rotation.
+
+3 TEXTHALIGN
+ The current text horizontal alignment entry in the SIGHT state list 
+ is set to the value specified by the parameter. To change the horizontal
+ alignment for an existing object, first select the object and then change
+ the horizontal alignment value.
+
+ Format
+   SIGHT SET TEXTHALIGN hor-align
+
+ Parameter
+ hor-align
+  NORMAL
+  LEFT (left justified)
+  CENTER (centered)
+  RIGHT (right justified)
+
+3 TEXTSIZE
+ The current text size entry in the SIGHT state list is set to the value
+ specified by the parameter. To change the text size for an existing object, 
+ select the object, and then change the text size.
+
+ Format
+  SIGHT SET TEXTSIZE size
+
+ Parameter
+ size
+   The available text sizes are 8pt, 10pt, 12pt, 14pt, 18pt and 24pt.
+
+ Example
+   gli> sight set text size 14pt
+   gli> sight text 0.5 0.5 Text example
+
+3 TEXTVALIGN
+ The current text vertical alignment entry in the SIGHT state list 
+ is set to the value specified by the parameter. To change the vertical
+ alignment for an existing object, first select the object and then change
+ the vertical alignment value.
+
+ Format
+   SIGHT SET TEXTVALIGN ver-align
+
+ Parameter
+ ver-align
+  NORMAL
+  TOP (cursor top)
+  CAP
+  HALF (cursor center)
+  BASE
+  BOTTOM (cursor bottom)
+
+3 VIEWPORT
+ Changes the viewport limits of the normalization transformation in the SIGHT
+ state list. All objects which are given in NDC values like text are 
+ repositioned relative to the middle of the new defined viewport. 
+
+ Format
+  SIGHT SET VIEWPORT x-min x-max y-min y-max
+
+ Parameters
+ x-min,x-max, y-min,y-max
+  Data specifications.
+
+ A data specification may be:
+   o  A subrange or range specification.
+   o  The name of a variable or function.
+   o  An arithmetic expression.
+
+ For more information, see Data_item
+
+ Example
+   gli> sight set viewport 0.2,0.9 0.2,0.9
+   gli>
+     .
+     .
+     .
+  
+3 WINDOW
+ Changes the normalization transformation by defining the limits
+ of the world coordinate system (window) which is to be mapped onto
+ a specified area of the normalized device coordinate space (viewport).
+
+ Format
+  SIGHT SET WINDOW x-min x-max y-min y-max
+
+ Parameters
+ x-min,x-max, y-min,y-max
+  Data specifications.
+
+ A data specification may be:
+   o  A subrange or range specification.
+   o  The name of a variable or function.
+   o  An arithmetic expression.
+
+ For more information, see Data_item
+
+ Example
+   gli> sight set window 0,3.1415 -1,1
+   gli>
+     .
+     .
+     .
+
+2 SPLINE
+ Smooths a given sequence of data points using a natural or weighted cubic
+ spline fit, starting from the first point and ending at the last point,
+ using the current line attributes in SIGHT state list.
+
+ Format
+  SIGHT SPLINE x-data y-data smoothing
+
+ Parameters
+ x-data, y-data
+  Data specifications.
+
+ A data specification may be:
+   o  A subrange or range specification.
+   o  The name of a variable or function.
+   o  An arithmetic expression.
+
+ smoothing
+  This parameter specifies the smoothing level to be used for the
+  spline interpolation.
+   
+ Example
+   gli> x := .1,.2,.3,.6,.8
+   gli> y := .5,.1,.8,.2,.4
+   gli> sight spline x y 0
+
+2 SYMBOL
+ Generates a sequence of polymarkers to identify all the given positions
+ using the current polymarker attributes.
+
+ See
+  SIGHT POLYMARKER
+
+2 TEXT
+ A character string is generated using the current text attributes as
+ given by the SIGHT state list. The starting point location is given in
+ normalized coordinates.
+
+ Format
+  SIGHT TEXT x-pos y-pos string
+
+ Parameters
+ x-pos, y-pos
+  Data items specifying the starting position.
+ string
+  Specifies a character string.
+
+ Example
+   gli> sight set textsize 14pt
+   gli> sight text 0.1 0.5 This is a text example...
+ 
+2 WRITE_DATA_TO_FILE
+ Records data in a file.
+
+1 SIMPLEPLOT
+ Invokes the SimplePlot interface, allowing you to quickly and easily plot
+ XY graphs from two-dimensional data.
+
+ Format
+  SIMPLEPLOT
+
+ To create a simple chart you merely:
+    o  Press N (New File).
+    o  Enter a valid file specification.
+
+1 SLEEP
+ Suspends execution for a time. It is used to execute a command after a
+ certain amount of time.
+
+ Format
+  SLEEP time
+
+ Parameters
+ time
+  The number of seconds to suspend.
+
+1 SMOOTH
+ Smooth a given sequence of data points.
+
+ Format
+  SMOOTH variable [smoothing-level [segment-size]]
+
+ Parameters
+ variable
+  A variable specification.
+ smoothing-level
+  Smoothing level (1-20).
+ segment-size
+  Segment size of the variable.
+
+ Example
+   gli>
+     .
+     .
+     .
+   gli> smooth y
+
+ This example smooths a variable, named Y.
+
+1 WRITE
+ Writes one or more variables into an output file.
+
+ Format
+  WRITE file-name data-spec,...
+
+ Parameters
+ file-name
+  Specifies the name of the output file to be written. If you do not
+  specify a file type, the system uses the default file type of DAT.
+  No wild cards (* or %) are allowed in the file name.
+ data-spec
+  Data specification.
+  
+ A data specification may be:
+   o  A constant expression.
+   o  A subrange or range specification.
+   o  The name of a variable or function.
+   o  An arithmetic expression.
+
+ For more information, see Data_item
+
+ Example
+   gli> write data.dat x,y
+     100 records written to file data.dat
+   gli>
+
+1 XUI
+ Transfers control to the XUI subsystem (X-Windows).
+
+1 Data_item
+ A data item denotes one or more values. A data item may represent a
+ constant, a subrange, a variable or function designator, or an expression.
+
+ Item Type    Format                               Example
+  constant    constant-expression                  1.234
+  repetition  n OF value                           10 of 1.25
+  subrange    lower-bound..upper-bound             -5..5
+  range       initial-value(increment)final-value  -1.5(0.1)2.5
+  identifier  variable or function identifier      T_C_max
+  expression  any arithmetic expression            F+SIN(X**2)/X
+
+ An identifier is a combination of letters, digits, dollar signs ($)
+ and underscores (_), that conforms to the following restrictions:
+   o  An identifier cannot start with a digit.
+   o  An identifier must denote a unique name.
+
+ An arithmetic operator usually provides a formula for calculating
+ a value. To perform an arithmetic operation, you combine numeric
+ data items with one or more of the following operators (listed in
+ the order of precedence of the operators, from lowest to highest).
+
+ Operator       Example         Result
+  +             A+B             Sum of A and B
+  -             A-B             B subtracted from A
+  *             A*B             Product of A and B
+  /             A/B             A divided by B
+  **            A**B            A raised to the power of B
+
+ You can use parentheses in an expression to force a particular order
+ for combining the operands. For example:
+
+ Expression:            Result:
+  8 * 5/2 -4            16
+  8 * 5 / (2-4)         -20
+
+ You may use the following predefined functions and constants to
+ perform arithmetic operations:
+
+  ABS     absolute value               ARCCOS  arc cosine
+  ARCOSH  hyperbolic arc cosine        ARCSIN  arc sine
+  ARCTAN  arc tangent                  ARSINH  hyperbolic arc sine
+  ARTANH  hyperbolic arc tangent       COS     cosine
+  COSH    hyperbolic cosine            DEG     degree
+  E       e                            EXP     exponential function
+  FRAC    fractional part              GAMMA   gamma function
+  INT     truncated value              LN      natural logarithm
+  LOG     common logarithm             PI      pi
+  RAD     radian                       RAN     random number
+  SIGN    transfer of sign             SIN     sine
+  SINH    hyperbolic sine              SQR     square
+  SQRT    square root                  TAN     tangent
+  TANH    hyperbolic tangent           TRUNC   truncated value
+
+1 Examples
+ The examples will help you to understand the basic features of GLI.
+ They show how to use the various features provided by GLI, GUS and GKS
+ to easily gather and display graphics data.
+
+2 Function_diagram
+ This example generates a simple function diagram.
+
+  gks set xform ndc                         ! switch to normalized window
+  gks set text align center bottom          ! set text alignment
+
+  gus text 0.5 0.9  SINE WAVE GENERATION    ! main title
+  gus text 0.5 0.85  SIN(x)/x               ! subtitle
+  gus text 0.5 0.05  RANGE OF THE VALUE X   ! x-axis title
+
+  gks set text align left bottom            ! change text alignment
+  gus text 0.1 0.8  RANGE OF THE VALUE Y    ! y-axis title
+
+  gks set xform wc                          ! switch to world coordinates
+  gks set viewport  0.1,0.9  0.2,0.8        ! set viewport limits
+  gks set window  -15,15  -0.3,1.1          ! scale window
+
+  gus axes_2d  5,0.1  -15,-0.3  1,2  0.01   ! draw a pair of axes
+
+  define variable  x = -15(0.4)15           ! define variable
+  define function  f = sin(x)/x             ! define function
+
+  gks polyline  x f                         ! plot function curve
+
+2 File
+ This example generates a plot of some financial data contained in an
+ external file.
+
+  gks set xform ndc                         ! switch to normalized window
+  gks set text align center bottom          ! set text alignment
+
+  gus text 0.5 0.9  XYZ WIDGET COMPANY      ! main and subtitle
+  gus text 0.5 0.85  Earnings by Prod. Line, 1974-1984
+  gus text 0.5 0.05  Fiscal Year            ! y-axis title
+
+  gks set text align left bottom            ! change text alignment
+  gus text 0.1 0.8  Millions of Dollars     ! y-axis title
+
+  gks set xform wc                          ! switch to world coordinates
+  gks set viewport  0.1,0.9  0.2,0.8        ! set viewport limits
+  gks set window  1974,1984  0,100          ! scale window
+
+  gus axes_2d  1,10  1974,0  1,2  0.01      ! draw a pair of axes
+  read data.dat  x,y1,y2,y3,y4              ! read file into variables
+
+  gks set pline linetype solid              ! set solid linetype
+  gks set pline color_index black           ! set color to black
+  gks polyline  x y1                        ! draw first curve
+
+  gks set pline linetype dashed             ! set dashed linetype
+  gks set pline color_index red             ! set color to red
+  gks polyline  x y2                        ! draw second curve
+
+  gks set pline linetype dotted             ! set dotted linetype
+  gks set pline color_index green           ! set color to green
+  gks polyline  x y3                        ! draw third curve
+
+  gks set pline linetype dashed_dotted      ! set linetype to dashed-dotted
+  gks set pline color_index blue            ! set color to blue
+  gks polyline  x y4                        ! draw fourth curve
+
+  gks set pline linetype solid              ! reset linetype
+  gks set pline color_index black           ! reset color
+
+2 Spectrum_plot
+ This example generates a spectrum plot with data contained in a file
+ named SPECTRUM.DAT.
+
+  gks set xform ndc
+  gks set text color_index black
+  gks set text align center bottom
+
+  gus text 0.5 0.9   BSS 1
+  gus text 0.5 0.05  Energy (<mu>eV)
+  gks set text align left bottom
+  gus text 0.1 0.82  Intensity
+
+  gks set text align left bottom
+  gks set text color_index red
+  gus text 0.7 0.7  A : t=24
+  gks set text color_index blue
+  gus text 0.7 0.65  B : t=122
+  gks set text color_index black
+
+  gks set xform wc
+  gks set viewport  0.1,0.9  0.2,0.8
+  gks set window  -9,9  -20,200
+  gus axes_2d  2,50  -9,-20  1,1  0.01
+  gus axes_2d  2,50  9,200  0,0  -0.02
+
+  read spectrum  energy, intensity_a, intensity_b
+
+  gks set pmark type circle
+  gks set pmark color_index red
+  gks polymarker  energy intensity_a
+
+  gks set pmark type  diagonal_cross
+  gks set pmark color_index blue
+  gks polymarker energy intensity_b
+
+2 Surface_plot
+ This example generates a three-dimensional surface plot of a
+ user defined function.
+
+  gks set text font 2 stroke
+  gks set text height  0.03
+
+  gks set xform wc
+  gks set window  -2,2 -2,2
+  gks set viewport  0.1,0.9 0.1,1
+
+  gus set space 0,1 30,45
+  gus axes_3d  0.5,0,0.1 -2,-2,0 2,0,2 -0.02
+  gus axes_3d  0,0.5,0   2,-2,0  0,2,0 0.02
+
+  define variable x -2(0.2)2
+  define variable y -2(0.2)2
+  define function f = exp(-x**2-y**2)
+
+  gus surface  x y f
+
+1 Hints
+ Type the name of one of the categories listed below to obtain a list
+ of related commands and topics. To obtain detailed information on a
+ topic, press the RETURN key until you reach the "Topic?" prompt and then
+ type the name of the topic.
+
+ Topics that appear in all upper case are GLI commands.
+
+2 Command_procedures
+   Performing operations specific to command procedures.
+
+ CALL        Transfers control to a labeled subroutine
+ EXIT        Terminates a command procedure
+ GOSUB       Transfers control to a labeled subroutine
+ GOTO        Transfers control to a label in a command procedure
+ IF          Executes a command only if an expression is true
+ ON          Specifies an action to perform when an event occurs
+ RETURN      Terminates a GOSUB subroutine
+ SET LOG     Displays logging information
+ SET VERIFY  Displays command input as it is read
+ SHOW SYMBOL Displays the value of a symbol
+
+ Type ? to display the list of HINTS.
+ Type COMMAND_PROCEDURES to redisplay this particular hint.
+ Press the RETURN key before typing a command or topic name.
+
+2 Files_and_directories
+   Saving and cataloging information on storage devices.
+
+ READ        Read the contents of a file
+ SAVE        Create a GLI command file
+ SET DEFAULT Change the default directory
+ WRITE       Write data to a file
+
+ Type ? to display the list of HINTS.
+ Type FILES_AND_DIRECTORIES to redisplay this particular hint.
+ Press the RETURN key before typing a command or topic name.
+
+2 Printing
+ Printing graphics from within GLI.
+
+3 Create_Figure_File
+  To create a figure file, use the GKS OPEN_WS command and specify
+  the workstation you want to activate and its type.
+
+      gli> gks open_ws figure_file 61
+  
+  Create Your Graphic
+   Enter the GLI commands to create a graphic, or execute the
+   macro that draws the graphic.
+
+      gli> @filename
+
+  Close the Figure File
+
+      gli> gks close_ws figure_file
+
+  The graphic is stored in the default gli.eps.
+  To print the file in UNIX:
+
+      gli> $lpr gli.eps
+
+  To print the file in VMS:
+
+      gli> $print gli.eps
+  
+  For further information see appendix G in your documentation,
+  PRINTING GRAPHICS.
+
+3 Changing_Standard_Output
+ By changing the device and/or workstation type when invoking GLI
+ the graphical output will be sent to the named device instead of
+ the default (your display).
+
+ When starting GLI, specify the connection identification and the
+ workstation type, using the following format: 
+
+      gli [-c conid] [-d[isplay] display] [-t wstype]
+
+ For example, to redirect your output to a PostScript file:
+
+      % gli -c figure -t 61
+
+  Start GLI, generate your graphic, then quit GLI and print the
+  graphic from the operating system.
+
+  In UNIX:
+      %lpr gli.eps
+
+  In VMS:
+      $print gli.eps
+
+  For more information see appendix G in your documentation,
+  PRINTING GRAPHICS.
+
+2 Scaling
+   Scaling and transformation of geometrical information.
+
+ GUS AUTOSCALE_2D       Scale the window according to data items
+ GKS SET WINDOW         Define the window limits (WC)
+ GKS SET VIEWPORT       Define the viewport limits (NDC)
+ GKS SET CLIPPING       Set the clipping indicator
+ GKS SET WS_WINDOW      Define the workstation window (NDC)
+ GKS SET WS_VIEWPORT    Define the workstation viewport (DC)
+ GKS SET XFORM          Select the transformation type
+
+ Type ? to display the list of HINTS.
+ Type SCALING to redisplay this particular hint.
+ Press the RETURN key before typing a command or topic name.
+
+2 Data_entry
+   Creating or modifying data items.
+
+ DEFINE VARIABLE        Define a variable
+ DEFINE FUNCTION        Define an arithmetic function
+ READ                   Read an input file into one or more variables
+ :=                     Declare an arithmetic function or assign one or
+ (Assignment Statement) more values to a variable
+
+ Type ? to display the list of HINTS.
+ Type DATA_ENTRY to redisplay this particular hint.
+ Press the RETURN key before typing a command or topic name.
+
+1 Introduction
+ The Graphics Language Interpreter (GLI) is an interactive graphics
+ utility based on an implementation of the Graphical Kernel System (GKS)
+ as proposed to DIN (66252) and to ISO (7942). Access to GLI is by means
+ of a command language.
+
+   +-------------------------------------------------------------------+
+   |                Graphics Language Interpreter (GLI)                |
+   |        .....................................................      |
+   |        | Simple Interactive Graphics Handling Tool (SIGHT) |      |
+   |        |                  ...................              |      |
+   |        |                  |   OSF/Motif     |              |      |
+   |     ...|..................|.................|............  |      |
+   |     |             Graphics Utility System (GUS)         |  |      |
+   |  ...|...................................................|..|...   |
+   |  |          GLI           |   GLI GKS, DEC GKS, or GKSGRAL    |   |
+   |  |        Run-Time        |...................................|...|
+   |  |       Libraries        |             X11R3 or R4               |
+   |..|........................|.......................................|
+   |     Operating System (VMS, Risc/Ultrix, SunOS, HP-UX, Unicos)     |
+   |-------------------------------------------------------------------|
+   |         Other Resources         |      Graphical Resources        |
+   +-------------------------------------------------------------------+
+
+ The Graphical Kernel System (GKS) provides two-dimensional input and
+ output primitives. The output primitives include line drawing, marker
+ drawing, text drawing, polygon-filling and raster graphics primitives.
+ The graphical output can be routed to one or more workstations.
+
+ The coordinates are transformed in a two-stage transformation process
+ where the first stage is globally (normalization transformation) and
+ the second stage applies individually to each workstation (device
+ transformation).
+
+ The Graphic Utility System (GUS) contains some features, not yet supported
+ by GKS, such as drawing of axes and grids, automatic scaling of axes,
+ logarithmically-scaled windows, curve smoothing and interpolation,
+ three-dimensional transformations, surface plotting or menu-driven chart
+ generation.
+
+ In addition, GLI provides services to read free-formatted files into
+ one or more data buffers (variables) and define arithmetic functions to
+ transform or combine variables and/or functions and write them to a file.
+
+2 Getting_started
+ To invoke the Graphics Language Interpreter, use the GLI command.
+ If the load operation fails, you receive an error message. Otherwise,
+ the system displays information like the following:
+
+    o  Welcome message
+    o  Possibly messages relating to the system
+    o  Possibly useful hints for new users
+
+ The system indicates that it is ready to accept commands by displaying
+ a prompt (gli>), the default GLI prompt string, as shown below:
+
+    G L I
+    VAX version 4.5 (VMS)
+    patchlevel 4.5.30, 13 Apr 2012
+		
+    Copyright @ 1986-1998, Josef Heinen, Jochen Werner, Gunnar Grimm
+    Copyright @ 1995, ZAM, Forschungszentrum Juelich GmbH (GR-Software)
+		
+    Send bugs and comments to J.Heinen@FZ-Juelich.de
+
+    gli>
+
+ The Graphics Language Interpreter (GLI) is an interactive system. While
+ you are running GLI, you and the system conduct a dialogue: you enter a
+ command, the system responds, and so on. GLI commands consist of words
+ from the English language (generally verbs) that describe what you want
+ the system to do.
+
+ When you finish using the system, you should quit. To quit from GLI,
+ enter the QUIT command.
+
+    gli> quit
+    $
+
+2 Entering_commands
+ User access to GLI is by means of a command language. GLI commands take
+ the form of a command name followed by parameters and qualifiers. The
+ commands can be typed on the terminal or included in command procedures.
+ Command names and keywords can be abbreviated.
+
+    gli> h
+    gli> he
+    gli> hel
+    gli> help
+
+ Another facility that saves keystrokes is the ability to substitute
+ symbolic names for commands. For example, the user might equate a lengthly
+ command to a short symbolic name. Thereafter, only the short name need
+ to be typed to execute the command.
+
+    gli> explain = "help introduction"
+    gli> explain
+
+ When you enter a command at the terminal, you do not need to enter the
+ entire command on one line. If you enter a command without specifying
+ required parameters, the system prompts you for the additional information
+ it requires.
+
+    gli> set
+    _What: default
+    _Directory: <RET>
+    _Directory: data
+    gli>
+
+ Any command may be canceled entering CTRL/C (or F6) or CTRL/Z (or F10).
+ On erroneous input, the user receives a message.
+
+ The user can obtain on-line documentation by typing HELP followed by
+ the name of a command and (optionally) a qualifier. You can also press 
+ the HELP key (or a question mark) to inquire a list of possible verbs
+ for the next command keyword. If you use this feature before entering
+ any command verb, the system responds by displaying a list of GLI commands.
+
+ gli> ?
+  $          @          APPEND     CALCULATE  CASE       DEFINE     DELETE
+  DISPLAY    DO         EXIT       GKS        GOSUB      GOTO       GRIDIT
+  GRSOFT     GUS        HELP       IF         IMAGE      IMPORT     INITIALIZE
+  INQUIRE    LEARN      LOAD       MESSAGE    ON         PRINT      QUIT
+  READ       RECOVER    RETURN     RPC        SAVE       SET        SHOW
+  SIGHT      SIMPLEPLOT SLEEP      SMOOTH     WRITE      XUI
+ gli>
+
+ GLI provides several ways to tailor the command language. These
+ techniques allow you to increase the power of the command language
+ and to customize GLI to meet your needs.
+
+ You can use following techniques to tailor the command language:
+   o  Defining symbols that you can use as synonyms for command names or
+      parameters. Use the := (Assignment Statement) or DEFINE SYMBOL
+      commands to define symbols.
+   o  Writing command procedures containing groups of commands that you
+      frequently use. You can execute your command procedure to issue
+      the commands, rather than issuing each command individually.
+   o  Writing a startup command procedure that the system automatically
+      executes every time you start GLI. Your startup procedure should
+      be named GLISTARTUP.GLI. It can contain any GLI command that you
+      want to execute every time you start GLI.
+
+ You can use abbreviated forms of symbols if you define them using the
+ abbreviation character, an asterisk (*). The following example shows
+ how to create a symbol that can be abbreviated:
+
+    gli> p*age = "gks clear_ws"
+
+ The GKS command will be executed whenever the following versions of the
+ symbolic name are used:
+
+    gli> p
+    gli> pa
+    gli> pag
+    gli> page
+
+ You can use symbols in places other than at the beginning of a command
+ line. However you must use the substitution operator, an apostrophe ('),
+ to request symbol substitution.
+
+    gli> filename = "spectrum.dat"
+    gli> read 'filename' x,y
+
+ In this example, the string FILENAME is a symbol name used as a parameter
+ for the READ command; the apostrophes enclosing the string indicate to
+ the command interpreter that FILENAME is a symbol name and not a literal
+ string. (If you had not used apostrophes, the command would have looked
+ for a file called FILENAME.DAT.)
+ 
+2 Line_editing
+ Some of the keys on your keyboard provide editing functions that you
+ can use to correct mistakes you make while typing commands. The following
+ table describes these keys:
+
+   RETURN       Transmits the current line to the system for processing.
+   CTRL/B (or   Displays the last command line issued. If pressed again,
+   Up Arrow)    displays the previous command line in the recall buffer.
+		The recall buffer stores the 20 most recently issued
+		commands.
+   CTRL/C (or   During command entry cancels command processing. In
+   F6)          general CTRL/C cancels the operation in progress. CTRL/C
+		is displayed as "Cancel".
+   CTRL/L       Causes the terminal to go to the beginning of the next
+		page.
+   CTRL/R       Retypes the current input line and leaves the cursor
+		positioned at the end of the line.
+   CTRL/W       Combines the function of CTRL/R and CTRL/L.
+   CTRL/Z (or   Signals the end of the file for data entered from the
+   F10)         terminal. CTRL/Z is displayed as "Exit".
+   DELETE       Moves the cursor back by character (on the current line)
+		and deletes that character.
+   TAB          Moves the cursor to the next tab stop on the terminal.
+   Down Arrow   Displays the next (more recent) command line in the recall
+		buffer.
+
+ Line Editing Terminal Function Keys:
+
+  CTRL/A (or    Switches between overstrike mode and insert mode.
+  F14)
+  CTRL/D (or    Moves the cursor one character to the left.
+  Left arrow)
+  CTRL/E        Moves the cursor to the end of the line.
+  CTRL/F (or    Moves the cursor one character to the right.
+  Right arrow)
+  CTRL/H (or    Moves the cursor to the beginning of the line.
+  BACKSPACE,F12)
+  CTRL/J (or    Deletes the word left to the cursor.
+  LINEFEED,F13)
+  CTRL/U        Deletes characters from the beginning of the line to the
+		cursor.
+
+ If you suspect that your system is not doing what you think it should
+ be doing, press CTRL/T. CTRL/T displays a single line of statistical
+ information about your GLI session.
+
+2 Help_information
+ To obtain online documentation for a command, enter the command HELP
+ with the name of the command as parameter.
+
+    gli> help gks
+
+ The system responds by displaying a description of the GKS command.
+ It also list GKS topics that you can get more information about. For
+ example you type the following command to obtain information about
+ the GKS SET command.
+
+    gli> help gks set
+
+ If you need help, but do not know what command or system topic to
+ specify, enter the command HELP with the word HINTS as a parameter.
+ Each task name listed in the HINTS text is associated with a list of
+ related command names and system information topics.
+
+ If you are a new user of GLI, enter the command HELP with the word
+ INTRODUCTION as a parameter. In response to the "Introduction Subtopic?"
+ prompt, you should type the name of one of the categories listed below
+ to obtain specific explanations of related topics.
+
+ To get familiar with all features of the Graphics Language Interpreter,
+ type an asterisk (*). You will get detailed and specific informations
+ about the important features of GLI. Upon reading this explanations,
+ you should be able to create simple graphs with one or multiple curves.
+
+2 Creating_data_items
+ All data used for (graphical) output operations is retrieved from one
+ or more data items. A data item denotes one or more values. A data item
+ may represent a list of constants, a subrange, a variable or function
+ designator, or an expression.
+
+ You can use following techniques to create or modify a data item:
+   o  Read an input file and assign the contents to one or more variables.
+      Use the READ command to read free-formatted files into variables.
+   o  Request graphical input from a locator or stroke device. Use the
+      GKS REQUEST command to provide a position or a point sequence.
+   o  Define variables that you can use whenever a data item is required.
+      Use the := (Assignment Statement) or DEFINE VARIABLE commands.
+   o  Define arithmetic functions that you can use to combine variables
+      and/or functions in a problem-specific way. Use the = (Assignment
+      Statement) or the DEFINE FUNCTION commands.
+
+ The assignment statement may be used to
+   o  define a symbol
+      symbol  [:]= "equ_symbol"
+   o  assign one or more values to a variable
+      variable   = { repetition | subrange | range ,... }
+      variable  := { constant | repetition | subrange | range |
+		     variable | function | expression ,... }
+   o  declare an arithmetic function
+      function   = constant | variable | function | expression
+
+ The general format of an assignment statement is
+   identifier [:]= data-item
+
+2 Data_item_types
+ A data item denotes one or more values. A data item may represent a
+ constant, a subrange, a variable or function designator, or an expression.
+
+ Item Type    Format                               Example
+  constant    constant-expression                  1.234
+  repetition  n OF value                           10 of 1.25
+  subrange    lower-bound..upper-bound             -5..5
+  range       initial-value(increment)final-value  -1.5(0.1)2.5
+  identifier  variable or function identifier      T_C_max
+  expression  any arithmetic expression            F+SIN(X**2)/X
+
+ An identifier is a combination of letters, digits, dollar signs ($)
+ and underscores (_), that conforms to the following restrictions:
+   o  An identifier cannot start with a digit.
+   o  An identifier must denote a unique name.
+
+ An arithmetic operator usually provides a formula for calculating
+ a value. To perform an arithmetic operation, you combine numeric
+ data items with one or more of the following operators (listed in
+ the order of precedence of the operators, from lowest to highest).
+
+ Operator       Example         Result
+  +             A+B             Sum of A and B
+  -             A-B             B subtracted from A
+  *             A*B             Product of A and B
+  /             A/B             A divided by B
+  **            A**B            A raised to the power of B
+
+ You can use parentheses in an expression to force a particular order
+ for combining the operands. For example:
+
+ Expression:            Result:
+  8 * 5/2 -4            16
+  8 * 5 / (2-4)         -20
+
+ You may use the following predefined functions and constants to
+ perform arithmetic operations:
+
+  ABS     absolute value               ARCCOS  arc cosine
+  ARCOSH  hyperbolic arc cosine        ARCSIN  arc sine
+  ARCTAN  arc tangent                  ARSINH  hyperbolic arc sine
+  ARTANH  hyperbolic arc tangent       COS     cosine
+  COSH    hyperbolic cosine            DEG     degree
+  E       e                            ERF     error function
+  ERFC    complementary error function EXP     exponential function
+  FRAC    fractional part              GAMMA   gamma function
+  INT     truncated value              LN      natural logarithm
+  LOG     common logarithm             PI      pi
+  RAD     radian                       RAN     random number
+  SIGN    transfer of sign             SIN     sine
+  SINH    hyperbolic sine              SQR     square
+  SQRT    square root                  TAN     tangent
+  TANH    hyperbolic tangent           TRUNC   truncated value
+
+2 Displaying_data
+ To create a graph initially, it is first necessary to prepare the
+ data which is to be plotted. At least two data items will be necessary -
+ one for the horizontal (X) values, and one for the vertical (Y) values.
+ Once the data has been specified to GLI we are ready to graph.
+
+ Five commands will produce results:
+      X := -10..10
+      Y = X**2
+      GUS AUTOSCALE_2D X Y
+      GUS AXES_2D
+      GKS POLYLINE X Y
+
+2 Output_functions
+ The graphical information that is generated by GKS or GUS and routed to
+ all active workstations is built up of basic pieces called output
+ primitives.
+
+   o  POLYLINE    GKS (or GUS) generates a set of connected lines defined
+		  by a point sequence
+   o  POLYMARKER  GKS (or GUS) generates symbols of one type centred at
+		  given positions
+   o  TEXT        GKS (or GUS) generates a character string at a given
+		  position
+   o  FILL AREA   GKS generates a polygon which may be hollow or filled
+		  with a uniform color, a pattern or a hatch style
+
+ Each primitive comprises
+   a) the geometric information, text data, and raster information
+      as specified
+   b) the attribute information which controls how the primitives are
+      to be represented on the workstation.
+
+2 Windows_and_viewports
+ For all output primitives a normalization transformation is used to
+ transform world coordinates (WC) into normalized device coordinates
+ (NDC) in the closed ranged [0,1]x[0,1]. A normalization transformation
+ is specified by defining the limits of an area in the world coordinate
+ system (WINDOW) which is to be mapped onto a specified area of the
+ normalized device coordinate space (VIEWPORT).
+
+ The viewport associated with a particular normalization transformation
+ can be used to define a clipping rectangle as well as, with the window,
+ specifying the normalization transformation. Clipping to the viewport
+ can either be enabled or disabled. The normalized device coordinate
+ space can be regarded as a workstation independent abstract viewing
+ surface. Each open workstation can select independently some part of
+ the NDC space to be displayed somewhere on the display surface space.
+
+ A workstation transformation is specified by defining the limits of
+ an area in the normalized device coordinates system (WORKSTATION
+ WINDOW) which is to be mapped onto a specified area of the device
+ coordinate space (WORKSTATION VIEWPORT).
+
+	(normalized device
+  1+-----coordinate space)------+    +---(display surface space)---+
+   |                            |    |                             |
+   |   +--WORKSTATION WINDOW--+ |    |                             |
+   |   |                      | |    |  +--WORKSTATION VIEWPORT--+ |
+   | +----VIEWPORT----+       | |    |  |                        | |
+   | |                |       | |    |  |                        | |
+   | |                |       |========>|                        | |
+   | |     WINDOW     |       | |    |  |                        | |
+   | |                |       | |    |  |                        | |
+   | |                |-------+ |    |  |                        | |
+   | +------(WC)------+         |    |  +------------------------+ |
+   |                            |    |                             |
+  0+-----------(NDC)------------+    +------------(DC)-------------+
+   0                            1
+
+ These transformations perform mapping between three coordinate systems:
+   o  World Coordinates (WC), as defined by the user
+   o  Normalized Device Coordinates (NDC) in the closed ranged [0,1]x[0,1],
+      used to define a uniform coordinate system for all workstations.
+   o  Device Coordinates (DC), one coordinate system per workstation
+      representing its display space coordinates.
+
+ The following example would scale a data window and position it in the
+ upper left hand quarter of the current workstation viewport:
+
+      GKS SET WINDOW -3.1415,3.1415 -1,1
+      GKS SET VIEWPORT 0,0.5 0.5,1
+ 
+ Subsequent output primitives will be mapped into the specified window.
+ Lines that exceed the window boundaries will be clipped depending
+ on the state of the GKS clipping indicator.
+
+  For more information, see HINTS Scaling.
+
+2 Graphical_attributes
+ Each output primitive may have two types of attributes:
+    a) geometric attributes, which affect the shape or size of
+       a primitive;
+    b) non-geometric attributes, which affect the appearance of
+       a primitive.
+
+ Output Primitive Attributes:
+    o  POLYLINE     linetype, linewidth scale factor, color index
+    o  POLYMARKER   marker type, marker size scale factor, color index
+    o  TEXT         character height, character up vector, character
+		    expansion factor, text path, character spacing,
+		    text alignment, text font and precision, color
+		    index
+    o  FILL AREA    interior style, style index, color index
+
+2 Using_Autoplot
+ AUTOPLOT is a form-driven graphics plotting utility which allows you
+ to quickly and easily plot numeric data files in the form of linear
+ or logarithmic charts.
+
+ To create a simple chart you merely:
+    o  Invoke AUTOPLOT.
+    o  Fill in the menu.
+    o  Press <PLOT> (PF1).
+
+ When the AUTOPLOT Linear Chart utility is loaded using the GUS AUTOPLOT
+ command, a blank Linear chart menu is displayed on your screen.
+ To make an initial plot of your input file, fill in a file
+ specification and then press the <PLOT> key (PF1). Then you may enter
+ optional information, such as plot specifications, axes specifications,
+ Linear chart annotations, or legend labels.
+
+ Linear Charts Form - Part A. PLOT SPECIFICATION
+
+ Field                          Description
+  FILE          You specify an input file for data to be plotted.
+		Multiple plots can be performed on the same set of axes
+		by changing the filename as many times as necessary.
+		The file specification may contain wildcard characters.
+  OUTPUT        You may specify the output primitive. Use the
+  PRIMITIVE     right/left arrow keys to select the desired display
+		element.
+  SMOOTHING     You may specify a smoothing level in the range 0-20.
+  LEVEL         Smoothing is restricted to line orientated display
+		elements (polyline, spline, least-square fit).
+
+ Linear Charts Form - Part B. AXES
+
+ Field                          Description
+  AXES          In this field, you specify whether you want linear
+		or logarithmic axes for your Linear chart. Linear is
+		the default and is displayed in the initial Linear
+		chart form. Use the right/left arrow keys to change
+		the current setting.
+  GRID          The major tics of your Linear chart have solid grid
+		lines associated with them. Use the right/left arrow
+		keys to confirm or deny the display of this grid.
+  MIN X         You specify the minimum value for the X axis in your
+		Linear chart. This value can be negative, positive or
+		zero. It must be less than the value specified for
+		the "MAX X" field.
+  UNITS BETWEEN You specify the length of the interval between tick-
+  X TICS        marks for the X axis.
+  MAX X         You specify the maximum value for the X axis in your
+		Linear chart. This value can be negative, positive or
+		zero. It must be greater than the value specified for
+		the "MIN X" field.
+  MAJOR X-TIC   You specify the number of minor tick intervals between
+  COUNT         major tick marks for the X axis. Values of 0 or 1
+		imply no minor ticks.
+  MIN Y         You specify the minimum value for the Y axis in your
+		Linear chart. This value can be negative, positive or
+		zero. It must be less than the value specified for
+		the "MAX Y" field.
+  UNITS BETWEEN You specify the length of the interval between tick-
+  Y TICS        marks for the Y axis.
+  MAX Y         You specify the maximum value for the Y axis in your
+		Linear chart. This value can be negative, positive or
+		zero. It must be greater than the value specified for
+		the "MIN Y" field.
+  MAJOR Y-TIC   You specify the number of minor tick intervals between
+  COUNT         major tick marks for the Y axis. Values of 0 or 1
+		imply no minor ticks.
+
+ Linear Charts Form - Part C. ANNOTATION
+
+ Field                          Description
+  Main          You may specify a title of up to 34 alphanumeric
+		characters for your Linear chart. This title is
+		displayed centered across the top of your screen.
+  X Axis        You may specify a title of up to 20 alphanumeric
+		characters for the X axis of your Linear chart.
+		The title is displayed below the X axis labels at the
+		bottom of your screen.
+  Sub           You may specify a subtitle of up to 34 alphanumeric
+		characters for your Linear chart. This title is
+		displayed centered just below your Linear chart main
+		title.
+  Y Axis        You may specify a title of up to 20 alphanumeric
+		characters for the Y axis of your Linear chart.
+		The title is displayed above the Y axis column above
+		the top of the plotted chart.
+  LEGENDS       You may cause descriptive legend labels to be
+		displayed together with your chart for multiple plots
+		of data. Up to eight legend labels may be declared.
+		The first label is associated with the first plotted
+		line, the second with the second, and so forth.
+		The legend labels are displayed immediately after the
+		plotting of the axes, while the appropriate line or
+		marker type is added to the proper legend label after
+		the associated plotted line is complete.
+
+ Linear Charts Form - Part D. FORMAT SPECIFICATION
+
+ Field                          Description
+  WINDOW        You may select a viewport for the next chart you wish
+		to plot. This allows combining of up to four Linear
+		charts into one picture.
+  SIZE          In this field, you may specify the viewport size for
+		your picture.
+
+2 Command_procedures
+ A command procedure is a file that contains a sequence of GLI commands.
+ You create a command procedure by using a text editor (like EDT) to create
+ a file. Then you will fill the file with GLI commands. Execute the
+ command procedure by typing an at sign (@) followed by the name of the
+ file containing the commands. For example, to execute the command
+ procedure PLOT.GLI, enter the following command string:
+
+    gli> @plot
+
+  Use command procedures to catalog frequently used sequences of
+  commands. A command procedure can contain:
+    o  Any valid GLI command.
+    o  Comment lines.
+    o  Labeled subroutines.
+    o  A request to execute another command procedure.
+
+ The default file type for a GLI command procedure is GLI. The following
+ example creates a simple plot of a file named DATA.DAT:
+
+			+------------PLOT.GLI------------+
+	      comment ->| ! Create a simple plot         |
+		    +---| READ DATA.DAT X,Y              |
+		    |   | GUS AUTOSCALE_2D X Y           |
+    command strings |   | GUS AXES_2D                    |
+		    |   | GKS POLYLINE X Y               |
+		    +---| EXIT                           |
+			+--------------------------------+
+
+ When you want your command procedure to choose a course of action
+ depending on some piece of information you provide, use the IF command.
+ When you want your command procedure to skip a number of steps for some
+ reasons, use the GOTO command. To transfer control to a subroutine
+ specified by the label, use the GOSUB command. The RETURN command
+ terminates the GOSUB command procedure, returning control to the
+ command following the calling GOSUB statement.
+
+			+------------PLOT.GLI------------+
+	      comment ->| ! Create a simple plot         |
+		    +---| MESSAGE Reading file DATA.DAT  |
+		    |   | READ DATA.DAT X Y              |
+    command strings |   | GOSUB AXES                     |
+		    |   | GKS POLYLINE X Y               |
+		    +---| EXIT                           |
+	command label ->| AXES:   ! Plot a pair of axes  |
+		    +---| GUS AUTOSCALE_2D X Y           |
+   GOSUB subroutine |   | GUS AXES_2D                    |
+		    +---| RETURN                         |
+			+--------------------------------+
+
+ Use the SAVE command to save previously entered commands. This saves
+ time because you need not use an editor to create a command procedure.
+
+2 Startup_command_files
+ Startup command files establish various settings and definitions at the
+ start of your GLI session. First, GLI reads a system-wide startup command
+ file at the beginning of your session. Then GLI looks for a file named
+ GLIINI.GLI in your login directory and processes the commands in that file.
+
+ Here are some typical commands that you might put in a startup command
+ file:
+
+	+------------GLIINI.GLI------------+
+	| SET NOLOG                        |
+	| GKS SET TEXT FONTPREC 1 STROKE   |
+	| EN*TER = "DEFINE VARIABLE"       |
+	| C = "GUS AUTOPLOT"               |
+	| L*INE = "GKS POLYLINE"           |
+	+----------------------------------+
+
+ To generate a listing of the system-wide GLI startup command file, use
+ the DCL command TYPE GLI$STARTUP.
+
+2 Journal_and_recovery
+ During an interactive session, you may enter many command strings. To see
+ these command strings after you have processed them, press the up arrow
+ key. Then, if you want to process the command again, press RETURN.
+ GLI extends command recall to the last 20 commands.
+
+ GLI's journal facility keeps track of each command you entered during
+ your GLI session in a special file called the journal file. The journal
+ file is normally stored in the current directory and has the file name
+ GLI.JOU. If your GLI session ends abruptly because of a system
+ interruption, the journal file is saved. Then, when you start a new GLI
+ session, use the RECOVER command to restore your work.
+ 
+ To save the commands entered during your GLI session in a file other than
+ GLI.JOU, use the SAVE command. 
+
+
+    G L I
+    VAX version 4.5 (VMS)
+    patchlevel 4.5.30, 13 Apr 2012
+			
+    Copyright @ 1986-1998, Josef Heinen, Jochen Werner, Gunnar Grimm
+    Copyright @ 1995, ZAM, Forschungszentrum Juelich GmbH (GR-Software)
+		
+    Send bugs and comments to J.Heinen@FZ-Juelich.de
+	
+    gli> read data.dat x,y
+    gli> gus autoscale_2d x y
+    gli> gus axes_2d
+    gli> gks polyline x y
+    gli> save data.gli
+    gli> @data
+
+2 Terminology
+ This clause gives definition of the important terms of the Graphic
+ Language Interpreter (GLI). As far as possible, commonly accepted graphics
+ terminology is used.
+
+ attribute
+    A particular property that applies to a display element (output
+    primitive). : Character spacing, polyline color index.
+ clipping
+    Removing parts of display elements that lie outside a given boundary,
+    usually a window or viewport.
+ color table
+    A workstation dependent table, in which the entries specify the values
+    of the red, green and blue intensities defining a particular color.
+ device coordinates
+    A coordinate expressed in a coordinate system that is device-dependent.
+    Note: In GKS, DC units are metres on a device capable of a precisely
+    scaled image, and appropriate workstation dependent units otherwise.
+ display element
+    (Also output primitive)
+    A basic graphic element that can be used to construct a display image.
+    : polyline, polymarker, text.
+ fill area
+    A GKS output primitive consisting of a polygon (closed boundary) which
+    may be hollow or filled with a uniform color, a pattern, or a hatch
+    style.
+ locator device
+    A GKS logical input device providing a position in world coordinates.
+ marker
+    A glyph with a specifies appearance which is used to identify a
+    particular location. In GKS, markers may be scaled.
+ normalization transformation
+    A transformation that maps the boundary and interior of a window to the
+    boundary and interior of a viewport. Note: In GKS this transformation
+    maps positions in world coordinates to normalized device coordinates..
+ normalized device coordinates (NDC)
+    A coordinate specified in a device-independent intermediate coordinate
+    system, normalized in some range, in GKS, typically 0 to 1. Note: In
+    GKS, during an intermediate state the coordinates may lie outside the
+    defined range, but associated clipping information insures that the
+    output does not exceed the coordinate range [0,1]x[0,1].
+ output primitive
+    A display element. Output primitives in GKS are POLYLINE, POLYMARKER,
+    TEXT, FILL AREA and PIXEL ARRAY.
+ polyline
+    A GKS output primitive consisting of a set of connected lines.
+ polymarker
+    A GKS output primitive consisting of a set of locations to be indicated
+    by a marker.
+ text
+    A GKS output primitive consisting of a character string.
+ text precision
+    An attribute describing the fidelity with which character position,
+    character size, character orientation and character font of output
+    matches that requested by the user. In order of increasing fidelity,
+    the precisions are string, character, and stroke.
+ viewport
+    Part of the normalized device coordinate space. Note: In GKS, this
+    definition is restricted to a rectangular region of normalized
+    device coordinate space used in definition of the normalization
+    transformation.
+ window
+    A predefined part of virtual space. Note: In GKS, this definition
+    is restricted to a rectangular region of the world coordinate space
+    used for the definition of the normalization transformation.
+ workstation
+    GKS is based on the concept of abstract graphical workstations which
+    provide the logical interface through which the applications program
+    controls physical devices.
+ workstation transformation
+    A transformation that maps the boundary and interior of a workstation
+    window into the boundary and interior of a workstation viewport (part
+    of display space), preserving aspect ratio. Note: In GKS, this 
+    transformation maps positions in normalized device coordinates to
+    device coordinates. The effect of preserving aspect ratio is that the
+    interior of the workstation window may not map to the whole
+    workstation viewport.
+ workstation viewport
+    A portion of display space currently selected for graphics.
+ workstation window
+    A rectangular region within the normalized device coordinate system
+    which is represented on a display space.
+ world coordinates (WC)
+    A device independent Cartesian coordinate system used for specifying
+    graphical input and output.
+
+1 Math_Functions
+ Provide formulas for calculating values.
+
+ Standard
+  +,-,/,*,**,abs(),arccos(),arcosh(),arcsin(),arctan(),arsinh(),artanh(),
+  cos(),cosh(),deg(),erf(),erfc(),exp(),frac(),gamma(),int(),ln(),log(),
+  max(),mean(),min(),rad(),ran(),rand(),sign(),sin(),sinh(),size(),sqr(),
+  sqrt(),stddev(),tan(),tanh(),total(),trunc()
+
+ Predefined Constants
+  pi,e
+
+ Parenthesis
+  ( and )
+
+ Special Operators
+  a..b, a(b)c
+

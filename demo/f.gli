@@ -1,0 +1,13 @@
+gks clear_ws
+gks set xform ndc
+gks set text height 0.1
+gks set text font -51 stroke
+gks text .1 .9 fillfont-51
+gks set text font -1 stroke
+gks text .1 .7 proportional-1
+gks set text font -101 stroke
+gks text .1 .5 kursiv-101
+gks set text font -201 stroke
+gks text .1 .3 aequidistant-201
+gks set text font -301 stroke
+gks text .1 .1 kursiv-301

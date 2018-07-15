@@ -1,0 +1,25 @@
+gks clear_ws
+gks set xform wc
+read 'GLI_DEMO'xdemo5.dat z
+x := 1..100
+y := 1..100
+h := 0(10)200
+f = (z-2800)*0.045
+zz := f
+smooth zz 20
+xmin = min(x)
+xmax = max(x)
+ymin = min(y)
+ymax = max(y)
+zmax = max(zz)
+zmin = min(zz)
+gks set viewport 0.09 0.9 0.13 0.87
+gks set window xmin xmax ymin ymax
+gus set space zmin zmax 30 45
+gks set fill color cyan
+gus surface x y zz filled_mesh
+gus surface x y zz z_shaded_mesh
+gus surface x y zz mesh
+gus autoscale_3d x y zz
+gus axes_3d
+

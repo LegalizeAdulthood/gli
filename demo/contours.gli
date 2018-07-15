@@ -1,0 +1,30 @@
+gks set xform wc
+gks set text height 0.03
+gks set viewport 0.05 0.95 0.05 0.95
+gks set window 1 100 1 100
+gus set space 2800 4400 0 90
+
+x := 1..100
+y := x
+h := 2800(100)4400
+read 'GLI_DEMO'contours z
+
+gus contour x y h z 100 5
+gosub wait
+gus surface x y z colored_mesh
+gosub wait
+gus surface x y z cell_array
+gosub wait
+gus set space 2800 4400 30 45
+gus contour x y h z
+gosub wait
+gks set viewport 0.09 0.91 0.09 0.91
+gus set space 2000 6000 30 45
+gus surface x y z mesh
+gus axes_3d 0 0 200 1 1 2000 0 0 5
+return
+
+wait:
+  inquire answer "Press Return to continue..."
+  gks clear_ws
+  return

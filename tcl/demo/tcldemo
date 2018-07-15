@@ -1,0 +1,1804 @@
+#
+# tcldemo - GLI script that demonstrates interaction between GLI and Tcl/Tk
+#
+# Syntax:
+#   gli -file tcldemo
+#
+# Environments:
+#   GLI_GKSM - name for GLI generated GKSM metafile (gli.gksm)
+#   GLI_POINTS - maximum number of points (65536)
+#
+# Author:
+#   G.Grimm
+#
+
+if {[file writable .] == 0} {
+  puts "gli: cannot write to current (working) directory"
+  exit
+}
+
+DEFINE LOGICAL GLI_GKS_DOUBLE_BUF True
+DEFINE LOGICAL GLI_GKS_CONVEX_SHAPE True
+
+if {[info exists env(GLI_GKSM)]} {
+  set td_env(gli_gksm) $env(GLI_GKSM)
+} else {
+  set td_env(gli_gksm) gli.gksm
+}
+if {[info exists env(GLI_POINTS)]} {
+  set td_env(gli_points) $env(GLI_POINTS)
+} else {
+  set td_env(gli_points) 65536
+}
+
+set Debug 0
+set Development 0
+
+#
+# Procedures
+#
+
+if {$Debug} {
+  puts Procedures
+} else {
+  proc tkerror {err} {
+    ErrorBox ?$err
+  }
+}
+
+proc UpdateScalers {} {
+  global parms angle index
+
+  foreach dim {x y z} {
+    set frame [format "%sframe" $dim]
+    UpdateScaler .e.$frame.from $parms($dim,from,value) $parms($dim,from,min) \
+      $parms($dim,from,max)
+    UpdateScaler .e.$frame.to $parms($dim,to,value) $parms($dim,to,min) \
+      $parms($dim,to,max)
+  }
+
+  .e.angleframe.xangle set $angle(x)
+  .e.angleframe.yangle set $angle(y)
+
+  foreach type {color marker line linecolor} {
+    .menu_$type activate $index($type)
+    .menu_$type invoke $index($type)
+  }
+}
+
+proc InitializeDimensionList {size} {
+  global parms angle gli
+  global dimension index
+
+  set dimension(list) ""
+
+  set x [expr int(sqrt($size))]
+  set xdim -1
+
+  while {$x >= 1} {
+    set y [expr $size/$x]
+    if {[expr $x*$y] == $size} {
+      if {$xdim == -1} {
+        set xdim $x
+        set ydim $y
+      }
+      lappend dimension(list) "$x x $y"
+      if {$x != $y} {
+        set dimension(list) [linsert $dimension(list) 0 "$y x $x"]
+      }
+    }
+    incr x -1
+  }
+
+  set dimension(x) $xdim
+  set dimension(y) $ydim
+
+  return 0
+}
+
+
+proc LoadData {} {
+  global gli td_env
+  global parms flag
+  global picture_mask
+  global title
+
+  set datafile $gli(dir)/$gli(filename)
+  if {![file exists $datafile]} {
+    ErrorBox FileNotFound
+  } else {
+    if {![file readable $datafile]} {
+      ErrorBox PermissionDenied
+    } else {
+      if {$gli(filefilter) && $gli(filefiltercommand) != ""} {
+	if {![file executable $gli(filefiltercommand)]} {
+	  ErrorBox CantExecuteFiltercommand
+          return
+	}
+        set datafile "|$gli(filefiltercommand) $datafile"
+      }
+      : READ \"$datafile\" TMP_DATA
+
+      if {[catch {set size [: PRINT SIZE(TMP_DATA)]}]} {
+        ErrorBox EmptyFile
+      } else {
+        if {$size > $td_env(gli_points)} {
+          ErrorBox FileTooLarge
+        } else {
+          : DATA := TMP_DATA
+
+          if {$flag(data_loaded) == 0} {
+            set flag(data_loaded) 1
+          }
+
+          InitializeDimensionList $size
+          InitMode $gli(actMode)
+
+        }
+        : DELETE VARIABLE TMP_DATA
+        set title(main) $gli(filename)
+      }
+    }
+  }
+}
+
+
+proc Reset {{ymin {}} {ymax {}} {xmin {}} {xmax {}}} {
+  global angle parms flip flag index
+  global visible
+  global dimension
+
+  set angle(x) 50
+  set angle(y) 30
+  if {$ymin == ""} {
+    set ymin 1
+    set ymax 64
+    set xmin 1
+    set xmax 64
+  }
+  set parms(y,from,min) $ymin
+  set parms(y,from,max) $ymax
+  set parms(y,from,value) $ymin
+  set parms(y,to,min) $ymin
+  set parms(y,to,max) $ymax
+  set parms(y,to,value) $ymax
+  set parms(x,from,min) $xmin
+  set parms(x,from,max) $xmax
+  set parms(x,from,value) $xmin
+  set parms(x,to,min) $xmin
+  set parms(x,to,max) $xmax
+  set parms(x,to,value) $xmax
+
+  set dimension(x) $xmax
+  set dimension(y) $ymax
+
+  if {$flag(data_loaded)} {
+    set zmin [expr int(floor([: PRINT MIN(Z)]))]
+    set zmax [expr int(ceil([: PRINT MAX(Z)]))]
+    if {$zmax == $zmin} {incr zmax 1}
+  } else {
+    set zmin 0
+    set zmax 64
+  }
+
+  set min [expr 1<<29]
+  while {$min > $zmin} {set min [DecrZmax $min]}
+  set max [expr -(1<<29)]
+  while {$max < $zmax} {set max [IncrZmax $max]}
+
+  set parms(z,from,min) $min
+  set parms(z,from,value) $zmin
+  set parms(z,to,value) $zmax
+  set parms(z,to,max) $max
+  set parms(z,from,max) [expr $parms(z,to,value)-1]
+  set parms(z,to,min) [expr $parms(z,from,value)+1]
+
+  set index(color) 4
+  set index(marker) 4
+  set index(line) 3
+  set index(linecolor) 3
+
+  set flip(x) 0
+  set flip(y) 0
+  set flip(z) 0
+
+}
+
+#
+#  Redraw - tell GLI to redraw the picture, if necessary
+#
+
+proc Redraw {} {
+  global Debug
+  global picture_mask
+  global angle parms flip flag title gli dimension
+  global color_list menuvar
+  global visible
+  
+  DefineCursor {All}
+
+  if {$flag(data_loaded) && [expr $picture_mask & (1<<$visible)]} {
+    DefineCursor {All} watch
+
+    set flip_txt "flip_"
+    foreach dim {x y z} {
+      if {$flip($dim)} {set flip_txt $flip_txt$dim}
+    }
+    if {$flip_txt == "flip_"} {set flip_txt "none"}
+
+    set clear_pic 0
+
+    : GKS ACTIVATE METAFILE
+
+    : GUS SET SPACE $parms(z,from,value) $parms(z,to,value) $angle(y) $angle(x)
+    : GUS SET SCALE LINEAR $flip_txt
+    : GKS SET TEXT HEIGHT 0.025
+    set minx $parms(x,from,value) 
+    set maxx $parms(x,to,value)
+    set miny $parms(y,from,value)
+    set maxy $parms(y,to,value)
+
+    if {[lsearch {0 1 2} $visible] != -1} {
+      : NEWZ := Z
+      if {$dimension(text) == "Z"} {
+        : DIMX := [expr $parms(x,to,value)-$parms(x,from,value)+1]
+        : NEWX := $parms(x,from,value)..$parms(x,to,value)
+        : NEWY := $parms(y,from,value)..$parms(y,to,value)
+        : REDIM NEWZ 1 $dimension(x) 1 $dimension(y) $minx $maxx $miny $maxy
+      } else {
+        : NEWX := X
+        : NEWY := Y
+
+        set sizex [: PRINT SIZE(X)]
+        set sizey [: PRINT SIZE(Y)]
+        set array_size_x [expr $parms(x,to,max)-$parms(x,from,min)]
+
+        set x1 [expr double($parms(x,from,value)-$parms(x,from,min))/ \
+                     $array_size_x * ($sizex-1) + 1];
+        set x2 [expr double($parms(x,to,value)-$parms(x,from,min))/ \
+                     $array_size_x * ($sizex-1) + 1];
+        set x1 [expr int(ceil($x1))]
+        set x2 [expr int(floor($x2))]
+
+        set array_size_y [expr $parms(y,to,max)-$parms(y,from,min)]
+        set y1 [expr double($parms(y,from,value)-$parms(y,from,min))/ \
+                     $array_size_y * ($sizey-1) + 1];
+        set y2 [expr double($parms(y,to,value)-$parms(y,from,min))/ \
+                     $array_size_y * ($sizey-1) + 1];
+        set y1 [expr int(ceil($y1))]
+        set y2 [expr int(floor($y2))]
+
+        if {$x1 > $x2 || $y1 > $y2 || ($x1 >= $x2 && $y1 >= $y2)} {
+          set clear_pic 1
+        } else {
+          : DIMX := [expr $x2-$x1+1]
+          : REDIM NEWX 1 $sizex 1 1 $x1 $x2 1 1
+          : REDIM NEWY 1 1 1 $sizey 1 1 $y1 $y2
+          : REDIM NEWZ 1 $sizex 1 $sizey $x1 $x2 $y1 $y2
+        }
+      }
+    }
+    if {$minx == $maxx} {
+      set minx [expr $minx-0.5]
+      set maxx [expr $maxx+0.5]
+    }
+    if {$miny == $maxy} {
+      set miny [expr $miny-0.5]
+      set maxy [expr $maxy+0.5]
+    }
+    : GKS SET WINDOW $minx $maxx $miny $maxy
+
+    if {!$clear_pic} {
+      switch $visible {
+
+       0 { ### SURFACE
+           : GKS CLEAR_WS
+           : GKS SET VIEWPORT 0.15 0.9 0.10 0.85
+           : GKS SET TEXT EXPFAC 0.7
+           : GUS AXES_3D -1,-1,-1
+           : GUS TITLES_3D \" $title(x) \" \" $title(y) \" \" $title(z) \"
+           : GKS SET TEXT EXPFAC 1
+
+           if {$flag(show_maintitle)} {
+             : GKS SET XFORM NDC
+             : GKS SET TEXT ALIGN RIGHT HALF
+             : GKS TEXT 0.95 0.96 $title(main)
+             : GKS SET TEXT ALIGN CENTER HALF
+             : GKS SET XFORM WC
+           }
+
+           : GKS SET PLINE COLOR_INDEX $menuvar(linecolor)
+           : GUS SURFACE NEWX NEWY NEWZ
+           : GKS SET PLINE COLOR_INDEX BLACK
+         }
+
+       1 { ### CELL ARRAY
+           : GKS CLEAR_WS
+           : GKS DEACTIVATE WK1
+           : GUS SET COLORMAP $menuvar(color)
+           : GKS ACTIVATE WK1
+
+           : GKS SET VIEWPORT 0 1 0 1
+           : GKS SET XFORM NDC
+           : GKS SET TEXT ALIGN CENTER HALF
+           if {$flag(show_maintitle)} {
+             : GKS TEXT 0.5 0.97 $title(main)
+           }
+           : GKS SET TEXT HEIGHT 0.021
+           : GKS TEXT 0.075 0.92 $parms(z,to,value)
+           : GKS TEXT 0.075 0.025 $parms(z,from,value)
+           : GKS SET TEXT HEIGHT 0.025
+           : GKS SET XFORM WC
+
+           : GKS SET VIEWPORT 0.025 0.125 0.045 0.895
+           : XX := 1
+           : COL := 8..79
+           : GKS CELL_ARRAY COL XX
+
+           : GKS SET VIEWPORT 0.165 0.99 0.045 0.895
+           : TMP_FUN = (NEWZ-$parms(z,from,value))/($parms(z,to,value)-$parms(z,from,value))*71.9+8
+           : CA_Z := TMP_FUN
+           : GKS CELL_ARRAY CA_Z DIMX 8 80
+         }
+
+       2 { ### SHADED MESH
+           : GKS CLEAR_WS
+           : GKS DEACTIVATE WK1
+           : GUS SET COLORMAP $menuvar(color)
+           : GKS ACTIVATE WK1
+
+           if {$flag(show_maintitle)} {
+             : GKS SET VIEWPORT 0 1 0 1
+             : GKS SET XFORM NDC
+             : GKS SET TEXT ALIGN RIGHT HALF
+             : GKS TEXT 0.95 0.96 $title(main)
+             : GKS SET TEXT ALIGN CENTER HALF
+             : GKS SET XFORM WC
+           }
+
+           : GKS SET VIEWPORT 0.05 0.95 0 0.9
+           : GUS SURFACE NEWX NEWY NEWZ SHADED_MESH
+         }
+
+       3 { ### Lines
+           : GKS CLEAR_WS
+
+           Titles2D
+           : GKS SET VIEWPORT 0.15 0.95 0.1 0.9
+
+           : GKS SET WINDOW $parms(x,from,value) $parms(x,to,value) \
+             $parms(z,from,value) $parms(z,to,value)
+           : GUS AXES_2D
+           : GKS SET PLINE COLOR_INDEX $menuvar(linecolor)
+           : GUS POLYLINE X Z
+           : GKS SET PLINE COLOR_INDEX BLACK
+         }
+
+       4 { ### Markers
+           : GKS CLEAR_WS
+
+           Titles2D
+           : GKS SET VIEWPORT 0.15 0.95 0.1 0.9
+
+           : GKS SET WINDOW $parms(x,from,value) $parms(x,to,value) \
+             $parms(z,from,value) $parms(z,to,value)
+           : GUS AXES_2D
+           : GKS POLYMARKER X Z
+         }
+
+       5 { ### Lines & Markers
+           : GKS CLEAR_WS
+
+           Titles2D
+           : GKS SET VIEWPORT 0.15 0.95 0.1 0.9
+
+           : GKS SET WINDOW $parms(x,from,value) $parms(x,to,value) \
+             $parms(z,from,value) $parms(z,to,value)
+           : GUS AXES_2D
+           : GKS SET PLINE COLOR_INDEX $menuvar(linecolor)
+           : GKS POLYLINE X Z
+           : GKS SET PLINE COLOR_INDEX BLACK
+           : GKS POLYMARKER X Z
+         }
+
+      }
+    } else {
+      : GKS CLEAR_WS
+    }
+
+    : GKS DEACTIVATE METAFILE
+    : GKS UPDATE_WS
+
+    if {$flag(print)} {
+      PrintPicture
+      set flag(print) 0
+    }
+    if {$flag(capture)} {
+      CapturePicture
+      set flag(capture) 0
+    }
+
+    DefineCursor {All}
+  }
+
+  set picture_mask 0
+
+  after [expr 2000] [list Redraw]
+}
+
+proc Titles2D {} {
+  global title flag
+
+  : GKS SET VIEWPORT 0 1 0 1
+  : GKS SET XFORM NDC
+  if {$flag(show_maintitle)} {
+    : GKS SET TEXT ALIGN CENTER BOTTOM
+    : GKS TEXT 0.55 0.95 $title(main)
+  }
+  : GKS SET TEXT ALIGN CENTER BOTTOM
+  : GKS TEXT 0.55 0.005 $title(x)
+  : GKS TEXT 0.15 0.9 $title(y)
+  : GKS SET TEXT ALIGN CENTER HALF
+  : GKS SET XFORM WC
+}
+
+
+proc CreateDimensionList {} {
+  global dimension
+  global gli parms
+  global picture_mask
+
+  if {[info exists dimension(list)] == 0} {
+    return
+  }
+
+  set dim [SelectionBox $dimension(list) -title "Possible Dimensions" \
+    -x 580 -y 120 -transient .]
+  if {$gli(status) == -1 | $dim == ""} {
+    return
+  }
+    
+  set dimension(x) [lindex $dim 0]
+  set dimension(y) [lindex $dim 2]
+
+  if {$gli(actMode) == "Z"} {
+    set xdim [lindex $dim 0]
+    set ydim [lindex $dim 2]
+
+    SetParms 1 1 $xdim \
+             1 $xdim $xdim \
+             1 1 $ydim \
+             1 $ydim $ydim
+
+    : X := $parms(x,from,min)..$parms(x,to,max)
+    : Y := $parms(y,from,min)..$parms(y,to,max)
+
+    UpdateScalers
+    set picture_mask $gli(completeMask)
+  }
+
+}
+
+proc GetEntryField {} {
+  regexp {.annotation.([^.]*)} [focus] match act_change
+
+  return $act_change
+}
+
+proc ChangeEntryField {direction} {
+  global act_change
+
+  set order {main x y z main}
+
+  set act_change [GetEntryField]
+
+  if {$direction == 1} {
+    set act_change [lindex $order [expr [lsearch $order $act_change]+1]]
+  } else {
+    set act_change [lindex $order [lsearch [lrange $order 1 end] $act_change]]
+  }
+  focus .annotation.$act_change.entry
+}
+
+proc Annotation {} {
+  global title act_change
+
+  if {[winfo exists .annotation]} {return}
+
+  toplevel .annotation
+  wm geometry .annotation +250+400
+  wm title .annotation "Annotation"
+
+  set labels {"Main Title" "X Title" "Y Title" "Z Title"}
+  set i 0
+
+  label .annotation.
+  foreach frame {main x y z} {
+    frame .annotation.$frame
+    label .annotation.$frame.text -text [lindex $labels $i]
+    entry .annotation.$frame.entry -textvariable title($frame)
+    pack .annotation.$frame -fill x -pady 1m -padx 1m
+    pack .annotation.$frame.text .annotation.$frame.entry -side left
+    incr i
+  }
+
+  button .annotation.ok -text Ok \
+    -command {set gli(Annotation,status) 1}
+  pack .annotation.ok -pady 2m
+
+  bind .annotation <Any-Key> {break}
+  bind .annotation <Control-n> {
+    set act_change [GetEntryField]
+    set title($act_change) ""
+    break
+  }
+  bind .annotation <Return> {
+    ChangeEntryField 1
+    break
+  }
+  bind .annotation <Down> {
+    ChangeEntryField 1
+    break
+  }
+  bind .annotation <Up> {
+    ChangeEntryField -1
+    break
+  }
+
+  set savedFocus [focus]
+  grab .annotation
+  set act_change x
+  focus .annotation.$act_change.entry
+
+  set gli(Annotation,status) 0
+  tkwait variable gli(Annotation,status)
+
+  set gli(status) $gli(Annotation,status)
+  update idletasks
+  destroy .annotation
+
+  catch {focus $savedFocus}
+
+}
+
+proc InitButtons {number} {  
+  global gli frame_width visible
+
+  foreach widget [winfo children .a.switch_buttons] {
+    destroy $widget
+  }
+  
+  for {set i 0} {$i < $number} {incr i 1} {
+    set binding1 [set binding2 [set binding3 ""]]
+    if {$gli(button,$i,menus) != "" } {
+      set j 1
+      foreach menu $gli(button,$i,menus) {
+        if {$menu != ""} {
+          set binding$j "tk_popup .menu_$menu %X %Y"
+        }
+        incr j 1 
+     }
+    }
+    radiobutton .a.switch_buttons.$i -text $gli(button,$i,text) -command "
+      DefineCursor {All} watch
+      bind .a.display <Button-1> \"$binding1\"
+      bind .a.display <Button-2> \"$binding2\"
+      bind .a.display <Button-3> \"$binding3\"
+      set picture_mask $gli(completeMask)
+    " \
+    -variable visible -value $gli(button,$i,value) -relief raised
+  }
+
+  set visible $gli(button,0,value)
+
+  set button_width [expr ($frame_width - 5*($number-1))/$number]
+  set x 0
+  for {set i 0} {$i < $number} {incr i 1} {
+    place .a.switch_buttons.$i -x $x -y 0 -width $button_width -height 36
+    incr x [expr $button_width+5]
+  }
+
+  .a.switch_buttons.0 invoke
+}
+
+proc InitMode {new_mode} {
+  global flag gli parms
+  global picture_mask dimension
+  global frame_text
+
+  switch $new_mode {
+    Y   {
+          if {$flag(data_loaded)} {
+            : X := 1..[: PRINT SIZE(DATA)]
+            : Y := 1
+            : Z := DATA
+          }
+          set gli(button,0,text) "Lines"
+          set gli(button,0,menus) "linecolor line"
+          set gli(button,0,value) 3
+          set gli(button,1,text) "Markers"
+          set gli(button,1,menus) "{} {} marker"
+          set gli(button,1,value) 4
+          set gli(button,2,text) "Lines & Markers"
+          set gli(button,2,menus) "linecolor line marker"
+          set gli(button,2,value) 5
+          InitButtons 3
+          set frame_text(text1) "X"
+          set frame_text(text3) "Y"
+          PlaceFrames 1 0 1 0
+        }
+    XY  {
+          if {$flag(data_loaded)} {
+            set size [: PRINT SIZE(DATA)]
+            if {[expr $size % 2]} {
+              ErrorBox OddNumber
+              .e.dim_mb.menu activate $gli(dimension_menu,index)
+              .e.dim_mb.menu invoke $gli(dimension_menu,index)
+              return
+            }
+            : SPLIT DATA X Z
+            : Y := 1
+          }
+          set gli(button,0,text) "Lines"
+          set gli(button,0,menus) "linecolor line"
+          set gli(button,0,value) 3
+          set gli(button,1,text) "Markers"
+          set gli(button,1,menus) "{} {} marker"
+          set gli(button,1,value) 4
+          set gli(button,2,text) "Lines & Markers"
+          set gli(button,2,menus) "linecolor line marker"
+          set gli(button,2,value) 5
+          InitButtons 3
+          set frame_text(text1) "X"
+          set frame_text(text3) "Y"
+          PlaceFrames 1 0 1 0
+        }
+    XYZ {
+          if {$flag(data_loaded)} {
+            set size [: PRINT SIZE(DATA)]
+            if {[expr $size % 3]} {
+              ErrorBox NotMultipleOf3
+              .e.dim_mb.menu activate $gli(dimension_menu,index)
+              .e.dim_mb.menu invoke $gli(dimension_menu,index)
+              return
+            }
+            : SPLIT DATA X Y Z
+            set size [expr $size/3]
+#            : GRIDIT X Y Z $size $size
+            : GRIDIT X Y Z
+          }
+          set gli(button,0,text) "Surface"
+          set gli(button,0,menus) "linecolor"
+          set gli(button,0,value) 0
+          set gli(button,1,text) "Cell Array"
+          set gli(button,1,menus) "color"
+          set gli(button,1,value) 1
+          set gli(button,2,text) "Shaded Mesh"
+          set gli(button,2,menus) "color"
+          set gli(button,2,value) 2
+          InitButtons 3
+          set frame_text(text1) "X"
+          set frame_text(text2) "Y"
+          set frame_text(text3) "Z"
+          PlaceFrames 1 1 1 1
+        }
+    Z   {
+          if {$flag(data_loaded)} {
+            : X := 1..$dimension(x)
+            : Y := 1..$dimension(y)
+            : Z := DATA
+          }
+          set gli(button,0,text) "Surface"
+          set gli(button,0,menus) "linecolor"
+          set gli(button,0,value) 0
+          set gli(button,1,text) "Cell Array"
+          set gli(button,1,menus) "color"
+          set gli(button,1,value) 1
+          set gli(button,2,text) "Shaded Mesh"
+          set gli(button,2,menus) "color"
+          set gli(button,2,value) 2
+          InitButtons 3
+          set frame_text(text1) "X"
+          set frame_text(text2) "Y"
+          set frame_text(text3) "Z"
+          PlaceFrames 1 1 1 1
+        }
+    default {}
+  }
+
+  set gli(dimension_menu,index) [.e.dim_mb.menu index active]
+
+  if {$flag(data_loaded)} {
+    set minx [expr int(floor([: PRINT MIN(X)]))]
+    set maxx [expr int(ceil([: PRINT MAX(X)]))]
+    set miny [expr int(floor([: PRINT MIN(Y)]))]
+    set maxy [expr int(ceil([: PRINT MAX(Y)]))]
+    set minz [expr int(floor([: PRINT MIN(Z)]))]
+    set maxz [expr int(ceil([: PRINT MAX(Z)]))]
+
+    SetParms $minx $minx $maxx \
+             $minx $maxx $maxx \
+             $miny $miny $maxy \
+             $miny $maxy $maxy \
+             $minz $maxz
+
+    UpdateScalers
+  }
+
+  set dimension(text) $new_mode
+  set gli(actMode) $new_mode
+
+  set picture_mask $gli(completeMask)
+}
+
+proc PrintPicture {} {
+  global env td_env
+  global gli
+
+  DefineCursor {All} watch
+  : GKS ACTIVATE METAFILE
+  : GKS UPDATE_WS
+
+  if {[file exists $td_env(gli_gksm)]} {
+    set tmpnam /tmp/tcldemo[pid].eps
+    exec $env(GLI_HOME)/gligksm $td_env(gli_gksm) -t 62 > $tmpnam
+    if {[file exists $tmpnam]} {
+      set command [InputBox -title "Print Command" -default "lpr"]
+      if {$gli(status) == 1} {
+        if {[catch {eval "exec $command $tmpnam"}]} {
+          ErrorBox CantExecutePrintcommand
+	}
+      }
+      exec rm -f $tmpnam
+    }
+  } else {
+    ErrorBox EmptyBuffer
+  }
+
+  : GKS DEACTIVATE METAFILE
+  DefineCursor {All}
+}
+
+proc CapturePicture {} {
+  global env td_env
+  global capture_filenr
+
+  DefineCursor {All} watch
+
+  : GKS ACTIVATE METAFILE
+  : GKS UPDATE_WS
+
+  if {[file exists $td_env(gli_gksm)]} {
+    set filename [format "tcldemo%02d.eps" $capture_filenr]
+    incr capture_filenr 1
+    exec $env(GLI_HOME)/gligksm $td_env(gli_gksm) -t 62 > $filename
+  } else {
+    ErrorBox EmptyBuffer
+  }
+
+  : GKS DEACTIVATE METAFILE
+
+  DefineCursor {All}
+}
+
+proc SetParms {x_from_min x_from_value x_from_max \
+               x_to_min x_to_value x_to_max \
+               y_from_min y_from_value y_from_max \
+               y_to_min y_to_value y_to_max \
+               {z_from_value {}}  {z_to_value {}} } {
+  global parms
+
+  foreach a {x y} {
+    foreach b {from to} {
+      foreach c {min value max} {
+        set parms($a,$b,$c) [set ${a}_${b}_${c}]
+      }
+    }
+  }
+
+  if {$z_from_value != ""} {
+    if {$z_from_value == $z_to_value} {incr z_to_value 1}
+
+    set min [expr 1<<29]
+    while {$min > $z_from_value} {set min [DecrZmax $min]}
+    set max [expr -(1<<29)]
+    while {$max < $z_to_value} {set max [IncrZmax $max]}
+
+    set parms(z,from,min) $min
+    set parms(z,from,value) $z_from_value
+    set parms(z,to,value) $z_to_value
+    set parms(z,to,max) $max
+    set parms(z,from,max) [expr $parms(z,to,value)-1]
+    set parms(z,to,min) [expr $parms(z,from,value)+1]
+  }
+
+}
+
+proc UpdateMinValue {widget min max_min max} {
+  global gli picture_mask
+  upvar $max_min min_to_set
+
+  set picture_mask $gli(completeMask)
+  set min_to_set $min
+  $widget config -from $min
+  $widget config -tickinterval [expr $max-$min]
+}
+
+proc UpdateMaxValue {widget max min_max min} {
+  global gli picture_mask
+  upvar $min_max max_to_set
+
+  set picture_mask $gli(completeMask)
+  set max_to_set $max
+  $widget config -to $max
+  $widget config -tickinterval [expr $max-$min]
+}
+
+proc IncrSlider {slider variable_name max} {
+  upvar $variable_name variable
+  if {$variable < $max} {
+    incr variable 1
+    $slider set $variable
+  }
+}
+
+proc DecrSlider {slider variable_name min} {
+  upvar $variable_name variable
+  if {$variable > $min} {
+    incr variable -1
+    $slider set $variable
+  }
+}
+
+proc DecrAngle {widget variable} {
+  global picture_mask 
+  global angle_increment
+  upvar $variable var
+
+  incr var -$angle_increment
+  if {$var < 0} {
+    set var 0
+  }
+  $widget set $var
+  OrPictureMask picture_mask 0 2
+}
+
+proc IncrAngle {widget variable} {
+  global picture_mask
+  global angle_increment
+  upvar $variable var
+
+  incr var $angle_increment
+  if {$var > 90} {
+    set var 90
+  }
+  $widget set $var
+  OrPictureMask picture_mask 0 2
+}
+
+proc IncrZmax {value} {
+  if {$value == -1} {
+    return 0
+  } else {
+    if {$value < 0} {
+      return [expr $value/2]
+    } else {
+      if {$value > 0} {
+        return [expr $value*2]
+      } else {
+        return 1
+      }
+    }
+  }
+}
+
+proc DecrZmax {value} {
+  if {$value == 1} {
+    return 0
+  } else {
+    if {$value > 0} {
+      return [expr $value/2]
+    } else {
+      if {$value < 0} {
+        return [expr $value*2]
+      } else {
+        return -1
+      }
+    }
+  }
+}
+
+proc OrPictureMask {picture_mask args} {
+  upvar $picture_mask mask
+
+  if {$args != ""} {
+    foreach picture $args {
+      set mask [expr $mask | (1 << $picture)]
+    }
+  }
+}
+
+proc DoColor {color} {
+  : GUS SET COLORMAP $color
+}
+
+proc DoMarker {marker} {
+  global picture_mask gli
+
+  : GKS SET PMARK TYPE $marker
+  set picture_mask $gli(completeMask)
+}
+
+proc DoLine {line} {
+  global picture_mask gli
+
+  : GKS SET PLINE LINETYPE $line
+  set picture_mask $gli(completeMask)
+}
+
+proc DoLineColor {linecolor} {
+  global picture_mask gli
+  
+  OrPictureMask picture_mask 0 3 5
+}
+
+
+proc BuildMenu {type title commands call_proc menu_var} {
+
+  set widget .menu_$type
+
+  menu $widget
+
+  $widget add command -label $title -state disabled -command {}
+  $widget add separator
+  set i 0
+  foreach c $commands {
+    incr i 1
+    $widget add radiobutton -variable $menu_var -label $c -command "
+      set index($type) \[$widget index active\];
+      $call_proc \$$menu_var;
+    "
+  }
+
+}
+
+proc PlaceFrames {args} {
+
+  set ydiff 109
+  set ypos [expr 79-$ydiff]  
+
+  set i 0
+  foreach type {x y z angle} {
+    if {[lindex $args $i]} {
+      place .e.${type}frame -x 9 -y [incr ypos $ydiff] -width 280 -height 105
+    } else {
+      catch {place forget .e.${type}frame}
+    }
+    incr i 1
+  }
+}
+
+proc Help {x y} {
+  global helpfile indexfile help_language
+  global bigfont
+
+  OnlineHelp [winfo containing $x $y] $helpfile.$help_language $indexfile \
+             -font $bigfont -title "DNS Live Display - Hilfe" -x 250 -y 50
+}
+
+
+proc Save {} {
+  global rcfile gli
+
+  if {[catch {set fp [open $rcfile w]}]} {
+    return 0
+  }
+
+  puts $fp "FILEFILTER $gli(filefilter)"
+  if {$gli(filefiltercommand) != ""} {
+    puts $fp "FILEFILTERCOMMAND $gli(filefiltercommand)"
+  }
+
+  close $fp
+}
+
+#
+# Preferences
+#
+
+if {$Debug} {
+  puts Preferences
+}
+
+set help_language "german"
+
+set mainwidth 790
+set mainheight 607
+set resolution 480
+set width [expr $resolution+10]
+set helpheight 20
+
+if {$Development} {
+  set tclhome $env(HOME)/gli/tcl
+  set doc_path /usr/users/iff_e/grimm/doc
+} else {
+  set tclhome $env(GLI_HOME)/tcl
+}
+set home_path $env(HOME)
+
+#set indexfile $doc_path/tcldemo_index
+#set helpfile $doc_path/tcldemo_doc
+#set shorthelpfile $doc_path/tcldemo_shorthelp
+set rcfile $home_path/.glitcldemorc
+
+set bitmap_path $tclhome/bitmaps
+set tcl_path $tclhome/lib
+
+
+lappend auto_path $tcl_path
+
+set up_xbm @$bitmap_path/up.xbm
+set down_xbm @$bitmap_path/down.xbm
+set left_xbm @$bitmap_path/left.xbm
+set right_xbm @$bitmap_path/right.xbm
+set zmax_up_xbm @$bitmap_path/zmax_up.xbm
+set zmax_down_xbm @$bitmap_path/zmax_down.xbm
+set angle_up_xbm @$bitmap_path/angle_up.xbm
+set angle_down_xbm @$bitmap_path/angle_down.xbm
+set angle_left_xbm @$bitmap_path/angle_left.xbm
+set angle_right_xbm @$bitmap_path/angle_right.xbm
+
+set frame_style sunken
+
+set gli(tkversion) [string index $tk_version 0]
+
+set gli(dir) [exec pwd]
+set gli(filter) ""
+
+set gli(ErrList,FileNotFound) "File not found"
+set gli(ErrList,PermissionDenied) "Permission denied"
+set gli(ErrList,FileTooLarge) "File too large"
+set gli(ErrList,EmptyBuffer) "Buffer is empty"
+set gli(ErrList,EmptyFile) "File is empty"
+set gli(ErrList,OddNumber) "Array has an odd number of elements"
+set gli(ErrList,NotMultipleOf3) "Size of Array is not a multiple of three"
+set gli(ErrList,CantExecuteFiltercommand) "Filtercommand ist not executable"
+set gli(ErrList,CantExecutePrintcommand) "Printcommand ist not executable"
+set gli(ErrList,CantOpenRCFile) "Unable to open $rcfile"
+set gli(ErrList,ErrorInRCFile) "Error while reading $rcfile"
+
+set zmax_min -1000000000
+set zmax_max 1000000000
+set angle_increment 10
+set gli(completeMask) [expr (1<<6) - 1]
+set picture_mask 0
+set filename " "
+set flag(data_loaded) 0
+set flag(print) 0
+set flag(capture) 0
+set flag(show_maintitle) 1
+set frame_text(text1) "X"
+set frame_text(text2) "Y"
+set frame_text(text3) "Z"
+set title(x) "X"
+set title(y) "Y"
+set title(z) "Z"
+set capture_filenr 0
+
+Reset
+
+set gli_background "0.8 0.8 0.8"
+
+option add *background gray70
+option add *foreground gray25
+option add *activeBackground yellow
+option add *activeForeground violet
+option add *highlightBackground gray75
+option add *selectBackground red
+option add *selectForeground green
+option add *disabledForeground gray25
+
+
+if {$gli(tkversion) >= 4} {
+  option add *selectColor MediumSpringGreen
+  option add *troughColor gray35
+} else {
+  option add *selector MediumSpringGreen
+  option add *Scale.background gray70
+  option add *Scale.activeForeground yellow
+  option add *Scale.sliderForeground gray70
+  option add *Scrollbar.background gray35
+  option add *Scrollbar.foreground gray70
+  option add *Scrollbar.activeForeground yellow
+  option add *Scrollbar.activeBackground violet
+  option add *Scrollbar.relief ridge
+  option add *Listbox.relief sunken
+}
+
+option add *Scale.orient horizontal
+option add *Scale.relief ridge
+option add *Scale.width 10
+option add *Scale.sliderlength 20
+
+set bigfont -adobe-helvetica-bold-r-normal--14-100-100-100-p-82-iso8859-1
+set stdfont -adobe-helvetica-bold-r-normal--12-120-75-75-p-70-iso8859-1
+set littlefont -adobe-helvetica-medium-r-normal--10-100-75-75-p-56-iso8859-1
+option add *font $stdfont
+
+wm geometry . [format "%sx%s+0+0" $mainwidth $mainheight]
+wm minsize . $mainwidth $mainheight
+wm maxsize . $mainwidth $mainheight
+wm title . "GLI-Tcl-Demo"
+wm iconname . "GLITcldemo"
+
+# open rc-file
+
+if {[file exists $rcfile]} {
+  if {[catch {set fp [open $rcfile r]}]} {
+    Error CantOpenRCFile
+    exit
+  }
+  while {[gets $fp line] != -1} {
+    if {[catch {
+      switch -- [lindex $line 0] {
+        FILEFILTER {
+          set gli(filefilter) [lindex $line 1]
+        }
+        FILEFILTERCOMMAND {
+          set gli(filefiltercommand) [lindex $line 1]
+        }
+      }
+    }]} {
+      error ErrorInRCFile
+      exit
+    }
+  }
+  close $fp
+}
+
+
+#
+# Layout
+#
+
+if {$Debug} {
+  puts Layout
+}
+
+label .a -relief $frame_style
+label .e -relief $frame_style
+label .f -relief $frame_style -textvariable shorthelp_text
+frame .a.display
+
+place .a -x 0 -y 0 -width $width -height [expr $mainheight-$helpheight]
+place .a.display -x 3 -y 5 -width $resolution -height $resolution
+place .e -x $width -y 0 -width [expr $mainwidth-$width] -height [expr $mainheight-$helpheight]
+place .f -x 0 -y [expr $mainheight-$helpheight] -width $mainwidth -height $helpheight
+
+#
+# Create widgets
+#
+
+if {$Debug} {
+  puts "Create Widgets"
+}
+
+frame .a.switch_buttons
+
+button .a.change_titles -text "Annotation" -command {
+  Annotation
+  OrPictureMask picture_mask 0 3 4 5
+}
+checkbutton .a.show_maintitle -text "Show Title" -relief raised \
+  -variable flag(show_maintitle) -command {
+    set picture_mask $gli(completeMask)
+  }
+
+button .e.load -text "Load Data..." -command {
+  set rc [FileSelectionBox -title "Load Data..." -ok "Load" -x 200 -y 200 \
+    -check -transient .]
+  if {$rc == 0 && $gli(status) == 1} {
+    DefineCursor {All} watch
+    LoadData
+    DefineCursor {All}
+  }
+}
+
+checkbutton .e.filter -text "Filter:" -variable gli(filefilter)
+entry .e.filtercommand -textvariable gli(filefiltercommand)
+
+label .e.dim_txt -text "Mode:"
+menubutton .e.dim_mb -textvariable dimension(text) -relief raised \
+  -menu .e.dim_mb.menu
+menu .e.dim_mb.menu
+if {$gli(tkversion) >= 4} {.e.dim_mb.menu config -tearoff no}
+foreach act_mode {Y XY XYZ Z} {
+  .e.dim_mb.menu add radiobutton -label $act_mode -command "InitMode $act_mode"
+  if {$act_mode == "Z"} {
+    .e.dim_mb.menu add command -label "Choose Dimension" \
+      -command {CreateDimensionList}
+  } else {
+    .e.dim_mb.menu add separator
+  }
+}
+
+button .e.reset -text Reset -command {
+  Reset $parms(y,from,min) $parms(y,to,max) $parms(x,from,min) $parms(x,to,max)
+  UpdateScalers
+  set picture_mask $gli(completeMask)
+}
+
+label .e.xframe -relief ridge
+label .e.xframe.xtxt -textvariable frame_text(text1)
+label .e.xframe.fromtxt -text Min
+label .e.xframe.totxt -text Max
+label .e.xframe.from_mintxt -textvariable parms(x,from,min) -font $littlefont
+label .e.xframe.from_maxtxt -textvariable parms(x,from,max) -font $littlefont
+label .e.xframe.to_mintxt -textvariable parms(x,to,min) -font $littlefont
+label .e.xframe.to_maxtxt -textvariable parms(x,to,max) -font $littlefont
+
+button .e.xframe.xright -bitmap $right_xbm -command {
+  if {$parms(x,to,value) < $parms(x,to,max)} {
+    IncrSlider .e.xframe.to parms(x,to,value) $parms(x,to,max)
+    UpdateMaxValue .e.xframe.from $parms(x,to,value) parms(x,from,max) \
+      $parms(x,from,min)
+    IncrSlider .e.xframe.from parms(x,from,value) $parms(x,from,max)
+    UpdateMinValue .e.xframe.to $parms(x,from,value) parms(x,to,min) \
+      $parms(x,to,max)
+  }
+}
+
+button .e.xframe.xleft -bitmap $left_xbm -command {
+  if {$parms(x,from,value) > $parms(x,from,min)} {
+    DecrSlider .e.xframe.from parms(x,from,value) $parms(x,from,min)
+    UpdateMinValue .e.xframe.to $parms(x,from,value) parms(x,to,min) \
+      $parms(x,to,max)
+    DecrSlider .e.xframe.to parms(x,to,value) $parms(x,to,min)
+    UpdateMaxValue .e.xframe.from $parms(x,to,value) parms(x,from,max) \
+      $parms(x,from,min)
+  }
+}
+
+scale .e.xframe.from -from $parms(x,from,min) -to $parms(x,from,max) \
+  -command {set parms(x,from,value)}
+scale .e.xframe.to -from $parms(x,to,min) -to $parms(x,to,max) \
+  -command {set parms(x,to,value)}
+
+label .e.yframe -relief ridge
+label .e.yframe.ytxt -textvariable frame_text(text2)
+label .e.yframe.fromtxt -text Min
+label .e.yframe.totxt -text Max
+label .e.yframe.from_mintxt -textvariable parms(y,from,min) -font $littlefont
+label .e.yframe.from_maxtxt -textvariable parms(y,from,max) -font $littlefont
+label .e.yframe.to_mintxt -textvariable parms(y,to,min) -font $littlefont
+label .e.yframe.to_maxtxt -textvariable parms(y,to,max) -font $littlefont
+
+button .e.yframe.yright -bitmap $right_xbm -command {
+  if {$parms(y,to,value) < $parms(y,to,max)} {
+    IncrSlider .e.yframe.to parms(y,to,value) $parms(y,to,max)
+    UpdateMaxValue .e.yframe.from $parms(y,to,value) parms(y,from,max) \
+      $parms(y,from,min)
+    IncrSlider .e.yframe.from parms(y,from,value) $parms(y,from,max)
+    UpdateMinValue .e.yframe.to $parms(y,from,value) parms(y,to,min) \
+      $parms(y,to,max)
+  }
+}
+
+button .e.yframe.yleft -bitmap $left_xbm -command {
+  if {$parms(y,from,value) > $parms(y,from,min)} {
+    DecrSlider .e.yframe.from parms(y,from,value) $parms(y,from,min)
+    UpdateMinValue .e.yframe.to $parms(y,from,value) parms(y,to,min) \
+      $parms(y,to,max)
+    DecrSlider .e.yframe.to parms(y,to,value) $parms(y,to,min)
+    UpdateMaxValue .e.yframe.from $parms(y,to,value) parms(y,from,max) \
+      $parms(y,from,min)
+  }
+}
+
+scale .e.yframe.from -from $parms(y,from,min) -to $parms(y,from,max) \
+  -command {set parms(y,from,value)}
+scale .e.yframe.to -from $parms(y,to,min) -to $parms(y,to,max) \
+  -command {set parms(y,to,value)}
+
+label .e.zframe -relief ridge
+label .e.zframe.ztxt -textvariable frame_text(text3)
+label .e.zframe.fromtxt -text Min
+label .e.zframe.totxt -text Max
+label .e.zframe.from_mintxt -textvariable parms(z,from,min) -font $littlefont
+label .e.zframe.from_maxtxt -textvariable parms(z,from,max) -font $littlefont
+label .e.zframe.to_mintxt -textvariable parms(z,to,min) -font $littlefont
+label .e.zframe.to_maxtxt -textvariable parms(z,to,max) -font $littlefont
+
+button .e.zframe.to_maxup -bitmap $zmax_up_xbm -command {
+  set value [IncrZmax $parms(z,to,max)]
+  if {$value < $zmax_max} {
+    set parms(z,to,max) $value
+    set parms(z,to,value) $value
+    UpdateMaxValue .e.zframe.to $parms(z,to,max) parms(z,to,max) \
+      $parms(z,to,min)
+    .e.zframe.to set $parms(z,to,value)
+    update idletasks
+    UpdateMaxValue .e.zframe.from [expr $parms(z,to,value)-1] \
+      parms(z,from,max) $parms(z,from,min)
+  }
+}
+
+button .e.zframe.to_maxdown -bitmap $zmax_down_xbm -command {
+  set value [DecrZmax $parms(z,to,max)]
+  if {$value >= $parms(z,to,min)} {
+    set parms(z,to,max) $value
+    set parms(z,to,value) $value
+    UpdateMaxValue .e.zframe.to $parms(z,to,max) parms(z,to,max) \
+      $parms(z,to,min)
+    .e.zframe.to set $parms(z,to,value)
+    update idletasks
+    UpdateMaxValue .e.zframe.from [expr $parms(z,to,value)-1] \
+      parms(z,from,max) $parms(z,from,min)
+  }
+}
+
+button .e.zframe.from_minup -bitmap $zmax_up_xbm -command {
+  set value [IncrZmax $parms(z,from,min)]
+  if {$value <= $parms(z,from,max)} {
+    set parms(z,from,min) $value
+    set parms(z,from,value) $value
+    UpdateMinValue .e.zframe.from $parms(z,from,min) parms(z,from,min) \
+      $parms(z,from,max)
+    .e.zframe.from set $parms(z,from,value)
+    update idletasks
+    UpdateMinValue .e.zframe.to [expr $parms(z,from,value)+1] \
+      parms(z,to,min) $parms(z,to,max)
+  }
+}
+
+button .e.zframe.from_mindown -bitmap $zmax_down_xbm -command {
+  set value [DecrZmax $parms(z,from,min)]
+  if {$value > $zmax_min} {
+    set parms(z,from,min) $value
+    set parms(z,from,value) $value
+    UpdateMinValue .e.zframe.from $parms(z,from,min) parms(z,from,min) \
+      $parms(z,from,max)
+    .e.zframe.from set $parms(z,from,value)
+    update idletasks
+    UpdateMinValue .e.zframe.to [expr $parms(z,from,value)+1] \
+      parms(z,to,min) $parms(z,to,max)
+  }
+}
+
+scale .e.zframe.from -from $parms(z,from,min) -to $parms(z,from,max) \
+  -command {set parms(z,from,value)}
+scale .e.zframe.to -from $parms(z,to,min) -to $parms(z,to,max) \
+  -command {set parms(z,to,value)}
+
+label .e.angleframe -relief ridge
+
+label .e.angleframe.xangletxt -text "Tilt"
+button .e.angleframe.xangleup -bitmap $angle_up_xbm \
+  -command {DecrAngle .e.angleframe.xangle angle(x)}
+scale .e.angleframe.xangle -from 0 -to 90 -tickinterval 45 -orient vertical \
+  -command {set angle(x)}
+button .e.angleframe.xangledown -bitmap $angle_down_xbm \
+  -command {IncrAngle .e.angleframe.xangle angle(x)}
+
+label .e.angleframe.yangletxt -text "Rotation"
+button .e.angleframe.yangleleft -bitmap $angle_left_xbm \
+  -command {DecrAngle .e.angleframe.yangle angle(y)}
+scale .e.angleframe.yangle -from 0 -to 90 -tickinterval 45 \
+  -command {set angle(y)}
+button .e.angleframe.yangleright -bitmap $angle_right_xbm \
+  -command {IncrAngle .e.angleframe.yangle angle(y)}
+
+label .e.angleframe.flip_text -text Flip
+checkbutton .e.angleframe.flip_x -variable flip(x) -text "X" \
+  -command {OrPictureMask picture_mask 0 2}
+checkbutton .e.angleframe.flip_y -variable flip(y) -text "Y" \
+  -command {OrPictureMask picture_mask 0 2}
+checkbutton .e.angleframe.flip_z -variable flip(z) -text "Z" \
+  -command {OrPictureMask picture_mask 0 2}
+
+button .e.print -text Print -command {
+  set flag(print) 1
+  set picture_mask $gli(completeMask)
+}
+
+button .e.capture -text Capture -command {
+  set flag(capture) 1
+  set picture_mask $gli(completeMask)
+}
+
+button .e.about -text About -command {
+  InformationBox " {}
+    {Tcl/Tk Demonstration}
+    {}
+    {Copyright (C) 1995-99 by Gunnar Grimm}
+    {}
+    {Research Centre Juelich}
+    {Institute for Solid State Research}
+    {}
+    {E-Mail: G.Grimm@FZ-Juelich.de}
+    {}
+    " \
+    -title "Copyright Information" -x 265 -y 190 -transient . \
+    -font -adobe-times-bold-r-normal--18-180-75-75-p-99-iso8859-1
+}
+
+foreach dim {x y z} {
+  entry .e.title_$dim -textvariable title($dim)
+}
+
+button .e.exit -text "Exit TCL-Demo" -command {
+
+  DefineCursor {All} watch
+
+  : GKS CLOSE_WS WK1
+  : GKS CLOSE_WS METAFILE
+
+  exec rm -f $td_env(gli_gksm)
+
+  Save
+  exit
+}
+
+#
+# Initialization
+#
+
+if {$Debug} {
+  puts "Initialization"
+}
+
+.e.yframe.from set $parms(y,from,value)
+.e.yframe.to set $parms(y,to,value)
+.e.xframe.from set $parms(x,from,value)
+.e.xframe.to set $parms(x,to,value)
+.e.zframe.from set $parms(z,from,value)
+.e.zframe.to set $parms(z,to,value)
+.e.angleframe.xangle set $angle(x)
+.e.angleframe.yangle set $angle(y)
+
+set commands {Uniform Temperature Grayscale "Grayscale Inverted" \
+  Glowing Rainbow Geologic Greenscale Cyanscale Bluescale Magentascale \
+  Redscale Flame} 
+BuildMenu color Colormap $commands DoColor menuvar(color)
+
+set commands {Dot Plus Asterisk Circle Diagonal_Cross Solid_Circle \
+  Triangle_Up Solid_Tri_Up Triangle_Down Solid_Tri_Down Square Solid_Square \
+  Bowtie Solid_Bowtie Hourglass Solid_Hglass Diamond Solid_Diamond Star \
+  Solid_Star Tri_Up_Down Solid_Tri_Left Solid_Tri_Right Hollow_Plus OMark}
+BuildMenu marker "Marker Type" $commands DoMarker menuvar(marker)
+
+set commands {Solid Dashed Dotted Dash_Dotted Dash_2_Dot Dash_3_Dot Long_Dash \
+  Long_Short_Dash Spaced_Dash Spaced_Dot Double_Dot Triple_Dot}
+BuildMenu line "Line Type" $commands DoLine linemenu_var
+
+set commands {Black Red Green Blue Cyan Yellow Magenta}
+BuildMenu linecolor "Line Color" $commands DoLineColor menuvar(linecolor)
+
+
+#
+# Place widgets
+#
+
+if {$Debug} {
+  puts "Place Widgets"
+}
+
+set frame_width 475
+place .a.switch_buttons -x 5 -y [expr $resolution+10] -width $frame_width \
+  -height 36
+
+place .a.change_titles -x 5 -y [expr $resolution+55] -width 120 -height 30
+place .a.show_maintitle -x 130 -y [expr $resolution+55] -width 120 -height 30
+
+place .e.load -x 9 -y 3 -width 95 -height 47
+place .e.filter -x 9 -y 53
+place .e.filtercommand -x 70 -y 53 -width 220
+place .e.dim_txt -x 120 -y 3 -width 112
+place .e.dim_mb -x 120 -y 23 -width 112 -height 27
+place .e.reset -x 235 -y 23 -width 52 -height 27
+
+PlaceFrames 1 1 1 1
+
+place .e.yframe.ytxt -x 140 -y 0 -anchor n
+place .e.yframe.fromtxt -x 5 -y 28
+place .e.yframe.totxt -x 5 -y 68
+place .e.yframe.from_mintxt -x 80 -y 31 -anchor center
+place .e.yframe.from_maxtxt -x 258 -y 31 -anchor center
+place .e.yframe.to_mintxt -x 80 -y 88 -anchor center
+place .e.yframe.to_maxtxt -x 258 -y 88 -anchor center
+place .e.yframe.yleft -x 72 -y 38
+place .e.yframe.yright -x 238 -y 38
+place .e.yframe.from -x 90 -y 18 -width 150 -height 40
+place .e.yframe.to -x 90 -y 58 -width 150 -height 40
+
+place .e.xframe.xtxt -x 140 -y 0 -anchor n
+place .e.xframe.fromtxt -x 5 -y 28
+place .e.xframe.totxt -x 5 -y 68
+place .e.xframe.from_mintxt -x 76 -y 31 -anchor center
+place .e.xframe.from_maxtxt -x 258 -y 31 -anchor center
+place .e.xframe.to_mintxt -x 76 -y 88 -anchor center
+place .e.xframe.to_maxtxt -x 258 -y 88 -anchor center
+place .e.xframe.xleft -x 72 -y 38
+place .e.xframe.xright -x 238 -y 38
+place .e.xframe.from -x 90 -y 18 -width 150 -height 40
+place .e.xframe.to -x 90 -y 58 -width 150 -height 40
+
+place .e.zframe.ztxt -x 140 -y 0 -anchor n
+place .e.zframe.from_mintxt -x 33 -y 31 -anchor center
+place .e.zframe.from_maxtxt -x 242 -y 31 -anchor center
+place .e.zframe.to_mintxt -x 33 -y 76 -anchor center
+place .e.zframe.to_maxtxt -x 242 -y 76 -anchor center
+place .e.zframe.to_maxup -x 229 -y 52
+place .e.zframe.to_maxdown -x 229 -y 80
+place .e.zframe.from_minup -x 20 -y 7
+place .e.zframe.from_mindown -x 20 -y 35
+place .e.zframe.from -x 65 -y 18 -width 150 -height 40
+place .e.zframe.to -x 65 -y 58 -width 150 -height 40
+
+place .e.angleframe.xangletxt -x 1 -y 41
+place .e.angleframe.xangleup -x 85 -y 0
+place .e.angleframe.xangle -x 30 -y 0 -height 100
+place .e.angleframe.xangledown -x 85 -y 49
+place .e.angleframe.yangletxt -x 167 -y 0 -anchor n
+place .e.angleframe.yangleleft -x 117 -y 73
+place .e.angleframe.yangle -x 117 -y 17 -width 100
+place .e.angleframe.yangleright -x 167 -y 73
+place .e.angleframe.flip_text -x 234 -y 0
+place .e.angleframe.flip_x -x 230 -y 18
+place .e.angleframe.flip_y -x 230 -y 43
+place .e.angleframe.flip_z -x 230 -y 68
+
+place .e.print -x 10 -y 521 -width 120 -height 30
+place .e.capture -x 10 -y 549 -width 120 -height 30
+
+place .e.about -x 156 -y 525 -width 132 -height 26
+place .e.exit -x 152 -y 553 -width 140 -height 26
+
+#
+# Button bindings
+#
+
+if {$Debug} {
+  puts "Button/Key Bindings"
+}
+
+bind .e.yframe.from <ButtonRelease-1> {
+  if {$parms(x,from,value) == $parms(x,to,value) && \
+      $parms(y,from,value) == $parms(y,to,value)} {
+    incr parms(y,from,value) -1
+    bell
+  }
+  UpdateMinValue .e.yframe.to $parms(y,from,value) parms(y,to,min) \
+    $parms(y,to,max)
+  .e.yframe.from set $parms(y,to,min)
+}
+
+bind .e.yframe.to <ButtonRelease-1> {
+  if {$parms(x,from,value) == $parms(x,to,value) && \
+      $parms(y,from,value) == $parms(y,to,value)} {
+    incr parms(y,to,value) 1
+    bell
+  }
+  UpdateMaxValue .e.yframe.from $parms(y,to,value) parms(y,from,max) \
+    $parms(y,from,min)
+  .e.yframe.to set $parms(y,from,max)
+}
+
+bind .e.xframe.from <ButtonRelease-1> {
+  if {$parms(x,from,value) == $parms(x,to,value) && \
+      $parms(y,from,value) == $parms(y,to,value)} {
+    incr parms(x,from,value) -1
+    bell
+  }
+  UpdateMinValue .e.xframe.to $parms(x,from,value) parms(x,to,min) \
+    $parms(x,to,max)
+  .e.xframe.from set $parms(x,to,min)
+}
+
+bind .e.xframe.to <ButtonRelease-1> {
+  if {$parms(x,from,value) == $parms(x,to,value) && \
+      $parms(y,from,value) == $parms(y,to,value)} {
+    incr parms(x,to,value) 1
+    bell
+  }
+  UpdateMaxValue .e.xframe.from $parms(x,to,value) parms(x,from,max) \
+    $parms(x,from,min)
+  .e.xframe.to set $parms(x,from,max)
+}
+
+bind .e.zframe.from <ButtonRelease-1> {
+  UpdateMinValue .e.zframe.to [expr $parms(z,from,value)+1] parms(z,to,min) \
+    $parms(z,to,max)
+  .e.zframe.from set [expr $parms(z,to,min)-1]
+}
+
+bind .e.zframe.to <ButtonRelease-1> {
+  UpdateMaxValue .e.zframe.from [expr $parms(z,to,value)-1] parms(z,from,max) \
+    $parms(z,from,min)
+  .e.zframe.to set [expr $parms(z,from,max)+1]
+}
+
+bind .e.angleframe.xangle <ButtonRelease-1> {
+  OrPictureMask picture_mask 0 2
+}
+
+bind .e.angleframe.yangle <ButtonRelease-1> {
+  OrPictureMask picture_mask 0 2
+}
+
+bind .e.yframe.yleft <ButtonPress-2> {
+  set diff [expr $parms(y,from,value)-$parms(y,from,min)]
+  if {$diff != 0} {
+    set incr [expr $parms(y,to,value)-$parms(y,from,value)+1]
+    if {$incr > $diff} {
+      set incr $diff
+    }
+    incr parms(y,from,value) -$incr
+    UpdateMinValue .e.yframe.to $parms(y,from,value) parms(y,to,min) \
+      $parms(y,to,max)
+    incr parms(y,to,value) -$incr
+    UpdateMaxValue .e.yframe.from $parms(y,to,value) parms(y,from,max) \
+      $parms(y,from,min)
+    .e.yframe.from set $parms(y,from,value)
+    .e.yframe.to set $parms(y,to,value)
+  }
+}
+
+bind .e.yframe.yright <ButtonPress-2> {
+  set diff [expr $parms(y,to,max)-$parms(y,to,value)]
+  if {$diff != 0} {
+    set incr [expr $parms(y,to,value)-$parms(y,from,value)+1]
+    if {$incr > $diff} {
+      set incr $diff
+    }
+    incr parms(y,to,value) $incr
+    UpdateMaxValue .e.yframe.from $parms(y,to,value) parms(y,from,max) \
+      $parms(y,from,min)
+    incr parms(y,from,value) $incr
+    UpdateMinValue .e.yframe.to $parms(y,from,value) parms(y,to,min) \
+      $parms(y,to,max)
+    .e.yframe.from set $parms(y,from,value)
+    .e.yframe.to set $parms(y,to,value)
+  }
+}
+
+bind .e.xframe.xleft <ButtonPress-2> {
+  set diff [expr $parms(x,from,value)-$parms(x,from,min)]
+  if {$diff != 0} {
+    set incr [expr $parms(x,to,value)-$parms(x,from,value)+1]
+    if {$incr > $diff} {
+      set incr $diff
+    }
+    incr parms(x,from,value) -$incr
+    UpdateMinValue .e.xframe.to $parms(x,from,value) parms(x,to,min) \
+      $parms(x,to,max)
+    incr parms(x,to,value) -$incr
+    UpdateMaxValue .e.xframe.from $parms(x,to,value) parms(x,from,max) \
+      $parms(x,from,min)
+    .e.xframe.from set $parms(x,from,value)
+    .e.xframe.to set $parms(x,to,value)
+  }
+}
+
+bind .e.xframe.xright <ButtonPress-2> {
+  set diff [expr $parms(x,to,max)-$parms(x,to,value)]
+  if {$diff != 0} {
+    set incr [expr $parms(x,to,value)-$parms(x,from,value)+1]
+    if {$incr > $diff} {
+      set incr $diff
+    }
+    incr parms(x,to,value) $incr
+    UpdateMaxValue .e.xframe.from $parms(x,to,value) parms(x,from,max) \
+      $parms(x,from,min)
+    incr parms(x,from,value) $incr
+    UpdateMinValue .e.xframe.to $parms(x,from,value) parms(x,to,min) \
+      $parms(x,to,max)
+    .e.xframe.from set $parms(x,from,value)
+    .e.xframe.to set $parms(x,to,value)
+  }
+}
+
+#
+# Key bindings
+#
+
+bind Entry <Delete> {
+  if {[%W select present]} {
+    %W delete sel.first sel.last
+  } else {
+    set idx [%W index insert]
+    if {$idx != 0} {
+      %W delete [expr $idx - 1]
+    }
+  }
+}
+
+bind all <Shift-Up> {.e.angleframe.xangleup invoke}
+bind all <Shift-Down> {.e.angleframe.xangledown invoke}
+bind all <Shift-Left> {.e.angleframe.yangleleft invoke}
+bind all <Shift-Right> {.e.angleframe.yangleright invoke}
+
+bind all <Control-Key-l> {.e.load invoke}
+
+bind .e.filtercommand <Return> {
+  set gli(filefilter) 1
+  focus .
+}
+
+#bind all <Help> {Help %X %Y}
+#bind all <Control-Key-question> {Help %X %Y}
+bind all <Control-Key-q> {.e.exit invoke}
+
+#InitShorthelp $shorthelpfile.$help_language $indexfile shorthelp_text
+
+#
+# Remove old metafiles
+#
+
+if {$Debug} {
+  puts "Remove old metafiles"
+}
+
+set files ""
+if { \
+  ![catch {set files [exec ls -l /tmp \| grep $env(LOGNAME) \| grep .gksm ]}] \
+  } {
+
+  catch { \
+    set pids [exec ps xww \| grep tcldemo \| grep "sh -f" \| cut -c1-5] \
+  }
+
+  if {$files != ""} {
+    set removed 0
+    foreach file $files {
+      if {[string match gli*.gksm $file]} {
+        regexp {gli(.*)\.gksm} $file match nr
+        if {[lsearch $pids $nr] == -1} {
+          incr removed 1
+          exec rm -f /tmp/$file
+        }
+      }
+    }
+    if {$removed} {
+      puts "$removed old metafile(s) removed."
+    }
+  }
+}
+
+
+#
+# GLI initialization
+#
+
+if {$Debug} {
+  puts "GLI Initialization"
+}
+
+: CELL_ARRAY := 1..[expr $resolution*$resolution]
+
+DefineCursor {All} watch
+update idletasks
+
+: GKS CLOSE_WS TERMINAL
+: DEFINE LOGICAL GKSconid \"[winfo screen .]![winfo id .a.display]\"
+: GKS OPEN_WS WK1 212
+: GKS OPEN_WS METAFILE 2
+: GKS DEACTIVATE METAFILE
+
+foreach type {color marker line} {
+  .menu_$type activate $index($type)
+  .menu_$type invoke $index($type)
+}
+
+.e.dim_mb.menu activate 6
+.e.dim_mb.menu invoke 6
+
+if {$Debug} {
+  puts Done
+}
+
+Redraw
+
+DefineCursor {All}
+
+

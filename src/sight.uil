@@ -1,0 +1,5614 @@
+!
+!  Sight UIL module
+!
+
+module sight
+    version = 'V1.1'
+    names = case_sensitive
+    objects = {
+	XmSeparator = gadget;
+	XmLabel = gadget;
+	XmPushButton = gadget;
+	XmToggleButton = gadget;
+    }
+
+include file 'icons.uil';
+
+value
+    drawing_area_width		: 686;
+    drawing_area_height		: 485;
+
+value
+    k_drawing			: 1;
+    k_cgm			: 2;
+    k_data			: 3;
+    k_quit			: 4;
+    k_exit			: 5;
+    k_tool_box  		: 6;
+    k_attribute_box		: 7;
+    k_digitize_area		: 8;
+    k_digitize_points		: 9;
+    k_digitize_vbars		: 10;
+    k_digitize_hbars		: 11;
+    k_enter			: 12;
+    k_help			: 13;
+    k_warning			: 14;
+    k_drawing_area		: 15;
+    k_image			: 16;
+
+value
+    k_file_label_text		: imported compound_string;
+	k_create_label_text	: imported compound_string;
+	k_open_label_text	: imported compound_string;
+	k_save_label_text	: imported compound_string;
+	k_close_label_text	: imported compound_string;
+	k_read_label_text	: imported compound_string;
+	k_write_label_text	: imported compound_string;
+	k_read_image_label_text	: imported compound_string;
+	k_import_label_text	: imported compound_string;
+	    k_image_label_text	: imported compound_string;
+	    k_cgm_binary_label_text
+		: imported compound_string;
+	    k_cgm_clear_text_label_text
+		: imported compound_string;
+	k_print_label_text	: imported compound_string;
+	k_capture_label_text	: imported compound_string;
+	k_quit_label_text	: imported compound_string;
+	    k_quit_warning_label_text
+		: imported compound_string;
+	k_exit_label_text	: imported compound_string;
+    k_edit_label_text		: imported compound_string;
+	k_redraw_label_text	: imported compound_string;
+	k_select_label_text	: imported compound_string;
+	    k_object_label_text	: imported compound_string;
+	    k_previous_label_text
+		: imported compound_string;
+	    k_next_label_text	: imported compound_string;
+	    k_last_label_text	: imported compound_string;
+	    k_group_label_text	: imported compound_string;
+	    k_all_label_text	: imported compound_string;
+	    k_excluded_label_text
+		: imported compound_string;
+	k_deselect_label_text   : imported compound_string;
+	k_cut_label_text        : imported compound_string;
+	k_paste_label_text      : imported compound_string;
+	k_pop_label_text        : imported compound_string;
+	k_push_label_text       : imported compound_string;
+	k_move_label_text       : imported compound_string;
+	k_remove_label_text     : imported compound_string;
+	k_pick_label_text	: imported compound_string;
+	    k_element_label_text
+		: imported compound_string;
+	    k_region_label_text	: imported compound_string;
+	k_digitize_label_text   : imported compound_string;
+	    k_area_label_text	: imported compound_string;
+	    k_points_label_text	: imported compound_string;
+	    k_bars_label_text	: imported compound_string;
+	k_clear_label_text	: imported compound_string;
+    k_tools_label_text		: imported compound_string;
+	k_tool_box_label_text	: imported compound_string;
+	k_line_label_text	: imported compound_string;
+	    k_locate_label_text	: imported compound_string;
+	    k_data_label_text	: imported compound_string;
+	k_spline_label_text	: imported compound_string;
+	    k_natural_label_text: imported compound_string;
+	    k_smooth_label_text	: imported compound_string;
+	    k_b_spline_label_text
+				: imported compound_string;
+	k_error_bars_label_text	: imported compound_string;
+	    k_vertical_label_text
+		: imported compound_string;
+	    k_horizontal_label_text
+		: imported compound_string;
+	k_symbol_label_text	: imported compound_string;
+	k_text_label_text	: imported compound_string;
+	k_fill_area_label_text	: imported compound_string;
+	k_bar_graph_label_text	: imported compound_string;
+	k_plot_label_text	: imported compound_string;
+	k_axes_label_text	: imported compound_string;
+	k_grid_label_text	: imported compound_string;
+    k_attributes_label_text	: imported compound_string;
+	k_attribute_box_label_text
+	   : imported compound_string;
+	k_linetype_label_text	: imported compound_string;
+	    k_solid_label_text	: imported compound_string;
+	    k_dashed_label_text	: imported compound_string;
+	    k_dotted_label_text	: imported compound_string;
+	    k_dash_dotted_label_text
+		: imported compound_string;
+	    k_dash_2_dot_label_text
+		: imported compound_string;
+	    k_dash_3_dot_label_text
+		: imported compound_string;
+	    k_long_dash_label_text
+		: imported compound_string;
+	    k_long_short_dash_label_text
+		: imported compound_string;
+	    k_spaced_dash_label_text
+		: imported compound_string;
+	    k_spaced_dot_label_text
+		: imported compound_string;
+	    k_double_dot_label_text
+		: imported compound_string;
+	    k_triple_dot_label_text
+		: imported compound_string;
+	k_linewidth_label_text	: imported compound_string;
+	    k_1_pt_label_text	: imported compound_string;
+	    k_2_pt_label_text	: imported compound_string;
+	    k_3_pt_label_text	: imported compound_string;
+	    k_4_pt_label_text	: imported compound_string;
+	    k_5_pt_label_text	: imported compound_string;
+	    k_6_pt_label_text	: imported compound_string;
+	k_linecolor_label_text	: imported compound_string;
+	    k_white_label_text	: imported compound_string;
+	    k_black_label_text	: imported compound_string;
+	    k_red_label_text	: imported compound_string;
+	    k_green_label_text	: imported compound_string;
+	    k_blue_label_text	: imported compound_string;
+	    k_cyan_label_text	: imported compound_string;
+	    k_yellow_label_text	: imported compound_string;
+	    k_magenta_label_text
+		: imported compound_string;
+	k_markertype_label_text	: imported compound_string;
+	    k_dot_label_text	: imported compound_string;
+	    k_plus_label_text	: imported compound_string;
+	    k_asterisk_label_text
+		: imported compound_string;
+	    k_diagonal_cross_label_text
+		: imported compound_string;
+	    k_circle_label_text	: imported compound_string;
+	    k_solid_circle_label_text
+		: imported compound_string;
+	    k_square_label_text	: imported compound_string;
+	    k_solid_square_label_text
+		: imported compound_string;
+	    k_triangle_up_label_text
+		: imported compound_string;
+	    k_solid_tri_up_label_text
+		: imported compound_string;
+	    k_triangle_down_label_text
+		: imported compound_string;
+	    k_solid_tri_down_label_text
+		: imported compound_string;
+	    k_bowtie_label_text	: imported compound_string;
+	    k_solid_bowtie_label_text
+		: imported compound_string;
+	    k_hourglass_label_text
+		: imported compound_string;
+	    k_solid_hourglass_label_text
+		: imported compound_string;
+	    k_diamond_label_text: imported compound_string;
+	    k_solid_diamond_label_text
+		: imported compound_string;
+	    k_star_label_text   : imported compound_string;
+	    k_solid_star_label_text
+		: imported compound_string;
+	    k_tri_up_down_label_text
+		: imported compound_string;
+	    k_solid_tri_left_label_text
+		: imported compound_string;
+	    k_solid_tri_right_label_text
+		: imported compound_string;
+	    k_hollow_plus_label_text
+	       : imported compound_string;
+	    k_omark_label_text  : imported compound_string;
+	k_markersize_label_text	: imported compound_string;
+	    k_8_pt_label_text	: imported compound_string;
+	    k_10_pt_label_text	: imported compound_string;
+	    k_12_pt_label_text	: imported compound_string;
+	    k_14_pt_label_text	: imported compound_string;
+	    k_18_pt_label_text	: imported compound_string;
+	    k_24_pt_label_text	: imported compound_string;
+	    k_36_pt_label_text	: imported compound_string;
+	    k_48_pt_label_text	: imported compound_string;
+	    k_72_pt_label_text	: imported compound_string;
+	k_markercolor_label_text: imported compound_string;
+	k_font_label_text	: imported compound_string;
+	    k_avant_garde_label_text
+		: imported compound_string;
+		k_normal_label_text
+		    : imported compound_string;
+		k_bold_label_text
+		    : imported compound_string;
+		k_italic_label_text
+		    : imported compound_string;
+		k_bold_italic_label_text
+		    : imported compound_string;
+	    k_courier_label_text
+		: imported compound_string;
+	    k_helvetica_label_text
+		: imported compound_string;
+	    k_lubalin_label_text
+		: imported compound_string;
+	    k_schoolbook_label_text
+		: imported compound_string;
+	    k_souvenir_label_text
+		: imported compound_string;
+	    k_symbol_font_label_text
+		: imported compound_string;
+	    k_times_label_text	: imported compound_string;
+	k_textsize_label_text	: imported compound_string;
+	k_textalign_label_text	: imported compound_string;
+	    k_left_label_text	: imported compound_string;
+	    k_center_label_text	: imported compound_string;
+	    k_right_label_text	: imported compound_string;
+	k_textdirection_label_text
+		: imported compound_string;
+	    k_ltoright_label_text
+		: imported compound_string;
+	    k_up_label_text	: imported compound_string;
+	    k_rtoleft_label_text: imported compound_string;
+	    k_down_label_text	: imported compound_string;
+	k_textcolor_label_text	: imported compound_string;
+	k_fillstyle_label_text	: imported compound_string;
+	    k_hollow_label_text	: imported compound_string;
+	    k_filled_label_text	: imported compound_string;
+	    k_pattern_label_text
+		: imported compound_string;
+	    k_hatch_label_text	: imported compound_string;
+	k_fillindex_label_text	: imported compound_string;
+	    k_1_label_text	: imported compound_string;
+	    k_2_label_text	: imported compound_string;
+	    k_3_label_text	: imported compound_string;
+	    k_4_label_text	: imported compound_string;
+	    k_5_label_text	: imported compound_string;
+	    k_6_label_text	: imported compound_string;
+	    k_7_label_text	: imported compound_string;
+	    k_8_label_text	: imported compound_string;
+	k_fillcolor_label_text	: imported compound_string;
+    k_view_label_text		: imported compound_string;
+	k_viewport_label_text   : imported compound_string;
+	k_window_label_text	: imported compound_string;
+        k_orientation_label_text: imported compound_string;
+            k_portrait_label_text
+                :  imported compound_string;
+            k_landscape_label_text
+                :  imported compound_string;
+	k_scale_label_text	: imported compound_string;
+	    k_linear_label_text	: imported compound_string;
+		k_flip_none_label_text
+		    : imported compound_string;
+		k_flip_x_label_text
+		    : imported compound_string;
+		k_flip_y_label_text
+		    : imported compound_string;
+		k_flip_xy_label_text
+		    : imported compound_string;
+	    k_xlog_label_text	: imported compound_string;
+	    k_ylog_label_text	: imported compound_string;
+	    k_xylog_label_text	: imported compound_string;
+	k_xform_label_text	: imported compound_string;
+    k_customize_label_text	: imported compound_string;
+	k_snap_grid_label_text	: imported compound_string;
+	    k_snap_off_label_text
+		: imported compound_string;
+	    k_snap_025_label_text
+		: imported compound_string;
+	    k_snap_05_label_text
+		: imported compound_string;
+	    k_snap_1_label_text
+		: imported compound_string;
+    k_help_label_text		: imported compound_string;
+	k_help_library_spec	: imported compound_string;
+
+    k_command_prompt_label_text	: imported compound_string;
+
+    k_information_label_text	: imported compound_string;
+    k_warning_label_text        : imported compound_string;
+    k_error_label_text		: imported compound_string;
+    k_file_selection_label_text	: imported compound_string;
+    k_filter_label_text		: imported compound_string;
+    k_directory_label_text	: imported compound_string;
+    k_list_label_text		: imported compound_string;
+    k_selection_label_text	: imported compound_string;
+    k_ok_label_text		: imported compound_string;
+    k_cancel_label_text         : imported compound_string;
+
+procedure
+    activate_widget (integer);
+    dismiss_widget (integer);
+    do_something (integer);
+    set_command (string);
+
+object
+    warning_box : XmWarningDialog {
+	arguments {
+	    XmNdialogTitle = k_warning_label_text;
+	    XmNokLabelString = k_ok_label_text;
+	    XmNcancelLabelString = k_cancel_label_text;
+	    XmNhelpLabelString = k_help_label_text;
+	    XmNdefaultPosition = true;
+	};
+    };
+
+object
+    main_window_widget : XmMainWindow {
+	controls {
+	    XmMenuBar menu_bar_widget;
+	    XmForm form_widget;
+	    XmCommand command_window_widget;
+	};
+    };
+
+object
+    menu_bar_widget : XmMenuBar {
+	arguments {
+	    XmNorientation = XmHORIZONTAL;
+	    XmNmenuHelpWidget = XmCascadeButton help_menu_entry;
+	};
+	controls {
+	    XmCascadeButton file_menu_entry;
+	    XmCascadeButton edit_menu_entry;
+	    XmCascadeButton tools_menu_entry;
+	    XmCascadeButton attributes_menu_entry;
+	    XmCascadeButton view_menu_entry;
+	    XmCascadeButton customize_menu_entry;
+	    XmCascadeButton help_menu_entry;
+	};
+    };
+
+object
+    file_menu_entry : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_file_label_text;
+	    XmNmappingDelay = 0;
+	};
+	controls {
+	    XmPulldownMenu file_menu;
+	};
+    };
+
+object
+    file_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton m_create_button;
+	    XmPushButton m_open_button;
+	    XmPushButton m_save_button;
+	    XmPushButton m_close_button;
+	    XmSeparator {};
+	    XmPushButton m_read_button;
+	    XmPushButton m_write_button;
+	    XmSeparator {};
+	    XmPushButton m_read_image_button;
+	    XmSeparator {};
+	    XmCascadeButton import_menu_entry;
+	    XmSeparator {};
+	    XmPushButton m_print_button;
+	    XmPushButton m_capture_button;
+	    XmSeparator {};
+	    XmPushButton m_quit_button;
+	    XmPushButton m_exit_button;
+	};
+    };
+
+object
+    m_create_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_create_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedures {
+		activate_widget (k_drawing);
+		set_command ("create_drawing %s");
+	    };
+	};
+    };
+
+object
+    m_open_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_open_label_text;
+	    XmNaccelerator = "Ctrl<KeyPress>O:";
+	    XmNacceleratorText = compound_string("Ctrl/O");
+	};
+	callbacks {
+	    XmNactivateCallback = procedures {
+		activate_widget (k_drawing);
+		set_command ("open_drawing %s");
+	    };
+	};
+    };
+
+object
+    m_save_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_save_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedures {
+		activate_widget (k_drawing);
+		set_command ("close_drawing %s");
+	    };
+	};
+    };
+
+object
+    m_close_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_close_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedures {
+		set_command ("close_drawing");
+	    };
+	};
+    };
+
+object
+    m_read_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_read_label_text;
+	    XmNaccelerator = "Ctrl<KeyPress>R:";
+	    XmNacceleratorText = compound_string("Ctrl/R");
+	};
+	callbacks {
+	    XmNactivateCallback = procedures {
+		activate_widget (k_data);
+		set_command ("\rread %s x y");
+	    };
+	};
+    };
+
+object
+    m_write_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_write_label_text;
+	    XmNaccelerator = "Ctrl<KeyPress>W:";
+	    XmNacceleratorText = compound_string("Ctrl/W");
+	};
+	callbacks {
+	    XmNactivateCallback = procedures {
+		activate_widget (k_data);
+		set_command ("\rwrite %s x y");
+	    };
+	};
+    };
+
+object
+    m_read_image_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_read_image_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedures {
+		activate_widget (k_image);
+		set_command ("image %s");
+	    };
+	};
+    };
+
+object
+    import_menu_entry : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_import_label_text;
+	    XmNmappingDelay = 0;
+	};
+	controls {
+	    XmPulldownMenu import_menu;
+	};
+    };
+
+object
+    import_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton m_image_button;
+	    XmPushButton m_cgm_binary_button;
+	    XmPushButton m_cgm_clear_text_button;
+	};
+    };
+
+object
+    m_image_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_image_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedures {
+		activate_widget (k_image);
+		set_command ("image \"|convert %s pnm:-\"");
+	    };
+	};
+    };
+
+object
+    m_cgm_binary_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_cgm_binary_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedures {
+		activate_widget (k_cgm);
+		set_command ("\rview %s cgm_binary sight");
+	    };
+	};
+    };
+
+object
+    m_cgm_clear_text_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_cgm_clear_text_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedures {
+		activate_widget (k_cgm);
+		set_command ("\rview %s cgm_clear_text sight");
+	    };
+	};
+    };
+
+object
+    drawing_selection_box : XmFileSelectionDialog {
+	arguments {
+	    XmNdialogTitle = k_file_selection_label_text;
+	    XmNfilterLabelString = k_filter_label_text;
+!ifdef motif010
+!	    XmNlistLabelString = k_list_label_text;
+!else
+	    XmNdirListLabelString = k_directory_label_text;
+	    XmNfileListLabelString = k_list_label_text;
+!endif
+	    XmNselectionLabelString = k_selection_label_text;
+	    XmNcancelLabelString = k_cancel_label_text;
+	    XmNhelpLabelString = k_help_label_text;
+	    XmNdirMask = "*.sight";
+	    XmNdefaultPosition = true;
+	};
+	callbacks {
+	    XmNokCallback = procedure do_something (k_drawing);
+	    XmNcancelCallback = procedure dismiss_widget (k_drawing);
+	};
+    };
+
+object
+    cgm_selection_box : XmFileSelectionDialog {
+	arguments {
+	    XmNdialogTitle = k_file_selection_label_text;
+	    XmNfilterLabelString = k_filter_label_text;
+!ifdef motif010
+!	    XmNlistLabelString = k_list_label_text;
+!else
+	    XmNdirListLabelString = k_directory_label_text;
+	    XmNfileListLabelString = k_list_label_text;
+!endif
+	    XmNselectionLabelString = k_selection_label_text;
+	    XmNcancelLabelString = k_cancel_label_text;
+	    XmNhelpLabelString = k_help_label_text;
+	    XmNdirMask = "*.cgm";
+	    XmNdefaultPosition = true;
+	};
+	callbacks {
+	    XmNokCallback = procedure do_something (k_cgm);
+	    XmNcancelCallback = procedure dismiss_widget (k_cgm);
+	};
+    };
+
+object
+    data_selection_box : XmFileSelectionDialog {
+	arguments {
+	    XmNdialogTitle = k_file_selection_label_text;
+	    XmNfilterLabelString = k_filter_label_text;
+!ifdef motif010
+!	    XmNlistLabelString = k_list_label_text;
+!else
+	    XmNdirListLabelString = k_directory_label_text;
+	    XmNfileListLabelString = k_list_label_text;
+!endif
+	    XmNselectionLabelString = k_selection_label_text;
+	    XmNcancelLabelString = k_cancel_label_text;
+	    XmNhelpLabelString = k_help_label_text;
+	    XmNdirMask = "*.dat";
+	    XmNdefaultPosition = true;
+	};
+	callbacks {
+	    XmNokCallback = procedure do_something (k_data);
+	    XmNcancelCallback = procedure dismiss_widget (k_data);
+	};
+    };
+
+object
+    image_selection_box : XmFileSelectionDialog {
+	arguments {
+	    XmNdialogTitle = k_file_selection_label_text;
+	    XmNfilterLabelString = k_filter_label_text;
+!ifdef motif010
+!	    XmNlistLabelString = k_list_label_text;
+!else
+	    XmNdirListLabelString = k_directory_label_text;
+	    XmNfileListLabelString = k_list_label_text;
+!endif
+	    XmNselectionLabelString = k_selection_label_text;
+	    XmNcancelLabelString = k_cancel_label_text;
+	    XmNhelpLabelString = k_help_label_text;
+	    XmNdirMask = "*.*";
+	    XmNdefaultPosition = true;
+	};
+	callbacks {
+	    XmNokCallback = procedure do_something (k_image);
+	    XmNcancelCallback = procedure dismiss_widget (k_image);
+	};
+    };
+
+object
+    m_print_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_print_label_text;
+	    XmNaccelerator = "Ctrl<KeyPress>P:";
+	    XmNacceleratorText = compound_string("Ctrl/P");
+	};
+	callbacks {
+	    XmNactivateCallback = procedures {
+		set_command ("print");
+	    };
+	};
+    };
+
+object
+    m_capture_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_capture_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedures {
+		set_command ("capture");
+	    };
+	};
+    };
+
+object
+    m_quit_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_quit_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure activate_widget (k_quit);
+	};
+    };
+
+object
+    quit_warning_box : XmWarningDialog {
+	arguments {
+	    XmNdialogTitle = k_warning_label_text;
+	    XmNmessageString = k_quit_warning_label_text;
+	    XmNokLabelString = k_ok_label_text;
+	    XmNcancelLabelString = k_cancel_label_text;
+	    XmNhelpLabelString = k_help_label_text;
+	    XmNdefaultPosition = true;
+	};
+	callbacks {
+	    XmNokCallback = procedure do_something (k_quit);
+	    XmNcancelCallback = procedure dismiss_widget (k_quit);
+	};
+    };
+
+object
+    m_exit_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_exit_label_text;
+	    XmNaccelerator = "Ctrl<KeyPress>Z:";
+	    XmNacceleratorText = compound_string("Ctrl/Z");
+	};
+	callbacks {
+	    XmNactivateCallback = procedure do_something (k_exit);
+	};
+    };
+
+object
+    edit_menu_entry : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_edit_label_text;
+	    XmNmappingDelay = 0;
+	};
+	controls {
+	    XmPulldownMenu edit_menu;
+	};
+    };
+
+object
+    edit_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton m_redraw_button;
+	    XmSeparator {};
+	    XmCascadeButton select_menu_entry;
+	    XmPushButton m_deselect_button;
+	    XmSeparator {};
+	    XmPushButton m_cut_button;
+	    XmPushButton m_paste_button;
+	    XmPushButton m_pop_button;
+	    XmPushButton m_push_button;
+	    XmPushButton m_move_button;
+	    XmPushButton m_remove_button;
+	    XmSeparator {};
+	    XmCascadeButton m_pick_menu;
+	    XmCascadeButton m_digitize_menu;
+	    XmSeparator {};
+	    XmPushButton m_clear_button;
+	};
+    };
+
+object
+    m_redraw_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_redraw_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("redraw");
+	};
+    };
+
+object
+    select_menu_entry : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_select_label_text;
+	    XmNmappingDelay = 0;
+	};
+	controls {
+	    XmPulldownMenu select_menu;
+	};
+    };
+
+object
+    select_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton m_object_button;
+	    XmPushButton m_previous_button;
+	    XmPushButton m_next_button;
+	    XmPushButton m_last_button;
+	    XmPushButton m_group_button;
+	    XmPushButton m_excluded_button;
+	    XmPushButton m_all_button;
+	};
+    };
+
+object
+    m_object_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_object_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("select object");
+	};
+    };
+
+object
+    m_previous_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_previous_label_text;
+	    XmNaccelerator = "<Key>Prior";
+	    XmNacceleratorText = compound_string('Prev');
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("select previous");
+	};
+    };
+
+object
+    m_next_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_next_label_text;
+	    XmNaccelerator = "<KeyPress>Next";
+	    XmNacceleratorText = compound_string('Next');
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("select next");
+	};
+    };
+
+object
+    m_last_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_last_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("select last");
+	};
+    };
+
+object
+    m_group_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_group_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("select group");
+	};
+    };
+
+object
+    m_excluded_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_excluded_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("select excluded");
+	};
+    };
+
+object
+    m_all_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_all_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("select all");
+	};
+    };
+
+object
+    m_deselect_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_deselect_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("deselect");
+	};
+    };
+
+object
+    m_cut_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_cut_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("cut");
+	};
+    };
+
+object
+    m_paste_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_paste_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("paste");
+	};
+    };
+
+object
+    m_pop_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_pop_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("pop");
+	};
+    };
+
+object
+    m_push_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_push_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("push");
+	};
+    };
+
+object
+    m_move_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_move_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("move");
+	};
+    };
+
+object
+    m_remove_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_remove_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("remove");
+	};
+    };
+
+object
+    m_pick_menu : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_pick_label_text;
+	    XmNmappingDelay = 0;
+	};
+	controls {
+	    XmPulldownMenu pick_menu;
+	};
+    };
+
+object
+    pick_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton m_pick_object_button;
+	    XmPushButton m_pick_element_button;
+	    XmPushButton m_pick_region_button;
+	};
+    };
+
+object
+    m_pick_object_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_object_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("pick_object");
+	};
+    };
+
+object
+    m_pick_element_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_element_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("pick_element");
+	};
+    };
+
+object
+    m_pick_region_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_region_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("pick_region");
+	};
+    };
+
+object
+    m_digitize_menu : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_digitize_label_text;
+	    XmNmappingDelay = 0;
+	};
+	controls {
+	    XmPulldownMenu digitize_menu;
+	};
+    };
+
+object
+    digitize_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton m_area_button;
+	    XmPushButton m_points_button;
+	    XmCascadeButton m_bars_menu;
+	};
+    };
+
+object
+    m_area_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_area_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure do_something (k_digitize_area);
+	};
+    };
+
+object
+    m_points_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_points_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure do_something (k_digitize_points);
+	};
+    };
+
+object
+    m_bars_menu : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_bars_label_text;
+	    XmNmappingDelay = 0;
+	};
+	controls {
+	    XmPulldownMenu bars_menu;
+	};
+    };
+
+object
+    bars_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton m_vbars_button;
+	    XmPushButton m_hbars_button;
+	};
+    };
+
+object
+    m_vbars_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_vertical_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure do_something (k_digitize_vbars);
+	};
+    };
+
+object
+    m_hbars_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_horizontal_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure do_something (k_digitize_hbars);
+	};
+    };
+
+object
+    m_clear_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_clear_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("clear");
+	};
+    };
+
+object
+    tools_menu_entry : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_tools_label_text;
+	    XmNmappingDelay = 0;
+	};
+	controls {
+	    XmPulldownMenu tools_menu;
+	};
+    };
+
+object
+    tools_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton m_tool_box_button;
+	    XmSeparator {};
+	    XmCascadeButton m_line_menu;
+	    XmCascadeButton m_spline_menu;
+	    XmCascadeButton m_error_bars_menu;
+	    XmCascadeButton m_symbol_menu;
+	    XmPushButton m_text_button;
+	    XmCascadeButton m_fill_area_menu;
+	    XmCascadeButton m_bar_graph_menu;
+	    XmSeparator {};
+	    XmCascadeButton m_plot_menu;
+	    XmPushButton m_axes_button;
+	    XmPushButton m_grid_button;
+	};
+    };
+
+object
+    m_tool_box_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_tool_box_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure activate_widget (k_tool_box);
+	};
+    };
+
+object
+    tool_box : XmBulletinBoardDialog {
+	arguments {
+	    XmNdialogTitle = k_tools_label_text;
+	};
+	controls {
+	    XmRowColumn tool_box_dialog;
+	};
+    };
+
+object
+    tool_box_dialog : XmRowColumn {
+	arguments{
+	    XmNpacking = XmPACK_COLUMN;
+	    XmNorientation = XmVERTICAL;
+	    XmNnumColumns = 3;
+	};   
+	controls {
+	    XmMenuBar line_menu_bar;
+            XmOptionMenu spline_option_menu;
+            XmOptionMenu error_bars_option_menu;
+	    XmMenuBar symbol_menu_bar;
+	    XmPushButton m_text;
+            XmMenuBar fill_area_menu_bar;
+            XmMenuBar bar_graph_menu_bar;
+            XmMenuBar plot_menu_bar;
+	    XmPushButton m_axes;
+	    XmPushButton m_grid;
+	};
+    };
+
+object
+    line_menu_bar : XmMenuBar {
+        controls {
+            XmCascadeButton m_line;
+        };
+    };
+
+object
+    m_line : XmCascadeButton {
+	arguments {
+	    XmNlabelPixmap = line_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	controls {
+	    XmPulldownMenu data_entry;
+	};
+	callbacks {
+	    XmNcascadingCallback = procedure set_command ("polyline\\");
+	};
+    };
+
+object
+    data_entry : XmPulldownMenu {
+	controls {
+	    XmPushButton m_locate_icon;
+	    XmPushButton m_data_icon;
+	};
+    };
+
+object
+    m_locate_icon : XmPushButton {
+	arguments {
+	    XmNlabelType = XmPIXMAP;
+	    XmNlabelPixmap = locate_icon;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("");
+	};
+    };
+
+object
+    m_data_icon : XmPushButton {
+	arguments {
+	    XmNlabelType = XmPIXMAP;
+	    XmNlabelPixmap = data_icon;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" x y");
+	};
+    };
+
+object
+    spline_option_menu : XmOptionMenu {
+        arguments{
+            XmNunitType = XmPIXELS;
+            XmNmenuHistory = XmPushButton m_spline;
+        };
+        controls {
+            XmPulldownMenu spline_icon_menu;
+        };
+    };
+
+object
+    spline_icon_menu : XmPulldownMenu {
+        controls {
+            XmPushButton m_spline;
+            XmPushButton m_smooth_spline;
+            XmPushButton m_b_spline;
+        };
+    };
+
+object
+    m_spline : XmPushButton {
+        arguments {
+            XmNlabelType = XmPIXMAP;
+            XmNlabelPixmap = spline_icon;
+        };
+        callbacks {
+            XmNactivateCallback = procedure set_command ("spline x y");
+        };
+    };
+
+object
+    m_smooth_spline : XmPushButton {
+        arguments {
+            XmNlabelType = XmPIXMAP;
+            XmNlabelPixmap = smooth_spline_icon;
+        };
+        callbacks {
+            XmNactivateCallback = procedure set_command ("spline x y -1");
+        };
+    };
+
+object
+    m_b_spline : XmPushButton {
+        arguments {
+            XmNlabelType = XmPIXMAP;
+            XmNlabelPixmap = b_spline_icon;
+        };
+        callbacks {
+            XmNactivateCallback = procedure set_command ("spline x y -2");
+        };
+    };
+
+object
+    error_bars_option_menu : XmOptionMenu {
+        arguments{
+            XmNunitType = XmPIXELS;
+            XmNmenuHistory = XmPushButton m_vertical_error_bars;
+        };
+        controls {
+            XmPulldownMenu error_bars_icon_menu;
+        };
+    };
+
+object
+    error_bars_icon_menu : XmPulldownMenu {
+        controls {
+            XmPushButton m_vertical_error_bars;
+            XmPushButton m_horizontal_error_bars;
+        };
+    };
+
+object
+    m_vertical_error_bars : XmPushButton {
+        arguments {
+            XmNlabelType = XmPIXMAP;
+            XmNlabelPixmap = v_error_bars_icon;
+        };
+        callbacks {
+            XmNactivateCallback = procedure set_command (
+		"error_bars x y e1 e2 vertical");
+        };
+    };
+
+object
+    m_horizontal_error_bars : XmPushButton {
+        arguments {
+            XmNlabelType = XmPIXMAP;
+            XmNlabelPixmap = h_error_bars_icon;
+        };
+        callbacks {
+            XmNactivateCallback = procedure set_command (
+		"error_bars x y e1 e2 horizontal");
+        };
+    };
+
+object
+    symbol_menu_bar : XmMenuBar {
+        controls {
+            XmCascadeButton m_symbol;
+        };
+    };
+
+object
+    m_symbol : XmCascadeButton {
+	arguments {
+	    XmNlabelPixmap = symbol_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	controls {
+	    XmPulldownMenu data_entry;
+	};
+	callbacks {
+	    XmNcascadingCallback = procedure set_command ("polymarker\\");
+	};
+    };
+
+object
+    m_text : XmPushButton {
+	arguments {
+	    XmNlabelType = XmPIXMAP;
+	    XmNlabelPixmap = text_icon;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("text");
+	};
+    };
+
+object
+    fill_area_menu_bar : XmMenuBar {
+        controls {
+            XmCascadeButton m_fill_area;
+        };
+    };
+
+object
+    m_fill_area : XmCascadeButton {
+	arguments {
+	    XmNlabelPixmap = fill_area_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	controls {
+	    XmPulldownMenu data_entry;
+	};
+	callbacks {
+	    XmNcascadingCallback = procedure set_command ("fill_area\\");
+	};
+    };
+
+object
+    bar_graph_menu_bar : XmMenuBar {
+        controls {
+            XmCascadeButton m_bar_graph;
+        };
+    };
+
+object
+    m_bar_graph : XmCascadeButton {
+	arguments {
+	    XmNlabelPixmap = bar_graph_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	controls {
+	    XmPulldownMenu data_entry;
+	};
+	callbacks {
+	    XmNcascadingCallback = procedure set_command ("bar_graph\\");
+	};
+    };
+
+object
+    plot_menu_bar : XmMenuBar {
+        controls {
+            XmCascadeButton m_plot;
+        };
+    };
+
+object
+    m_plot : XmCascadeButton {
+	arguments {
+	    XmNlabelPixmap = plot_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	controls {
+	    XmPulldownMenu data_entry;
+	};
+	callbacks {
+	    XmNcascadingCallback = procedure set_command ("plot\\");
+	};
+    };
+
+object
+    m_axes : XmPushButton {
+	arguments {
+	    XmNlabelType = XmPIXMAP;
+	    XmNlabelPixmap = axes_icon;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("axes");
+	};
+    };
+
+object
+    m_grid : XmPushButton {
+	arguments {
+	    XmNlabelType = XmPIXMAP;
+	    XmNlabelPixmap = grid_icon;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("grid");
+	};
+    };
+
+object
+    m_line_menu : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_line_label_text;
+	    XmNmappingDelay = 0;
+	};
+	controls {
+	    XmPulldownMenu data_entry_menu;
+	};
+	callbacks {
+	    XmNcascadingCallback = procedure set_command ("polyline\\");
+	};
+    };
+
+object
+    data_entry_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton m_locate_button;
+	    XmPushButton m_data_button;
+	};
+    };
+
+object
+    m_locate_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_locate_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("");
+	};
+    };
+
+object
+    m_data_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_data_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" x y");
+	};
+    };
+
+object
+    m_spline_menu : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_spline_label_text;
+	    XmNmappingDelay = 0;
+	};
+	controls {
+	    XmPulldownMenu spline_menu;
+	};
+    };
+
+object
+    spline_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton m_natural_button;
+	    XmPushButton m_smooth_button;
+	    XmPushButton m_b_spline_button;
+	};
+    };
+
+object
+    m_natural_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_natural_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("spline x y");
+	};
+    };
+
+object
+    m_smooth_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_smooth_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("spline x y -1");
+	};
+    };
+
+object
+    m_b_spline_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_b_spline_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("spline x y -2");
+	};
+    };
+
+object
+    m_error_bars_menu : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_error_bars_label_text;
+	    XmNmappingDelay = 0;
+	};
+	controls {
+	    XmPulldownMenu error_bars_menu;
+	};
+    };
+
+object
+    error_bars_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton m_vertical_button;
+	    XmPushButton m_horizontal_button;
+	};
+    };
+
+object
+    m_vertical_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_vertical_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"error_bars x y e1 e2 vertical");
+	};
+    };
+
+object
+    m_horizontal_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_horizontal_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"error_bars x y e1 e2 horizontal");
+	};
+    };
+
+object
+    m_symbol_menu : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_symbol_label_text;
+	    XmNmappingDelay = 0;
+	};
+	controls {
+	    XmPulldownMenu data_entry_menu;
+	};
+	callbacks {
+	    XmNcascadingCallback = procedure set_command ("polymarker\\");
+	};
+    };
+
+object
+    m_text_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_text_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("text");
+	};
+    };
+
+object
+    m_fill_area_menu : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_fill_area_label_text;
+	    XmNmappingDelay = 0;
+	};
+	controls {
+	    XmPulldownMenu data_entry_menu;
+	};
+	callbacks {
+	    XmNcascadingCallback = procedure set_command ("fill_area\\");
+	};
+    };
+
+object
+    m_bar_graph_menu : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_bar_graph_label_text;
+	    XmNmappingDelay = 0;
+	};
+	controls {
+	    XmPulldownMenu data_entry_menu;
+	};
+	callbacks {
+	    XmNcascadingCallback = procedure set_command ("bar_graph\\");
+	};
+    };
+
+object
+    m_plot_menu : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_plot_label_text;
+	    XmNmappingDelay = 0;
+	};
+	controls {
+	    XmPulldownMenu data_entry_menu;
+	};
+	callbacks {
+	    XmNcascadingCallback = procedure set_command ("plot\\");
+	};
+    };
+
+object
+    m_axes_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_axes_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("axes");
+	};
+    };
+
+object
+    m_grid_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_grid_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("grid");
+	};
+    };
+
+object
+    attributes_menu_entry : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_attributes_label_text;
+	    XmNmappingDelay = 0;
+	};
+	controls {
+	    XmPulldownMenu attributes_menu;
+	};
+    };
+
+object
+    attributes_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton m_attribute_box_button;
+	    XmSeparator {};
+	    XmCascadeButton linetype_menu_entry;
+	    XmCascadeButton linewidth_menu_entry;
+	    XmCascadeButton linecolor_menu_entry;
+	    XmSeparator {};
+	    XmCascadeButton markertype_menu_entry;
+	    XmCascadeButton markersize_menu_entry;
+	    XmCascadeButton markercolor_menu_entry;
+	    XmSeparator {};
+	    XmCascadeButton font_menu_entry;
+	    XmCascadeButton textsize_menu_entry;
+	    XmCascadeButton textalign_menu_entry;
+	    XmCascadeButton textdirection_menu_entry;
+	    XmCascadeButton textcolor_menu_entry;
+	    XmSeparator {};
+	    XmCascadeButton fillstyle_menu_entry;
+	    XmCascadeButton fillindex_menu_entry;
+	    XmCascadeButton fillcolor_menu_entry;
+	};
+    };
+
+object
+    m_attribute_box_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_attribute_box_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure activate_widget (k_attribute_box);
+	};
+    };
+
+object
+    attribute_box : XmBulletinBoardDialog {
+	arguments {
+	    XmNdialogTitle = k_attributes_label_text;
+	};
+	controls {
+	    XmRowColumn attributes_rowcol;
+	};
+    };
+
+object
+    attributes_rowcol : XmRowColumn {
+	controls {
+	    XmOptionMenu linetype_option_menu;
+	    XmOptionMenu linewidth_option_menu;
+	    XmOptionMenu linecolor_option_menu;
+	    XmSeparator {};
+	    XmOptionMenu markertype_option_menu;
+	    XmOptionMenu markersize_option_menu;
+	    XmOptionMenu markercolor_option_menu; 
+	    XmSeparator {};
+	    XmOptionMenu font_option_menu;
+	    XmOptionMenu textsize_option_menu;
+	    XmOptionMenu textalign_option_menu;
+	    XmOptionMenu textdirection_option_menu;
+	    XmOptionMenu textcolor_option_menu;
+	    XmSeparator {};
+	    XmOptionMenu fillstyle_option_menu;
+	    XmOptionMenu fillcolor_option_menu;
+	};
+    };
+
+object
+    linetype_option_menu : XmOptionMenu {
+	arguments {
+	    XmNmarginHeight= -2; 
+	    XmNmenuHistory = XmPushButton m_solid;
+	    XmNlabelString = k_linetype_label_text;
+	};
+	controls {
+	    XmPulldownMenu linetype_icon_menu; 
+	};
+    };
+
+object
+    linetype_icon_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton m_solid;
+	    XmPushButton m_dashed;
+	    XmPushButton m_dotted;
+	    XmPushButton m_dash_dotted;
+	    XmPushButton m_dash_2_dot;
+	    XmPushButton m_dash_3_dot;
+	    XmPushButton m_long_dash;
+	    XmPushButton m_long_short_dash;
+	    XmPushButton m_spaced_dash;
+	    XmPushButton m_spaced_dot;
+	    XmPushButton m_double_dot;
+	    XmPushButton m_triple_dot;
+	};
+    };
+
+object
+    m_solid : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = linetype_solid_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set linetype solid");
+	};
+    };
+
+object
+    m_dashed : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = linetype_dashed_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set linetype dashed");
+	};
+    };
+				    
+object
+    m_dotted : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = linetype_dotted_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set linetype dotted");
+	};
+    };
+				    
+object
+    m_dash_dotted : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = linetype_dash_dotted_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set linetype dash_dotted");
+	};
+    };
+				    
+object
+    m_dash_2_dot : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = linetype_dash_2_dot_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set linetype dash_2_dot");
+	};
+    };                                    
+
+object
+    m_dash_3_dot : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = linetype_dash_3_dot_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set linetype dash_3_dot");
+	};
+    };                                    
+
+object
+    m_long_dash : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = linetype_long_dash_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set linetype long_dash");
+	};
+    };                                    
+
+object
+    m_long_short_dash : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = linetype_long_short_dash_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set linetype long_short_dash");
+	};
+    };                                    
+
+object
+    m_spaced_dash : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = linetype_spaced_dash_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set linetype spaced_dash");
+	};
+    };                                    
+
+object
+    m_spaced_dot : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = linetype_spaced_dot_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set linetype spaced_dot");
+	};
+    };                                    
+
+object
+    m_double_dot : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = linetype_double_dot_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set linetype double_dot");
+	};
+    };
+				    
+object
+    m_triple_dot : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = linetype_triple_dot_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set linetype triple_dot");
+	};
+    };                                    
+
+object
+    linewidth_option_menu : XmOptionMenu {
+	arguments { 
+	    XmNmarginHeight= -2; 
+	    XmNmenuHistory = XmPushButton linewidth_1_pt;
+	    XmNlabelString = k_linewidth_label_text;
+	};
+	controls {
+	    XmPulldownMenu linewidth_icon_menu; 
+	};
+    };
+
+object
+    linewidth_icon_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton linewidth_1_pt;
+	    XmPushButton linewidth_2_pt;
+	    XmPushButton linewidth_3_pt;
+	    XmPushButton linewidth_4_pt;
+	    XmPushButton linewidth_5_pt;
+	    XmPushButton linewidth_6_pt;
+	};
+    };
+
+object
+    linewidth_1_pt : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = linewidth_1_pt_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set linewidth 1pt");
+	};
+    };                                    
+
+object
+    linewidth_2_pt : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = linewidth_2_pt_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set linewidth 2pt");
+	};
+    };                                    
+
+object
+    linewidth_3_pt : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = linewidth_3_pt_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set linewidth 3pt");
+	};
+    };                                    
+
+object
+    linewidth_4_pt : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = linewidth_4_pt_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set linewidth 4pt");
+	};
+    };                                    
+
+object
+    linewidth_5_pt : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = linewidth_5_pt_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set linewidth 5pt");
+	};
+    };                                    
+
+object
+    linewidth_6_pt : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = linewidth_6_pt_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set linewidth 6pt");
+	};
+    };                                    
+
+object
+    linecolor_option_menu : XmOptionMenu {
+	arguments {
+	    XmNmarginHeight= -2; 
+	    XmNmenuHistory = XmPushButton linecolor_black;
+	    XmNlabelString = k_linecolor_label_text;
+	};
+	controls {
+	    XmPulldownMenu linecolor_icon_menu; 
+	};
+    };
+
+object
+    linecolor_icon_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton linecolor_black;
+	    XmPushButton linecolor_white;
+	    XmPushButton linecolor_red;
+	    XmPushButton linecolor_green;
+	    XmPushButton linecolor_blue;
+	    XmPushButton linecolor_cyan;
+	    XmPushButton linecolor_yellow;
+	    XmPushButton linecolor_magenta;
+	};
+    };
+
+object
+    linecolor_black : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = linecolor_black_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set linecolor black");
+	};
+    };                                    
+
+object
+    linecolor_white : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = linecolor_white_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set linecolor white");
+	};
+    };                                    
+
+object
+    linecolor_red : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = linecolor_red_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set linecolor red");
+	};
+    };                                    
+
+object
+    linecolor_green : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = linecolor_green_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set linecolor green");
+	};
+    };                                    
+
+object
+    linecolor_blue : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = linecolor_blue_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set linecolor blue");
+	};
+    };                                    
+
+object
+    linecolor_cyan : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = linecolor_cyan_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set linecolor cyan");
+	};
+    };                                    
+
+object
+    linecolor_yellow : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = linecolor_yellow_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set linecolor yellow");
+	};
+    };                                    
+
+object
+    linecolor_magenta : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = linecolor_magenta_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set linecolor magenta");
+	};
+    };                                    
+
+object
+    markertype_option_menu : XmOptionMenu {
+	arguments {
+	    XmNmarginHeight= -2; 
+	    XmNmenuHistory = XmPushButton markertype_asterisk;
+	    XmNlabelString = k_markertype_label_text;
+	};
+	controls {
+	    XmPulldownMenu markertype_icon_menu; 
+	};
+    };
+
+object
+    markertype_icon_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton markertype_dot;
+	    XmPushButton markertype_plus;
+	    XmPushButton markertype_asterisk;
+	    XmPushButton markertype_diagonal_cross;
+	    XmPushButton markertype_circle;
+	    XmPushButton markertype_solid_circle;
+	    XmPushButton markertype_square;
+	    XmPushButton markertype_solid_square;
+	    XmPushButton markertype_triangle_up;
+	    XmPushButton markertype_solid_tri_up;
+	    XmPushButton markertype_triangle_down;
+	    XmPushButton markertype_solid_tri_down;
+	    XmPushButton markertype_bowtie;
+	    XmPushButton markertype_solid_bowtie;
+	    XmPushButton markertype_hourglass;
+	    XmPushButton markertype_solid_hourglass;
+	    XmPushButton markertype_diamond;
+	    XmPushButton markertype_solid_diamond;
+	    XmPushButton markertype_star;
+	    XmPushButton markertype_solid_star;
+	    XmPushButton markertype_tri_up_down;
+	    XmPushButton markertype_solid_tri_left;
+	    XmPushButton markertype_solid_tri_right;
+	    XmPushButton markertype_hollow_plus;
+	    XmPushButton markertype_omark;
+	};
+    };
+
+object
+    markertype_dot : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = markertype_dot_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set markertype dot");
+	};
+    };                                    
+
+object
+    markertype_plus : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = markertype_plus_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set markertype plus");
+	};
+    };                                    
+
+object
+    markertype_asterisk : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = markertype_asterisk_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype asterisk");
+	};
+    };                                    
+
+object
+    markertype_circle : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = markertype_circle_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype circle");
+	};
+    };                                    
+
+object
+    markertype_diagonal_cross : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = markertype_diagonal_cross_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype diagonal_cross");
+	};
+    };                                    
+
+object
+    markertype_solid_circle : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = markertype_solid_circle_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype solid_circle");
+	};
+    };                                    
+
+object
+    markertype_triangle_up : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = markertype_triangle_up_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype triangle_up");
+	};
+    };                                    
+
+object
+    markertype_solid_tri_up : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = markertype_solid_tri_up_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype solid_tri_up");
+	};
+    };                                    
+
+object
+    markertype_triangle_down : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = markertype_triangle_down_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype triangle_down");
+	};
+    };                                    
+
+object
+    markertype_solid_tri_down : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = markertype_solid_tri_down_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype solid_tri_down");
+	};
+    };                                    
+
+object
+    markertype_square : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = markertype_square_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype square");
+	};
+    };                                    
+
+object
+    markertype_solid_square : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = markertype_solid_square_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype solid_square");
+	};
+    };                                    
+
+object
+    markertype_bowtie : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = markertype_bowtie_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype bowtie");
+	};
+    };                                    
+
+object
+    markertype_solid_bowtie : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = markertype_solid_bowtie_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype solid_bowtie");
+	};
+    };                                    
+
+object
+    markertype_hourglass : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = markertype_hourglass_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype hourglass");
+	};
+    };                                    
+
+object
+    markertype_solid_hourglass : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = markertype_solid_hourglass_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype solid_hglass");
+	};
+    };                                    
+
+object
+    markertype_diamond : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = markertype_diamond_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype diamond");
+	};
+    };                                    
+
+object
+    markertype_solid_diamond : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = markertype_solid_diamond_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype solid_diamond");
+	};
+    };                                    
+
+object
+    markertype_star : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = markertype_star_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set markertype star");
+	};
+    };                                    
+
+object
+    markertype_solid_star : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = markertype_solid_star_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype solid_star");
+	};
+    };                                    
+
+object
+    markertype_tri_up_down : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = markertype_tri_up_down_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype tri_up_down");
+	};
+    };                                    
+
+object
+    markertype_solid_tri_left : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = markertype_solid_tri_left_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype solid_tri_left");
+	};
+    };                                    
+
+object
+    markertype_solid_tri_right : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = markertype_solid_tri_right_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype solid_tri_right");
+	};
+    };                                    
+
+object
+    markertype_hollow_plus : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = markertype_hollow_plus_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype hollow_plus");
+	};
+    };                                    
+
+object
+    markertype_omark : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = markertype_omark_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype omark");
+	};
+    };                                    
+
+object
+    markersize_option_menu : XmOptionMenu {
+	arguments {
+	    XmNmarginHeight= -2; 
+	    XmNmenuHistory = XmPushButton markersize_10_pt;
+	    XmNlabelString = k_markersize_label_text;
+	};
+	controls {
+	    XmPulldownMenu markersize_icon_menu;
+	};
+    };
+
+object
+    markersize_icon_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton markersize_6_pt;
+	    XmPushButton markersize_8_pt;
+	    XmPushButton markersize_10_pt;
+	    XmPushButton markersize_12_pt;
+	    XmPushButton markersize_14_pt;
+	    XmPushButton markersize_18_pt;
+	    XmPushButton markersize_24_pt;
+	    XmPushButton markersize_36_pt;
+	    XmPushButton markersize_48_pt;
+	    XmPushButton markersize_72_pt;
+	};
+    };
+
+object
+    markersize_6_pt : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = markersize_6_pt_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set markersize 6pt");
+	};
+    };                                    
+
+object
+    markersize_8_pt : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = markersize_8_pt_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set markersize 8pt");
+	};
+    };                                    
+
+object
+    markersize_10_pt : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = markersize_10_pt_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set markersize 10pt");
+	};
+    };                                    
+
+object
+    markersize_12_pt : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = markersize_12_pt_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set markersize 12pt");
+	};
+    };                                    
+
+object
+    markersize_14_pt : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = markersize_14_pt_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set markersize 14pt");
+	};
+    };                                    
+
+object
+    markersize_18_pt : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = markersize_18_pt_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set markersize 18pt");
+	};
+    };                                    
+
+object
+    markersize_24_pt : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = markersize_24_pt_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set markersize 24pt");
+	};
+    };                                    
+
+object
+    markersize_36_pt : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = markersize_36_pt_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set markersize 36pt");
+	};
+    };                                    
+
+object
+    markersize_48_pt : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = markersize_48_pt_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set markersize 48pt");
+	};
+    };                                    
+
+object
+    markersize_72_pt : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = markersize_72_pt_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set markersize 72pt");
+	};
+    };                                    
+
+object
+    markercolor_option_menu : XmOptionMenu {
+	arguments {
+	    XmNmarginHeight= -2; 
+	    XmNmenuHistory = XmPushButton markercolor_black;
+	    XmNlabelString = k_markercolor_label_text;
+	};
+	controls {
+	    XmPulldownMenu markercolor_icon_menu; 
+	};
+    };
+
+object
+    markercolor_icon_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton markercolor_black;
+	    XmPushButton markercolor_white;
+	    XmPushButton markercolor_red;
+	    XmPushButton markercolor_green;
+	    XmPushButton markercolor_blue;
+	    XmPushButton markercolor_cyan;
+	    XmPushButton markercolor_yellow;
+	    XmPushButton markercolor_magenta;
+	};
+    };
+
+object
+    markercolor_black : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = markercolor_black_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markercolor black");
+	};
+    };                                    
+
+object
+    markercolor_white : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = markercolor_white_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markercolor white");
+	};
+    };                                    
+
+object
+    markercolor_red : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = markercolor_red_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markercolor red");
+	};
+    };                                    
+
+object
+    markercolor_green : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = markercolor_green_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markercolor green");
+	};
+    };                                    
+
+object
+    markercolor_blue : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = markercolor_blue_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markercolor blue");
+	};
+    };                                    
+
+object
+    markercolor_cyan : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = markercolor_cyan_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markercolor cyan");
+	};
+    };                                    
+
+object
+    markercolor_yellow : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = markercolor_yellow_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markercolor yellow");
+	};
+    };                                    
+
+object
+    markercolor_magenta : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = markercolor_magenta_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markercolor magenta");
+	};
+    };                                    
+
+object
+    font_option_menu : XmOptionMenu {
+	arguments{
+	    XmNmarginHeight= -2; 
+	    XmNmenuHistory = XmPushButton font_helvetica_normal;
+	    XmNlabelString = k_font_label_text;
+	};
+	controls {
+	    XmPulldownMenu font_icon_menu; 
+	};
+    };
+
+object
+    font_icon_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton font_avant_garde_normal;
+	    XmPushButton font_avant_garde_bold;
+	    XmPushButton font_avant_garde_italic;
+	    XmPushButton font_avant_garde_bit;
+	    XmPushButton font_courier_normal;
+	    XmPushButton font_courier_bold;
+	    XmPushButton font_courier_italic;
+	    XmPushButton font_courier_bit;
+	    XmPushButton font_helvetica_normal;
+	    XmPushButton font_helvetica_bold;
+	    XmPushButton font_helvetica_italic;
+	    XmPushButton font_helvetica_bit;
+	    XmPushButton font_lubalin_normal;
+	    XmPushButton font_lubalin_bold;
+	    XmPushButton font_lubalin_italic;
+	    XmPushButton font_lubalin_bit;
+	    XmPushButton font_schoolbook_normal;
+	    XmPushButton font_schoolbook_bold;
+	    XmPushButton font_schoolbook_italic;
+	    XmPushButton font_schoolbook_bit;
+	    XmPushButton font_souvenir_normal;
+	    XmPushButton font_souvenir_bold;
+	    XmPushButton font_souvenir_italic;
+	    XmPushButton font_souvenir_bit;
+	    XmPushButton font_symbol_normal;
+	    XmPushButton font_times_normal;
+	    XmPushButton font_times_bold;
+	    XmPushButton font_times_italic;
+	    XmPushButton font_times_bit;
+	};
+    };
+
+object
+    font_avant_garde_normal : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = font_avant_garde_normal_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set textfont avant_garde normal");
+	};
+    }; 
+
+				   
+object
+    font_avant_garde_bold : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = font_avant_garde_bold_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set textfont avant_garde boldface");
+	};
+    }; 
+
+				   
+object
+    font_avant_garde_italic : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = font_avant_garde_italic_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set textfont avant_garde italic");
+	};
+    }; 
+
+				   
+object
+    font_avant_garde_bit : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = font_avant_garde_bit_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set textfont avant_garde bold_italic");
+	};
+    }; 
+
+				   
+object
+    font_courier_normal : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = font_courier_normal_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set textfont courier normal");
+	};
+    };                                    
+
+
+object
+    font_courier_bold : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = font_courier_bold_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set textfont courier boldface");
+	};
+    };                                    
+
+
+object
+    font_courier_italic : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = font_courier_italic_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set textfont courier italic");
+	};
+    };                                    
+
+
+object
+    font_courier_bit : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = font_courier_bit_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set textfont courier bold_italic");
+	};
+    };                                    
+
+
+object
+    font_helvetica_normal : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = font_helvetica_normal_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set textfont helvetica normal");
+	};
+    };                                    
+
+object
+    font_helvetica_bold : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = font_helvetica_bold_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set textfont helvetica boldface");
+	};
+    };                                    
+
+object
+    font_helvetica_italic : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = font_helvetica_italic_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set textfont helvetica italic");
+	};
+    };                                    
+
+object
+    font_helvetica_bit : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = font_helvetica_bit_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set textfont helvetica bold_italic");
+	};
+    };                                    
+
+
+object
+    font_lubalin_normal : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = font_lubalin_normal_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set textfont lubalin normal");
+	};
+    };                                    
+
+object
+    font_lubalin_bold : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = font_lubalin_bold_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set textfont lubalin boldface");
+	};
+    };                                    
+
+object
+    font_lubalin_italic : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = font_lubalin_italic_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set textfont lubalin italic");
+	};
+    };                                    
+
+object
+    font_lubalin_bit : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = font_lubalin_bit_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set textfont lubalin bold_italic");
+	};
+    };                                    
+
+
+object
+    font_schoolbook_normal : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = font_schoolbook_normal_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set textfont schoolbook normal");
+	};
+    };                                    
+
+object
+    font_schoolbook_bold : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = font_schoolbook_bold_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set textfont schoolbook boldface");
+	};
+    };                                    
+
+object
+    font_schoolbook_italic : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = font_schoolbook_italic_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set textfont schoolbook italic");
+	};
+    };                                    
+
+object
+    font_schoolbook_bit : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = font_schoolbook_bit_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set textfont schoolbook bold_italic");
+	};
+    };                                    
+
+
+
+object
+    font_souvenir_normal : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = font_souvenir_normal_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set textfont souvenir normal");
+	};
+    };                                    
+
+object
+    font_souvenir_bold : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = font_souvenir_bold_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set textfont souvenir boldface");
+	};
+    };                                    
+
+object
+    font_souvenir_italic : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = font_souvenir_italic_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set textfont souvenir italic");
+	};
+    };                                    
+
+object
+    font_souvenir_bit : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = font_souvenir_bit_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set textfont souvenir bold_italic");
+	};
+    };                                    
+
+
+object
+    font_symbol_normal : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = font_symbol_normal_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set textfont symbol normal");
+	};
+    };                                    
+
+object
+    font_times_normal : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = font_times_normal_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set textfont times normal");
+	};
+    };                                    
+
+object
+    font_times_bold : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = font_times_bold_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set textfont times boldface");
+	};
+    };                                    
+
+object
+    font_times_italic : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = font_times_italic_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set textfont times italic");
+	};
+    };                                    
+
+object
+    font_times_bit : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = font_times_bit_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set textfont times bold_italic");
+	};
+    };                                    
+
+
+object
+    textsize_option_menu : XmOptionMenu {
+	arguments {
+	    XmNmarginHeight= -2;
+	    XmNmenuHistory = XmPushButton textsize_14_pt;
+	    XmNlabelString = k_textsize_label_text;
+	};
+	controls {
+	    XmPulldownMenu textsize_icon_menu; 
+	};
+    };
+
+object
+    textsize_icon_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton textsize_8_pt;
+	    XmPushButton textsize_10_pt;
+	    XmPushButton textsize_12_pt;
+	    XmPushButton textsize_14_pt;
+	    XmPushButton textsize_18_pt;
+	    XmPushButton textsize_24_pt;
+	};
+    };
+
+object
+    textsize_8_pt : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = textsize_8_pt_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set textsize 8pt");
+	};
+    };                                    
+
+object
+    textsize_10_pt : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = textsize_10_pt_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set textsize 10pt");
+	};
+    };                                    
+
+object
+    textsize_12_pt : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = textsize_12_pt_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set textsize 12pt");
+	};
+    };                                    
+
+object
+    textsize_14_pt : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = textsize_14_pt_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set textsize 14pt");
+	};
+    };                                    
+
+object
+    textsize_18_pt : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = textsize_18_pt_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set textsize 18pt");
+	};
+    };                                    
+
+object
+    textsize_24_pt : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = textsize_24_pt_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set textsize 24pt");
+	};
+    };                                    
+
+
+object
+    textalign_option_menu : XmOptionMenu {
+	arguments {
+	    XmNmarginHeight= -2; 
+	    XmNmenuHistory = XmPushButton textalign_center;
+	    XmNlabelString = k_textalign_label_text;
+	};
+	controls {
+	    XmPulldownMenu textalign_icon_menu; 
+	};
+    };
+
+object
+    textalign_icon_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton textalign_left;
+	    XmPushButton textalign_center;
+	    XmPushButton textalign_right;
+	};
+    };
+
+object
+    textalign_left : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = textalign_left_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set texthalign left");
+	};
+    };                                    
+
+
+object
+    textalign_center : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = textalign_center_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set texthalign center");
+	};
+    };                                    
+
+object
+    textalign_right : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = textalign_right_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set texthalign right");
+	};
+    };                                    
+
+object
+    textdirection_option_menu : XmOptionMenu {
+	arguments {
+	    XmNmarginHeight= -2; 
+	    XmNmenuHistory = XmPushButton textdirection_right;
+	    XmNlabelString = k_textdirection_label_text;
+	};
+	controls {
+	    XmPulldownMenu textdirection_icon_menu; 
+	};
+    };
+
+object
+    textdirection_icon_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton textdirection_left;
+	    XmPushButton textdirection_up;
+	    XmPushButton textdirection_down;
+	    XmPushButton textdirection_right;
+	};
+    };
+
+object
+    textdirection_left : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = textdirection_rtoleft_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set textdirection left");
+	};
+    };                                    
+
+object
+    textdirection_down : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = textdirection_down_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set textdirection down");
+	};
+    };                                    
+
+object
+    textdirection_up : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = textdirection_up_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set textdirection up");
+	};
+    };                                    
+
+object
+    textdirection_right : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = textdirection_ltoright_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set textdirection right");
+	};
+    };                                    
+
+object
+    textcolor_option_menu : XmOptionMenu {
+	arguments {
+	    XmNmarginHeight= -2; 
+	    XmNmenuHistory = XmPushButton textcolor_black;
+	    XmNlabelString = k_textcolor_label_text;
+	};
+	controls {
+	    XmPulldownMenu textcolor_icon_menu; 
+	};
+    };
+
+object
+    textcolor_icon_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton textcolor_black;
+	    XmPushButton textcolor_white;
+	    XmPushButton textcolor_red;
+	    XmPushButton textcolor_green;
+	    XmPushButton textcolor_blue;
+	    XmPushButton textcolor_cyan;
+	    XmPushButton textcolor_yellow;
+	    XmPushButton textcolor_magenta;
+	};
+    };
+
+object
+    textcolor_black : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = textcolor_black_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set textcolor black");
+	};
+    };                                    
+
+object
+    textcolor_white : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = textcolor_white_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set textcolor white");
+	};
+    };                                    
+
+object
+    textcolor_red : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = textcolor_red_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set textcolor red");
+	};
+    };                                    
+
+object
+    textcolor_green : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = textcolor_green_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set textcolor green");
+	};
+    };                                    
+
+object
+    textcolor_blue : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = textcolor_blue_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set textcolor blue");
+	};
+    };                                    
+
+object
+    textcolor_cyan : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = textcolor_cyan_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set textcolor cyan");
+	};
+    };                                    
+
+object
+    textcolor_yellow : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = textcolor_yellow_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set textcolor yellow");
+	};
+    };                                    
+
+object
+    textcolor_magenta : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = textcolor_magenta_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set textcolor magenta");
+	};
+    };                                    
+
+object
+    fillstyle_option_menu : XmOptionMenu {
+	arguments {
+	    XmNmarginHeight= -2; 
+	    XmNmenuHistory = XmPushButton fillstyle_hollow;
+	    XmNlabelString = k_fillstyle_label_text;
+	};
+	controls {
+	    XmPulldownMenu fillstyle_icon_menu; 
+	};
+    };
+
+object
+    fillstyle_icon_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton fillstyle_solid;
+	    XmPushButton fillstyle_hollow;
+	    XmPushButton fillstyle_pattern_1;
+	    XmPushButton fillstyle_pattern_2;
+	    XmPushButton fillstyle_pattern_3;
+	    XmPushButton fillstyle_pattern_4;
+	    XmPushButton fillstyle_pattern_5;
+	    XmPushButton fillstyle_pattern_6;
+	    XmPushButton fillstyle_pattern_7;
+	    XmPushButton fillstyle_pattern_8;
+	    XmPushButton fillstyle_hatch_1;
+	    XmPushButton fillstyle_hatch_2;
+	    XmPushButton fillstyle_hatch_3;
+	    XmPushButton fillstyle_hatch_4;
+	    XmPushButton fillstyle_hatch_5;
+	    XmPushButton fillstyle_hatch_6;
+	    XmPushButton fillstyle_hatch_7;
+	    XmPushButton fillstyle_hatch_8;
+	};
+    };
+
+object
+    fillstyle_solid : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = fillstyle_solid_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set fillstyle solid");
+	};
+    };                                    
+
+object
+    fillstyle_hollow : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = fillstyle_hollow_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set fillstyle hollow");
+	};
+    };                                    
+
+
+
+object
+    fillstyle_pattern_1 : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = fillstyle_pattern_1_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"\r do sight set fillstyle pattern; sight set fillindex 1");
+	};
+    };
+				    
+object
+    fillstyle_pattern_2 : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = fillstyle_pattern_2_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"\r do sight set fillstyle pattern; sight set fillindex 2");
+	    };
+    };                                    
+
+object
+    fillstyle_pattern_3 : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = fillstyle_pattern_3_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"\r do sight set fillstyle pattern; sight set fillindex 3");
+	};
+    };                                    
+
+object
+    fillstyle_pattern_4 : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = fillstyle_pattern_4_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"\r do sight set fillstyle pattern; sight set fillindex 4");
+	};
+    };                                    
+
+object
+    fillstyle_pattern_5 : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = fillstyle_pattern_5_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"\r do sight set fillstyle pattern; sight set fillindex 5");
+	};
+    };                                    
+
+object
+    fillstyle_pattern_6 : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = fillstyle_pattern_6_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"\r do sight set fillstyle pattern; sight set fillindex 6");
+	};
+    };                                    
+
+object
+    fillstyle_pattern_7 : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = fillstyle_pattern_7_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"\r do sight set fillstyle pattern; sight set fillindex 7");
+	};
+    };                                    
+
+object
+    fillstyle_pattern_8 : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = fillstyle_pattern_8_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"\r do sight set fillstyle pattern; sight set fillindex 8");
+	};
+    };                                    
+
+object
+    fillstyle_hatch_1 : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = fillstyle_hatch_1_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"\r do sight set fillstyle hatch; sight set fillindex 1");
+	};
+    };                                    
+
+object
+    fillstyle_hatch_2 : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = fillstyle_hatch_2_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"\r do sight set fillstyle hatch; sight set fillindex 2");
+	};
+    };                                    
+
+object
+    fillstyle_hatch_3 : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = fillstyle_hatch_3_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"\r do sight set fillstyle hatch; sight set fillindex 3");
+	};
+    };                                    
+
+object
+    fillstyle_hatch_4 : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = fillstyle_hatch_4_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"\r do sight set fillstyle hatch; sight set fillindex 4");
+	};
+    };                                    
+
+object
+    fillstyle_hatch_5 : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = fillstyle_hatch_5_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"\r do sight set fillstyle hatch; sight set fillindex 5");
+	};
+    };                                    
+
+object
+    fillstyle_hatch_6 : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = fillstyle_hatch_6_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"\r do sight set fillstyle hatch; sight set fillindex 6");
+	};
+    };                                    
+
+object
+    fillstyle_hatch_7 : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = fillstyle_hatch_7_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"\r do sight set fillstyle hatch; sight set fillindex 7");
+	};
+    };                                    
+
+object
+    fillstyle_hatch_8 : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = fillstyle_hatch_8_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"\r do sight set fillstyle hatch; sight set fillindex 8");
+	};
+    };                                    
+
+object
+    fillcolor_option_menu : XmOptionMenu {
+	arguments {
+	    XmNmarginHeight= -2;
+	    XmNmenuHistory = XmPushButton fillcolor_black;
+	    XmNlabelString = k_fillcolor_label_text;
+	};
+	controls {
+	    XmPulldownMenu fillcolor_icon_menu;
+	};
+    };
+
+object
+    fillcolor_icon_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton fillcolor_black;
+	    XmPushButton fillcolor_white;
+	    XmPushButton fillcolor_red;
+	    XmPushButton fillcolor_green;
+	    XmPushButton fillcolor_blue;
+	    XmPushButton fillcolor_cyan;
+	    XmPushButton fillcolor_yellow;
+	    XmPushButton fillcolor_magenta;
+	};
+    };
+
+object
+    fillcolor_black : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = fillcolor_black_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set fillcolor black");
+	};
+    };                                    
+
+object
+    fillcolor_white : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = fillcolor_white_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set fillcolor white");
+	};
+    };                                    
+
+object
+    fillcolor_red : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = fillcolor_red_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set fillcolor red");
+	};
+    };                                    
+
+object
+    fillcolor_green : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = fillcolor_green_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set fillcolor green");
+	};
+    };                                    
+
+object
+    fillcolor_blue : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = fillcolor_blue_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set fillcolor blue");
+	};
+    };                                    
+
+object
+    fillcolor_cyan : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = fillcolor_cyan_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set fillcolor cyan");
+	};
+    };                                    
+
+object
+    fillcolor_yellow : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = fillcolor_yellow_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set fillcolor yellow");
+	};
+    };                                    
+
+object
+    fillcolor_magenta : XmPushButton {
+	arguments {
+	    XmNlabelPixmap = fillcolor_magenta_icon;
+	    XmNlabelType = XmPIXMAP;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set fillcolor magenta");
+	};
+    };                                    
+
+object
+    linetype_menu_entry : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_linetype_label_text;
+	    XmNmappingDelay = 0;
+	};
+	controls {
+	    XmPulldownMenu linetype_menu;
+	};
+    };
+
+object
+    linetype_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton m_solid_button;
+	    XmPushButton m_dashed_button;
+	    XmPushButton m_dotted_button;
+	    XmPushButton m_dash_dotted_button;
+	    XmPushButton m_dash_2_dot_button;
+	    XmPushButton m_dash_3_dot_button;
+	    XmPushButton m_long_dash_button;
+	    XmPushButton m_long_short_dash_button;
+	    XmPushButton m_spaced_dash_button;
+	    XmPushButton m_spaced_dot_button;
+	    XmPushButton m_double_dot_button;
+	    XmPushButton m_triple_dot_button;
+	};
+    };
+
+object
+    m_solid_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_solid_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set linetype solid");
+	};
+    };
+
+object
+    m_dashed_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_dashed_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set linetype dashed");
+	};
+    };
+
+object
+    m_dotted_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_dotted_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set linetype dotted");
+	};
+    };
+
+object
+    m_dash_dotted_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_dash_dotted_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set linetype dash_dotted");
+	};
+    };
+
+object
+    m_dash_2_dot_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_dash_2_dot_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set linetype dash_2_dot");
+	};
+    };
+
+object
+    m_dash_3_dot_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_dash_3_dot_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set linetype dash_3_dot");
+	};
+    };
+
+object
+    m_long_dash_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_long_dash_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set linetype long_dash");
+	};
+    };
+
+object
+    m_long_short_dash_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_long_short_dash_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set linetype long_short_dash");
+	};
+    };
+
+object
+    m_spaced_dash_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_spaced_dash_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set linetype spaced_dash");
+	};
+    };
+
+object
+    m_spaced_dot_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_spaced_dot_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set linetype spaced_dot");
+	};
+    };
+
+object
+    m_double_dot_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_double_dot_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set linetype double_dot");
+	};
+    };
+
+object
+    m_triple_dot_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_triple_dot_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set linetype triple_dot");
+	};
+    };
+
+object
+    linewidth_menu_entry : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_linewidth_label_text;
+	    XmNmappingDelay = 0;
+	};
+	controls {
+	    XmPulldownMenu linewidth_menu;
+	};
+	callbacks {
+	    XmNcascadingCallback = procedure set_command ("set linewidth\\");
+	};
+    };
+
+object
+    linewidth_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton m_1_pt_button;
+	    XmPushButton m_2_pt_button;
+	    XmPushButton m_3_pt_button;
+	    XmPushButton m_4_pt_button;
+	    XmPushButton m_5_pt_button;
+	    XmPushButton m_6_pt_button;
+	};
+    };
+
+object
+    m_1_pt_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_1_pt_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" 1pt");
+	};
+    };
+
+object
+    m_2_pt_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_2_pt_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" 2pt");
+	};
+    };
+
+object
+    m_3_pt_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_3_pt_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" 3pt");
+	};
+    };
+
+object
+    m_4_pt_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_4_pt_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" 4pt");
+	};
+    };
+
+object
+    m_5_pt_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_5_pt_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" 5pt");
+	};
+    };
+
+object
+    m_6_pt_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_6_pt_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" 6pt");
+	};
+    };
+
+object
+    linecolor_menu_entry : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_linecolor_label_text;
+	    XmNmappingDelay = 0;
+	};
+	controls {
+	    XmPulldownMenu linecolor_menu;
+	};
+	callbacks {
+	    XmNcascadingCallback = procedure set_command ("set linecolor\\");
+	};
+    };
+
+object
+    linecolor_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton m_black_button;
+	    XmPushButton m_white_button;
+	    XmPushButton m_red_button;
+	    XmPushButton m_green_button;
+	    XmPushButton m_blue_button;
+	    XmPushButton m_cyan_button;
+	    XmPushButton m_yellow_button;
+	    XmPushButton m_magenta_button;
+	};
+    };
+
+object
+    m_black_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_black_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" black");
+	};
+    };
+
+object
+    m_white_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_white_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" white");
+	};
+    };
+
+object
+    m_red_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_red_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" red");
+	};
+    };
+
+object
+    m_green_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_green_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" green");
+	};
+    };
+
+object
+    m_blue_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_blue_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" blue");
+	};
+    };
+
+object
+    m_cyan_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_cyan_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" cyan");
+	};
+    };
+
+object
+    m_yellow_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_yellow_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" yellow");
+	};
+    };
+
+object
+    m_magenta_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_magenta_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" magenta");
+	};
+    };
+
+object
+    markertype_menu_entry : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_markertype_label_text;
+	    XmNmappingDelay = 0;
+	};
+	controls {
+	    XmPulldownMenu markertype_menu;
+	};
+    };
+
+object
+    markertype_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton m_dot_button;
+	    XmPushButton m_plus_button;
+	    XmPushButton m_asterisk_button;
+	    XmPushButton m_diagonal_cross_button;
+	    XmPushButton m_circle_button;
+	    XmPushButton m_solid_circle_button;
+	    XmPushButton m_square_button;
+	    XmPushButton m_solid_square_button;
+	    XmPushButton m_triangle_up_button;
+	    XmPushButton m_solid_tri_up_button;
+	    XmPushButton m_triangle_down_button;
+	    XmPushButton m_solid_tri_down_button;
+	    XmPushButton m_bowtie_button;
+	    XmPushButton m_solid_bowtie_button;
+	    XmPushButton m_hourglass_button;
+	    XmPushButton m_solid_hourglass_button;
+	    XmPushButton m_diamond_button;
+	    XmPushButton m_solid_diamond_button;
+	    XmPushButton m_star_button;
+	    XmPushButton m_solid_star_button;
+	    XmPushButton m_tri_up_down_button;
+	    XmPushButton m_solid_tri_left_button;
+	    XmPushButton m_solid_tri_right_button;
+	    XmPushButton m_hollow_plus_button;
+	    XmPushButton m_omark_button;
+	};
+    };
+
+object
+    m_dot_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_dot_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set markertype dot");
+	};
+    };
+
+object
+    m_plus_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_plus_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set markertype plus");
+	};
+    };
+
+object
+    m_asterisk_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_asterisk_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype asterisk");
+	};
+    };
+
+object
+    m_diagonal_cross_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_diagonal_cross_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype diagonal_cross");
+	};
+    };
+
+object
+    m_circle_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_circle_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype circle");
+	};
+    };
+
+object
+    m_solid_circle_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_solid_circle_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype solid_circle");
+	};
+    };
+
+object
+    m_square_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_square_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype square");
+	};
+    };
+
+object
+    m_solid_square_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_solid_square_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype solid_square");
+	};
+    };
+
+object
+    m_triangle_up_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_triangle_up_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype triangle_up");
+	};
+    };
+
+object
+    m_solid_tri_up_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_solid_tri_up_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype solid_tri_up");
+	};
+    };
+
+object
+    m_triangle_down_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_triangle_down_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype triangle_down");
+	};
+    };
+
+object
+    m_solid_tri_down_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_solid_tri_down_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype solid_tri_down");
+	};
+    };
+
+object
+    m_bowtie_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_bowtie_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype bowtie");
+	};
+    };
+
+object
+    m_solid_bowtie_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_solid_bowtie_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype solid_bowtie");
+	};
+    };
+
+object
+    m_hourglass_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_hourglass_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype hourglass");
+	};
+    };
+
+object
+    m_solid_hourglass_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_solid_hourglass_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype solid_hglass");
+	};
+    };
+
+object
+    m_diamond_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_diamond_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype diamond");
+	};
+    };
+
+object
+    m_solid_diamond_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_solid_diamond_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype solid_diamond");
+	};
+    };
+
+object
+    m_star_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_star_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype star");
+	};
+    };
+
+object
+    m_solid_star_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_solid_star_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype solid_star");
+	};
+    };
+
+object
+    m_tri_up_down_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_tri_up_down_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype tri_up_down");
+	};
+    };
+
+object
+    m_solid_tri_left_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_solid_tri_left_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype solid_tri_left");
+	};
+    };
+
+object
+    m_solid_tri_right_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_solid_tri_right_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype solid_tri_right");
+	};
+    };
+
+object
+    m_hollow_plus_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_hollow_plus_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype hollow_plus");
+	};
+    };
+
+object
+    m_omark_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_omark_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set markertype omark");
+	};
+    };
+
+object
+    markersize_menu_entry : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_markersize_label_text;
+	    XmNmappingDelay = 0;
+	};
+	controls {
+	    XmPulldownMenu markersize_menu;
+	};
+	callbacks {
+	    XmNcascadingCallback = procedure set_command ("set markersize\\");
+	};
+    };
+
+object
+    markersize_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton m_4_pt_button;
+	    XmPushButton m_6_pt_button;
+	    XmPushButton m_8_pt_button;
+	    XmPushButton m_10_pt_button;
+	    XmPushButton m_12_pt_button;
+	    XmPushButton m_14_pt_button;
+	    XmPushButton m_18_pt_button;
+	    XmPushButton m_24_pt_button;
+	    XmPushButton m_36_pt_button;
+	    XmPushButton m_48_pt_button;
+	    XmPushButton m_72_pt_button;
+	};
+    };
+
+object
+    markercolor_menu_entry : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_markercolor_label_text;
+	    XmNmappingDelay = 0;
+	};
+	controls {
+	    XmPulldownMenu markercolor_menu;
+	};
+	callbacks {
+	    XmNcascadingCallback = procedure set_command ("set markercolor\\");
+	};
+    };
+
+object
+    markercolor_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton m_black_button;
+	    XmPushButton m_white_button;
+	    XmPushButton m_red_button;
+	    XmPushButton m_green_button;
+	    XmPushButton m_blue_button;
+	    XmPushButton m_cyan_button;
+	    XmPushButton m_yellow_button;
+	    XmPushButton m_magenta_button;
+	};
+    };
+
+object
+    font_menu_entry : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_font_label_text;
+	    XmNmappingDelay = 0;
+	};
+	controls {
+	    XmPulldownMenu font_menu;
+	};
+    };
+
+object
+    font_menu : XmPulldownMenu {
+	controls {
+	    XmCascadeButton m_avant_garde_button;
+	    XmCascadeButton m_courier_button;
+	    XmCascadeButton m_helvetica_button;
+	    XmCascadeButton m_lubalin_button;
+	    XmCascadeButton m_schoolbook_button;
+	    XmCascadeButton m_souvenir_button;
+	    XmPushButton m_symbol_font_button;
+	    XmCascadeButton m_times_button;
+	};
+    };
+
+object
+    m_avant_garde_button : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_avant_garde_label_text;
+	};
+	controls {
+	    XmPulldownMenu textstyle_menu;
+	};
+	callbacks {
+	    XmNcascadingCallback = procedure set_command (
+		"set textfont avant_garde\\");
+	};
+    };
+
+object
+    m_courier_button : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_courier_label_text;
+	};
+	controls {
+	    XmPulldownMenu textstyle_menu;
+	};
+	callbacks {
+	    XmNcascadingCallback = procedure set_command (
+		"set textfont courier\\");
+	};
+    };
+
+object
+    m_helvetica_button : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_helvetica_label_text;
+	};
+	controls {
+	    XmPulldownMenu textstyle_menu;
+	};
+	callbacks {
+	    XmNcascadingCallback = procedure set_command (
+		"set textfont helvetica\\");
+	};
+    };
+
+object
+    m_lubalin_button : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_lubalin_label_text;
+	};
+	controls {
+	    XmPulldownMenu textstyle_menu;
+	};
+	callbacks {
+	    XmNcascadingCallback = procedure set_command (
+		"set textfont lubalin\\");
+	};
+    };
+
+object
+    m_schoolbook_button : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_schoolbook_label_text;
+	};
+	controls {
+	    XmPulldownMenu textstyle_menu;
+	};
+	callbacks {
+	    XmNcascadingCallback = procedure set_command (
+		"set textfont schoolbook\\");
+	};
+    };
+
+object
+    m_souvenir_button : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_souvenir_label_text;
+	};
+	controls {
+	    XmPulldownMenu textstyle_menu;
+	};
+	callbacks {
+	    XmNcascadingCallback = procedure set_command (
+		"set textfont souvenir\\");
+	};
+    };
+
+object
+    m_symbol_font_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_symbol_font_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set textfont symbol");
+	};
+    };
+
+object
+    m_times_button : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_times_label_text;
+	};
+	controls {
+	    XmPulldownMenu textstyle_menu;
+	};
+	callbacks {
+	    XmNcascadingCallback = procedure set_command (
+		"set textfont times\\");
+	};
+    };
+
+object
+    textsize_menu_entry : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_textsize_label_text;
+	    XmNmappingDelay = 0;
+	};
+	controls {
+	    XmPulldownMenu textsize_menu;
+	};
+	callbacks {
+	    XmNcascadingCallback = procedure set_command ("set textsize\\");
+	};
+    };
+
+object
+    textsize_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton m_8_pt_button;
+	    XmPushButton m_10_pt_button;
+	    XmPushButton m_12_pt_button;
+	    XmPushButton m_14_pt_button;
+	    XmPushButton m_18_pt_button;
+	    XmPushButton m_24_pt_button;
+	};
+    };
+
+object
+    m_8_pt_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_8_pt_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" 8pt");
+	};
+    };
+
+object
+    m_10_pt_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_10_pt_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" 10pt");
+	};
+    };
+
+object
+    m_12_pt_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_12_pt_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" 12pt");
+	};
+    };
+
+object
+    m_14_pt_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_14_pt_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" 14pt");
+	};
+    };
+
+object
+    m_18_pt_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_18_pt_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" 18pt");
+	};
+    };
+
+object
+    m_24_pt_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_24_pt_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" 24pt");
+	};
+    };
+
+object
+    m_36_pt_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_36_pt_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" 36pt");
+	};
+    };
+
+object
+    m_48_pt_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_48_pt_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" 48pt");
+	};
+    };
+
+object
+    m_72_pt_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_72_pt_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" 72pt");
+	};
+    };
+
+object
+    textstyle_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton m_normal_button;
+	    XmPushButton m_bold_button;
+	    XmPushButton m_italic_button;
+	    XmPushButton m_bold_italic_button;
+	};
+    };
+
+object
+    m_normal_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_normal_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" normal");
+	};
+    };
+
+object
+    m_bold_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_bold_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" boldface");
+	};
+    };
+
+object
+    m_italic_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_italic_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" italic");
+	};
+    };
+
+object
+    m_bold_italic_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_bold_italic_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" bold_italic");
+	};
+    };
+
+object
+    textalign_menu_entry : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_textalign_label_text;
+	    XmNmappingDelay = 0;
+	};
+	controls {
+	    XmPulldownMenu textalign_menu;
+	};
+    };
+
+object
+    textalign_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton m_left_button;
+	    XmPushButton m_center_button;
+	    XmPushButton m_right_button;
+	};
+    };
+
+object
+    m_left_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_left_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set texthalign left");
+	};
+    };
+
+object
+    m_center_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_center_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set texthalign center");
+	};
+    };
+
+object
+    m_right_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_right_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set texthalign right");
+	};
+    };
+
+object
+    textdirection_menu_entry : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_textdirection_label_text;
+	    XmNmappingDelay = 0;
+	};
+	controls {
+	    XmPulldownMenu textdirection_menu;
+	};
+    };
+
+object
+    textdirection_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton m_ltoright_button;
+	    XmPushButton m_up_button;
+	    XmPushButton m_rtoleft_button;
+	    XmPushButton m_down_button;
+	};
+    };
+
+object
+    m_ltoright_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_ltoright_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set textdirection right");
+	};
+    };
+
+object
+    m_up_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_up_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set textdirection up");
+	};
+    };
+
+object
+    m_rtoleft_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_rtoleft_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set textdirection left");
+	};
+    };
+
+object
+    m_down_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_down_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set textdirection down");
+	};
+    };
+
+object
+    textcolor_menu_entry : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_textcolor_label_text;
+	    XmNmappingDelay = 0;
+	};
+	controls {
+	    XmPulldownMenu textcolor_menu;
+	};
+	callbacks {
+	    XmNcascadingCallback = procedure set_command ("set textcolor\\");
+	};
+    };
+
+object
+    textcolor_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton m_black_button;
+	    XmPushButton m_white_button;
+	    XmPushButton m_red_button;
+	    XmPushButton m_green_button;
+	    XmPushButton m_blue_button;
+	    XmPushButton m_cyan_button;
+	    XmPushButton m_yellow_button;
+	    XmPushButton m_magenta_button;
+	};
+    };
+
+object
+    fillstyle_menu_entry : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_fillstyle_label_text;
+	    XmNmappingDelay = 0;
+	};
+	controls {
+	    XmPulldownMenu fillstyle_menu;
+	};
+    };
+
+object
+    fillstyle_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton m_hollow_button;
+	    XmPushButton m_filled_button;
+	    XmPushButton m_pattern_button;
+	    XmPushButton m_hatch_button;
+	};
+    };
+
+object
+    m_hollow_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_hollow_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set fillstyle hollow");
+	};
+    };
+
+object
+    m_filled_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_filled_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set fillstyle solid");
+	};
+    };
+
+object
+    m_pattern_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_pattern_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set fillstyle pattern");
+	};
+    };
+
+object
+    m_hatch_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_hatch_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+		"set fillstyle hatch");
+	};
+    };
+
+object
+    fillindex_menu_entry : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_fillindex_label_text;
+	    XmNmappingDelay = 0;
+	};
+	controls {
+	    XmPulldownMenu fillindex_menu;
+	};
+	callbacks {
+	    XmNcascadingCallback = procedure set_command ("set fillindex\\");
+	};
+    };
+
+object
+    fillindex_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton m_1_button;
+	    XmPushButton m_2_button;
+	    XmPushButton m_3_button;
+	    XmPushButton m_4_button;
+	    XmPushButton m_5_button;
+	    XmPushButton m_6_button;
+	    XmPushButton m_7_button;
+	    XmPushButton m_8_button;
+	};
+    };
+
+object
+    m_1_button : XmPushButton {
+	arguments {
+	    XmNlabelString = "1";
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" 1");
+	};
+    };
+
+object
+    m_2_button : XmPushButton {
+	arguments {
+	    XmNlabelString = "2";
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" 2");
+	};
+    };
+
+object
+    m_3_button : XmPushButton {
+	arguments {
+	    XmNlabelString = "3";
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" 3");
+	};
+    };
+
+object
+    m_4_button : XmPushButton {
+	arguments {
+	    XmNlabelString = "4";
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" 4");
+	};
+    };
+
+object
+    m_5_button : XmPushButton {
+	arguments {
+	    XmNlabelString = "5";
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" 5");
+	};
+    };
+
+object
+    m_6_button : XmPushButton {
+	arguments {
+	    XmNlabelString = "6";
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" 6");
+	};
+    };
+
+object
+    m_7_button : XmPushButton {
+	arguments {
+	    XmNlabelString = "7";
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" 7");
+	};
+    };
+
+object
+    m_8_button : XmPushButton {
+	arguments {
+	    XmNlabelString = "8";
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" 8");
+	};
+    };
+
+object
+    m_9_button : XmPushButton {
+	arguments {
+	    XmNlabelString = "9";
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" 9");
+	};
+    };
+
+object
+    m_10_button : XmPushButton {
+	arguments {
+	    XmNlabelString = "10";
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" 10");
+	};
+    };
+
+object
+    m_11_button : XmPushButton {
+	arguments {
+	    XmNlabelString = "11";
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" 11");
+	};
+    };
+
+object
+    m_12_button : XmPushButton {
+	arguments {
+	    XmNlabelString = "12";
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" 12");
+	};
+    };
+
+object
+    m_13_button : XmPushButton {
+	arguments {
+	    XmNlabelString = "13";
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" 13");
+	};
+    };
+
+object
+    m_14_button : XmPushButton {
+	arguments {
+	    XmNlabelString = "14";
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" 14");
+	};
+    };
+
+object
+    m_15_button : XmPushButton {
+	arguments {
+	    XmNlabelString = "15";
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" 15");
+	};
+    };
+
+object
+    m_16_button : XmPushButton {
+	arguments {
+	    XmNlabelString = "16";
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" 16");
+	};
+    };
+
+object
+    fillcolor_menu_entry : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_fillcolor_label_text;
+	    XmNmappingDelay = 0;
+	};
+	controls {
+	    XmPulldownMenu fillcolor_menu;
+	};
+	callbacks {
+	    XmNcascadingCallback = procedure set_command ("set fillcolor\\");
+	};
+    };
+
+object
+    fillcolor_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton m_black_button;
+	    XmPushButton m_white_button;
+	    XmPushButton m_red_button;
+	    XmPushButton m_green_button;
+	    XmPushButton m_blue_button;
+	    XmPushButton m_cyan_button;
+	    XmPushButton m_yellow_button;
+	    XmPushButton m_magenta_button;
+	};
+    };
+
+object
+    view_menu_entry : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_view_label_text;
+	    XmNmappingDelay = 0;
+	};
+	controls {
+	    XmPulldownMenu view_menu;
+	};
+    };
+
+object
+    view_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton m_viewport_button;
+	    XmPushButton m_window_button;
+	    XmCascadeButton orientation_menu_entry;
+	    XmCascadeButton scale_menu_entry;
+	    XmCascadeButton xform_menu_entry;
+	};
+    };
+
+object
+    m_viewport_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_viewport_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set viewport");
+	};
+    };
+
+object
+    m_window_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_window_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set window");
+	};
+    };
+
+object
+    orientation_menu_entry : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_orientation_label_text;
+	    XmNmappingDelay = 0;
+	};
+	controls {
+	    XmPulldownMenu orientation_menu;
+	};
+    };
+
+object
+    orientation_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton m_portrait_button;
+	    XmPushButton m_landscape_button;
+	};
+    };
+
+object
+    m_portrait_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_portrait_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+                "set orientation portrait");
+	};
+    };
+
+object
+    m_landscape_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_landscape_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (
+                "set orientation landscape");
+	};
+    };
+
+object
+    scale_menu_entry : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_scale_label_text;
+	    XmNmappingDelay = 0;
+	};
+	controls {
+	    XmPulldownMenu scale_menu;
+	};
+    };
+
+object
+    scale_menu : XmPulldownMenu {
+	controls {
+	    XmCascadeButton m_linear_button;
+	    XmCascadeButton m_xlog_button;
+	    XmCascadeButton m_ylog_button;
+	    XmCascadeButton m_xylog_button;
+	};
+    };
+
+object
+    m_linear_button : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_linear_label_text;
+	};
+	controls {
+	    XmPulldownMenu flip_menu;
+	};
+	callbacks {
+	    XmNcascadingCallback = procedure set_command ("set scale linear\\");
+	};
+    };
+
+object
+    m_xlog_button : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_xlog_label_text;
+	};
+	controls {
+	    XmPulldownMenu flip_menu;
+	};
+	callbacks {
+	    XmNcascadingCallback = procedure set_command ("set scale x_log\\");
+	};
+    };
+
+object
+    m_ylog_button : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_ylog_label_text;
+	};
+	controls {
+	    XmPulldownMenu flip_menu;
+	};
+	callbacks {
+	    XmNcascadingCallback = procedure set_command ("set scale y_log\\");
+	};
+    };
+
+object
+    m_xylog_button : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_xylog_label_text;
+	};
+	controls {
+	    XmPulldownMenu flip_menu;
+	};
+	callbacks {
+	    XmNcascadingCallback = procedure set_command ("set scale xy_log\\");
+	};
+    };
+
+object
+    flip_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton m_flip_none_button;
+	    XmPushButton m_flip_x_button;
+	    XmPushButton m_flip_y_button;
+	    XmPushButton m_flip_xy_button;
+	};
+    };
+
+object
+    m_flip_none_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_flip_none_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" none");
+	};
+    };
+
+object
+    m_flip_x_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_flip_x_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" flip_x");
+	};
+    };
+
+object
+    m_flip_y_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_flip_y_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" flip_y");
+	};
+    };
+
+object
+    m_flip_xy_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_flip_xy_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command (" flip_xy");
+	};
+    };
+
+object
+    xform_menu_entry : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_xform_label_text;
+	    XmNmappingDelay = 0;
+	};
+	controls {
+	    XmPulldownMenu xform_menu;
+	};
+	callbacks {
+	    XmNcascadingCallback = procedure set_command ("select xform\\");
+	};
+    };
+
+object
+    xform_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton m_1_button;
+	    XmPushButton m_2_button;
+	    XmPushButton m_3_button;
+	    XmPushButton m_4_button;
+	    XmPushButton m_5_button;
+	    XmPushButton m_6_button;
+	    XmPushButton m_7_button;
+	    XmPushButton m_8_button;
+	    XmPushButton m_9_button;
+	    XmPushButton m_10_button;
+	    XmPushButton m_11_button;
+	    XmPushButton m_12_button;
+	    XmPushButton m_13_button;
+	    XmPushButton m_14_button;
+	    XmPushButton m_15_button;
+	    XmPushButton m_16_button;
+	};
+    };
+
+object
+    customize_menu_entry : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_customize_label_text;
+	    XmNmappingDelay = 0;
+	};
+	controls {
+	    XmPulldownMenu customize_menu;
+	};
+    };
+
+object
+    customize_menu : XmPulldownMenu {
+	controls {
+	    XmCascadeButton snap_grid_menu_entry;
+	};
+    };
+
+object
+    snap_grid_menu_entry : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_snap_grid_label_text;
+	    XmNmappingDelay = 0;
+	};
+	controls {
+	    XmPulldownMenu snap_grid_menu;
+	};
+    };
+
+object
+    snap_grid_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton m_snap_off_button;
+	    XmPushButton m_snap_05_button;
+	    XmPushButton m_snap_025_button;
+	    XmPushButton m_snap_01_button;
+	};
+    };
+
+object
+    m_snap_off_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_snap_off_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set snap_grid 0");
+	};
+    };
+
+object
+    m_snap_05_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_snap_025_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set snap_grid 0.25");
+	};
+    };
+
+object
+    m_snap_025_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_snap_05_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set snap_grid 0.5");
+	};
+    };
+
+object
+    m_snap_01_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_snap_1_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure set_command ("set snap_grid 1");
+	};
+    };
+
+object
+    help_menu_entry : XmCascadeButton {
+	arguments {
+	    XmNlabelString = k_help_label_text;
+	    XmNmappingDelay = 0;
+	};
+	controls {
+	    XmPulldownMenu help_menu;
+	};
+    };
+
+object
+    help_menu : XmPulldownMenu {
+	controls {
+	    XmPushButton m_help_button;
+	};
+    };
+
+object
+    m_help_button : XmPushButton {
+	arguments {
+	    XmNlabelString = k_help_label_text;
+	};
+	callbacks {
+	    XmNactivateCallback = procedure activate_widget (k_help);
+	};
+    };
+
+object
+    form_widget : XmForm {
+	arguments {
+	    XmNwidth = drawing_area_width + 8;
+	    XmNheight = drawing_area_height + 8;
+	};
+	controls {
+	    XmScrolledWindow scrolled_window_widget;
+	};
+    };
+
+object
+    scrolled_window_widget : XmScrolledWindow {
+	arguments {
+	    XmNleftAttachment = XmATTACH_FORM;
+	    XmNrightAttachment = XmATTACH_FORM;
+	    XmNbottomAttachment = XmATTACH_FORM;
+	    XmNtopAttachment = XmATTACH_FORM;
+	    XmNscrollingPolicy = XmAUTOMATIC;
+	};
+	controls {
+	    XmDrawingArea graphic_window_widget;
+	};
+    };
+
+object
+    graphic_window_widget : XmDrawingArea {
+	arguments {
+	    XmNwidth = drawing_area_width;
+	    XmNheight = drawing_area_height;
+	    XmNborderWidth = 2;
+	};
+	callbacks {
+	    MrmNcreateCallback = procedure do_something (k_drawing_area);
+	};
+    };
+
+object
+    command_window_widget : XmCommand {
+	arguments {
+	    XmNpromptString = k_command_prompt_label_text;
+	};
+	callbacks {
+	    XmNcommandEnteredCallback = procedure do_something (k_enter);
+	};
+    };
+
+end module;
+

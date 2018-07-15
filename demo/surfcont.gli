@@ -1,0 +1,14 @@
+gks set xform wc
+x := 1..540
+y := 1..24
+gks set viewport 0 1 0 1
+gks set window 1 540 1 24
+gus set space 0 100 0 90
+x := 1..540
+y := 1..24
+read 'GLI_DEMO'xdemo3.dat z
+c = z*0.1
+zz := c
+gus surface x y zz cell
+h := 0(10)100
+gus contour x y h zz

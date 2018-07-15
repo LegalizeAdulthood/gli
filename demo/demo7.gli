@@ -1,0 +1,59 @@
+    page
+    gks set xform ndc
+    gks set text font 3 string
+    gks set pline color_index yellow
+    gks set text color_index yellow
+    gks set pline linewi 3
+    gks set text align centre bottom
+    gks set text height 0.027
+
+! Background
+    gks set xform ndc
+    a := 0 0 1 1 0
+    b := 0 1 1 0 0 
+    gks set fill color green
+    gks set fill int_style solid
+    gks fill a b
+    gks set text color_index black
+    gus text 0.5 0.9 <pi> - Spectrometer
+    gus text 0.5 0.85  (BSS 1)
+    gus text 0.5 0.05  Energy ( <mu>eV )
+    gks set text align left bottom
+    gus text 0.1 0.82  Intensity
+
+    gks set text align left bottom
+    gus text 0.7 0.7  A : <DELTA>=24
+    gks set text color_index blue
+    gus text 0.7 0.65  B : <DELTA>=122
+
+    gks set text color_index black
+
+    gks set xform wc
+    gks set viewport  0.1,0.9  0.2,0.8
+    gks set window  -9,9  -20,200
+    gks set pline color_index black
+    gus axes_2d  2,50  -9,-20  1,1  0.01
+    gus axes_2d  2,50  9,200  0,0  -0.01
+
+    read 'GLI_DEMO'demo7.dat  energy,a,b
+    gus set smoothing 1
+    gks set pline linetype dashed
+    gus spline energy a
+    gks set pmark type circle
+    gks set pmark color_index black
+    gks polymarker energy a
+
+    gks set pline color_index blue
+    gks set pline linetype dotted
+    gus spline  energy b
+    gks set pmark type  diagonal_cross
+    gks set pmark color_index blue
+    gks polymarker energy b
+
+    del var *
+    gks set text color_index black
+    gks set pline color_index black
+    gks set pmark color_index black
+    gks set pline linetype solid
+    gks set pline linewi 1
+    gus set smoothing 0

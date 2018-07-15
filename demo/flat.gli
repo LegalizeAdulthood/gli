@@ -1,0 +1,27 @@
+	gks set xform ndc
+	gks set pline linewi 1
+
+! text
+        gks set text color white
+        gks set text font 16 string
+        gks set text height 0.027
+        gks set text align center half
+	gks text .5 .95 Longs Peak Colorado
+        gks text .5 .9 East Southwest View
+        gks set xform wc
+
+! define variable        
+        read 'GLI_DEMO'xdemo5.dat z
+        x := 1..100
+        y := 1..100
+
+        gks set window 1 100 1 100
+        gks set viewport 0 1 0 1
+        gus set space 2400 5000 30 60
+
+! draw surface        
+        gus set color glowing
+        gus surface x y z shaded_mesh
+
+! draw mesh
+	gus surface x y z mesh

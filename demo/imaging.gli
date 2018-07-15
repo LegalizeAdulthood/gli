@@ -1,0 +1,139 @@
+gks open_ws terminal 210
+image read 'GLI_IMAGES'hugo5.pgm hugo
+image display hugo pixel
+gks deactivate_ws terminal
+gks open_ws wk2 210
+j := 0
+!start the demo
+
+Loop:
+xui choice Imaging |Information|Contrast|Edge Detect|Enhance Edges|Flip|Gamma Correction|Gradient|Histogram Equalization|Invert|Median Filter|Normalize|Rotate|Shear|Quit Demos
+
+case Imaging "Information" Then gosub Info
+case Imaging "Contrast" Then gosub Cont
+case Imaging "Edge Detect" Then gosub Edge_it
+case Imaging "Enhance Edges" Then gosub Enhance_it
+case Imaging "Flip" Then gosub Flip_it
+case Imaging "Gamma Correction" Then gosub Gamma_it
+case Imaging "Gradient" Then gosub Grad_it
+case Imaging "Histogram Equalization" Then gosub Hist_it
+case Imaging "Invert" Then gosub Inv
+case Imaging "Median Filter" Then gosub Median_it
+case Imaging "Normalize" Then gosub Normal
+case Imaging "Rotate" Then gosub Rot
+case Imaging "Shear" Then gosub Shea
+case Imaging "Quit Demos" Then goto Quit_all
+goto Loop
+
+Info:
+	gks clear_ws
+	@'GLI_DEMO'information
+	goto Done
+	return
+
+Cont:
+	image contrast hugo temp 0.5
+	gks clear_ws
+	image display temp pixel
+	j := j+1
+	goto Done
+	return
+
+Edge_it:
+	image edge hugo temp
+	gks clear_ws
+	image display temp pixel
+	j := j+1
+	goto Done
+	return
+
+Enhance_it:
+	image enhance hugo temp 0.75
+	gks clear_ws
+	image display temp pixel
+	j := j+1
+	goto Done
+	return
+
+Flip_it:
+	image flip hugo temp vertical
+	gks clear_ws
+	image display temp pixel
+	j := j+1
+	goto Done
+	return
+
+Gamma_it:
+	image gamma hugo temp 1.5
+	gks clear_ws
+	image display temp pixel
+	j := j+1
+	goto Done
+	return
+
+Grad_it:
+	image gradient xdirection hugo temp
+	gks clear_ws
+	image display temp pixel
+	j := j+1
+	goto Done
+	return
+
+Hist_it:
+	image histogram hugo temp
+	gks clear_ws
+	image display temp pixel
+	j := j+1
+	goto Done
+	return
+
+Inv:
+	image invert hugo temp
+	gks clear_ws
+	image display temp pixel
+	j := j+1
+	goto Done
+	return
+
+Median_it:
+	image median hugo temp
+	gks clear_ws
+	image display temp pixel
+	j := j+1
+	goto Done
+	return
+
+Normal:
+	image normalize hugo temp
+	gks clear_ws
+	image display temp pixel
+	j := j+1
+	goto Done
+	return
+
+Rot:
+	image rotate hugo temp 45
+	gks clear_ws
+	image display temp pixel
+	j := j+1
+	goto Done
+	return
+
+Shea:
+	image shear xdirection hugo temp 45
+	gks clear_ws
+	image display temp pixel
+	j := j+1
+	goto Done
+	return
+	
+Done:
+	xui choice Continue |Keep Going|Finished with Demo
+	case Continue "Keep Going" Then Goto Loop
+
+Quit_all:
+	image delete hugo
+	gks close_ws terminal
+	gks close_ws wk2
+	if j >= 1 then image delete temp
+	exit

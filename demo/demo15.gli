@@ -1,0 +1,83 @@
+        page
+        gks set clip off
+        gks set text font 3 string
+
+        gks set pline linew 3
+        gks set pline color black
+        gks set text color black
+        gks set text height 0.021
+
+! Background
+        gks set xform ndc
+        x := 0 1 1 0 0
+        y := 0 0 1 1 0
+        gks set fill color cyan
+        gks set fill int solid
+        gks fill x y
+        gks set xform wc
+
+        gks set viewport 0.2 0.9 0.2 0.9
+        gks set window 0 1 0 1
+        gks set fill color green
+        gks fill x y
+
+!Axes        
+        gks set window 0 8 -1 0.3
+        gus axes_2d 0.5 0.1 0 -1 -2 2 0.01
+        gus axes_2d 0.5 0.1 8 0.3 -2 -2 -0.01
+
+! Text       
+        gks set text height 0.027
+        gks set text align left bottom
+        gus text 0 .33 Interaction Energy (eV)
+        gks set text color blue
+        gus text 6 -0.2 Cu
+        gks set text color red
+        gus text 5.5 -0.4 Ni
+
+        gks set text height 0.021
+        gks set text align center top
+        gks set text color black
+        gus text .5 -1.02 Sc
+        gus text 1 -1.02 Ti
+        gus text 1.5 -1.02 V
+        gus text 2 -1.02 Cr
+        gus text 2.5 -1.02 Mn
+        gus text 3 -1.02 Fe
+        gus text 3.5 -1.02 Co
+        gus text 4 -1.02 Ni
+        gus text 4.5 -1.02 Cu
+        gus text 5 -1.02 Zn
+        gus text 5.5 -1.02 Ga
+        gus text 6 -1.02 Ge
+        gus text 6.5 -1.02 As
+        gus text 7 -1.02 Se
+        gus text 7.5 -1.02 Br
+
+! Draw Polylines       
+        x := 0.5 7.5
+        y := 0 0
+        gks set pline linet solid
+        gks set pline color black
+        gks polyline x y
+
+        gks set pline linew 3
+        read 'GLI_DEMO'demo15.dat x y1 y2 y3
+
+        gks set pline color yellow
+        gks set pline linet spaced_dash
+        gus polyl x y3
+
+        gks set pline linet solid
+        gks set pline color blue
+        gus polyl x y1
+        gks set pline linet long_dash
+        gks set pline color red
+        gus polyl x y2
+
+        del var *
+        gks set text font 3 string
+        gks set pline linet solid
+        gks set pline linewidth 1
+        gks set pline color black
+        gks set clip on

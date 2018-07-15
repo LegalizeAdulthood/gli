@@ -1,0 +1,38 @@
+gks set xform ndc
+gks set text height 0.035
+gks set text align left base
+
+t=0
+gosub show
+t=8
+gosub show
+t=16
+gosub show
+t=24
+gosub show
+
+return
+
+show:
+  gks set text font t+1 string
+  gks text .1 .85 Avant Garde
+  gks set text font t+2 string
+  gks text .1 .75 Courier
+  gks set text font t+3 string
+  gks text .1 .65 Helvetica
+  gks set text font t+4 string
+  gks text .1 .55 Lubalin Graph
+  gks set text font t+5 string
+  gks text .1 .45 New Century Schoolbook
+  gks set text font t+6 string
+  gks text .1 .35 Souvenir
+  gks set text font t+7 string
+  gks text .1 .25 Symbol
+  gks set text font t+8 string
+  gks text .1 .15 Times
+
+  gks update_ws
+  inquire answer Press Return to continue...
+  gks clear_ws
+  return
+

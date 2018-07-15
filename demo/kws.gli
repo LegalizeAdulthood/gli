@@ -1,0 +1,10 @@
+x := 1..64
+y := 1..64
+h := 0(10)40 60 100(100)2000
+read 'GLI_DEMO'kws z
+gks set xform wc
+gks set viewport 0 1 0 1
+gks set window 1 64 1 64
+gus set space 0 2000 0 90
+gus surface x y z cell_array
+gus contour x y h z

@@ -1,0 +1,3 @@
+#!/bin/csh -f
+#
+env GLI_POINTS=1048576 GLI_GKSM=/tmp/gli$$.gksm gli -f $HOME/tcl/glimod/glimod.tcl

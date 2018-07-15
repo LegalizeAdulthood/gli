@@ -1,0 +1,11 @@
+!
+gks set color 0 1 1 1       ! 0: white
+gks set color 1 0 0 0       ! 1: black
+gks set color 2 1 0 0       ! 2: red
+gks set color 3 0 1 0       ! 3: green
+gks set color 4 0 0 1       ! 4: blue
+gks set color 5 0 1 1       ! 5: cyan
+gks set color 6 1 1 0       ! 6: yellow
+gks set color 7 1 0 1       ! 7: magenta
+!
+gus set colormap uniform    ! colors 8-79

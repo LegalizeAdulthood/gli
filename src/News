@@ -1,0 +1,35 @@
+
+GLI V4.5
+
+   o  A demonstration script (glitcldemo) for generating three-dimensional
+      surfaces is provided as a skeleton for Tcl/Tk beginners.
+
+   o  GLI/GKS generated PostScript files may now be converted to Adobe's
+      Illustrator format with GhostScript's ps2ai filter.
+
+   o  GLI/GKS has been ported to Linux using the gcc, g77 and/or f2c
+      compilers.
+
+   o  Shared Libraries are now provided for AIX, Digital UNIX, IRIX and
+      SunOS operating systems.
+
+   o  GLI/GKS now contains a logical device driver for GKSM metafiles.
+      The GKSM device driver is intended for real-time applications
+      that require a graphics output device with minimum overhead.
+
+   o  GLI V4.5 provides full Tcl/Tk support. Once, a Tcl interpreter
+      has been registered with the SET TCL command, GLI may process any
+      Tcl or Tk (widget) command. GLI/GKS graphics may be routed into
+      pre-existing Tk widgets.
+
+   o  GLI/GKS now allows double buffering on X displays. Set the
+      GLI_GKS_DOUBLE_BUF environment variable to enable this feature.
+      For most applications, using this switch results in substantially
+      smoother display.      
+
+   o  The VIEW command has been renamed to IMPORT. The TEKtronix input
+      filter has been further improved.
+
+   o  The GLI/IMAGE allows Fast fourier transforms on images. Several
+      filters may be used to manipulate your data (highpass, lowpass,
+      bandpass, notch).

@@ -1,0 +1,4 @@
+	define logical GLI_FIG 'p2'.eps
+	connect figure 61
+	@ 'GLI_DEMO''p1'
+	disconnect figure

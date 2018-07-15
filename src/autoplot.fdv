@@ -1,0 +1,24 @@
+!N0(Linear Charts,PLOT,AUTOSCALE,CLEAR,EXIT)
+A. PLOT SPECIFICATION                       | D. FORMAT SPECIFICATION
+  FILE  !A34^1                              |\  WINDOW  !(full,-
+upper half,lower half,upper left,upper right,lower left,lower right)^2
+  OUTPUT PRIMITIVE  !(POLYLINE,POLYMARKER,SPLINE,LINFIT,LINREG,-
+FFT,INVERSE_FFT)^3-
+                                            |\  SIZE    !(A5,A4,A3)^2
+  SMOOTHING LEVEL   !I10[0,20]^3            |
+------------------------------------------------------------------------------- 
+B. AXES   !(linear        ,x_log,y_log,xy_log)^4 -
+                           GRID                         !(no,yes)
+  MIN X   !F14^5           UNITS BETWEEN X TICS         !F10^6
+  MAX X   !F14^5           MAJOR X-TIC COUNT            !I10^6
+  MIN Y   !F14^5           UNITS BETWEEN Y TICS         !F10^6
+  MAX Y   !F14^5           MAJOR Y-TIC COUNT            !I10^7
+------------------------------------------------------------------------------- 
+C. ANNOTATION                    Titles
+  Main  !A34                                 X Axis  !A20
+  Sub   !A34                                 Y Axis  !A20
+
+   LEGENDS  !A14           !A14           !A14           !A14
+            !A14           !A14           !A14           !A14
+ 
+ 

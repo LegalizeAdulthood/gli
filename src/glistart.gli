@@ -1,0 +1,26 @@
+define symbol  auto*plot = gus autoplot
+define symbol  axe*s = gus axes_2d
+define symbol  conn*ect = gks open_ws
+define symbol  cop*y = gks copy_sg
+define symbol  demo = @ 'GLI_DEMO'demo.gli
+define symbol  disc*onnect = gks close_ws
+define symbol  f*lush = gks update_ws
+define symbol  gr = grsoft
+define symbol  gri*d = gus grid
+define symbol  image_demo = @ 'GLI_DEMO'image.gli
+define symbol  pag*e = gks clear_ws
+define symbol  pl*ot = gus plot
+define symbol  sou*rce = @
+define symbol  xdemo = @ 'GLI_DEMO'xdemo.gli
+define symbol  tcldemo = @ 'GLI_DEMO'browse.gli
+define symbol  defc*olors = @ 'GLI_DEMO'defcolors.gli
+define symbol  view = import
+!
+gks open_gks
+gks set xform wc
+gks set viewport  0.2,0.9 0.2,0.9
+gks set asf individual
+gks set pmark size  2
+gks set pmark type asterisk
+gks set text font 3 string
+gks set text height 0.027

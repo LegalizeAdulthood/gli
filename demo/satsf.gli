@@ -1,0 +1,36 @@
+read 'GLI_DEMO'snow3n z
+x := 0..100
+y := 0..100
+gks set text font 3 string
+gus autoscale_3d x y z
+gus set space 0 3000
+gks set viewport 0.15 0.4 0.15 0.8
+gus surface x y z colored_mesh
+gus set space 0 300
+gus axes_3d 
+del var *
+
+read 'GLI_DEMO'snow3s z
+x := 0..100
+y := 0..100
+gus autoscale_3d x y z
+gus set space 0 3000
+gks set viewport 0.55 0.8 0.15 0.8
+gus surface x y z colored_mesh
+gus set space 0 300
+gus axes_3d 
+gks set viewport 0.85 0.9 0.15 0.9
+gks set text height 0.015
+gus colormap
+gks set xform ndc
+gks set text align center normal
+gks set text height 0.021
+gks text 0.5 0.9 Brightness Temperature at 19 GHz V
+gks text 0.5 0.85 December 1, 1989
+gks text 0.25 0.8 North
+gks text 0.625 0.8 South
+gks set text upvec -1 0
+gks text 0.05 0.5 Degrees Kelvin
+gks set text upvec 0 1
+gks set xform wc
+del var *

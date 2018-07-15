@@ -1,0 +1,130 @@
+page
+gks set xform wc
+gks set fill int_style solid
+gks set viewport 0.1 0.9 0.1 0.9
+gks set window 0 35 0 40
+gks set text height 0.018
+gks set text font 3 string
+define symbol c1=blue
+define symbol c2=green
+define symbol c3=red
+define symbol c4=yellow
+
+! Background
+gks set xform ndc
+def var x 0,0,1,1,0
+def var y 0,1,1,0,0
+gks set color 5 0.78 0.74 0.62
+gks set fill color cyan 
+gks fill x y 
+del var x
+del var y 
+gks set xform wc
+gus axes_2d 0 5 0 0 1 1 -0.005
+
+
+! box x1 y1 x2 y2 color
+
+! Methane
+@ 'GLI_DEMO'box 1 0 2 10.22 'c1'
+@ 'GLI_DEMO'box 2 0 3 12.25 'c2'
+@ 'GLI_DEMO'box 3 0 4 16.09 'c3'
+@ 'GLI_DEMO'box 4 0 5 19.96 'c4'
+! Ethane
+@ 'GLI_DEMO'box 6 0 7 27.72 'c1'
+@ 'GLI_DEMO'box 7 0 8 30.69 'c2' 
+@ 'GLI_DEMO'box 8 0 9 32.46 'c3'
+@ 'GLI_DEMO'box 9 0 10 39.92 'c4'
+! Propane
+@ 'GLI_DEMO'box 11 0 12 17.92 'c1'
+@ 'GLI_DEMO'box 12 0 13 19.35 'c2'
+@ 'GLI_DEMO'box 13 0 14 12.03 'c3' 
+@ 'GLI_DEMO'box 14 0 15 14.25 'c4'
+! Butane1 / i-Butane
+@ 'GLI_DEMO'box 16 0 17 6.42 'c1'
+@ 'GLI_DEMO'box 17 0 18 5.96 'c2'
+@ 'GLI_DEMO'box 18 0 19 1.71 'c3'
+@ 'GLI_DEMO'box 19 0 20 1.89 'c4'
+! Butadiene 1,3
+@ 'GLI_DEMO'box 21 0 22 4.40 'c1'
+@ 'GLI_DEMO'box 22 0 23 5.05 'c2'
+@ 'GLI_DEMO'box 23 0 24 3.97 'c3'
+@ 'GLI_DEMO'box 24 0 25 4.47 'c4'
+! tr-Butene + cis-Butene
+@ 'GLI_DEMO'box 26 0 27 1.32 'c1'
+@ 'GLI_DEMO'box 27 0 28 1.30 'c2'
+@ 'GLI_DEMO'box 28 0 29 0.00 'c3'
+@ 'GLI_DEMO'box 29 0 30 0.50 'c4'
+! Benzol
+@ 'GLI_DEMO'box 31 0 32 1.29 'c1'
+@ 'GLI_DEMO'box 32 0 33 2.43 'c2'
+@ 'GLI_DEMO'box 33 0 34 11.66 'c3'
+@ 'GLI_DEMO'box 34 0 35 6.14 'c4'
+
+! Text
+gks set xform ndc
+gks set text align center normal
+gks set text height 0.015
+gus text 0.17 0.05 Methane
+gus text 0.28 0.05 Ethane
+gus text 0.395 0.05 Propane
+gus text 0.515 0.05 Butane 1
+gus text 0.515 0.02 i-Butane
+gus text 0.63 0.05  1,3
+gus text 0.63 0.02  Butadiene
+gus text 0.74 0.05 tr-Butene +
+gus text 0.74 0.02 cis-Butene
+gus text 0.85 0.05 Benzol
+
+! Main title and axes
+gks set text height 0.036
+gus text 0.65 0.92 Products of Pyrolyzation
+gks set text height 0.018
+gus text 0.05 0.94 Mass [%]
+
+! Legend
+gks set text align left half
+gks set text height 0.021
+
+! box
+x := 0.78,0.78,0.97,0.97,0.78
+y := 0.48,0.87,0.87,0.48,0.48
+gks set color 7 1 0.96 0.83
+gks set fill color magenta
+gks fill x y
+gks set pline linewidth 2
+gks polyline x y
+gks set pline linewidth 1
+
+x := 0.9,0.9,0.95,0.95,0.9
+
+y := 0.8,0.85,0.85,0.8,0.8
+gks set fill color 'c1'
+gks fill x y
+gks polyline x y
+gus text 0.8 0.825 Trial 1
+
+y := 0.7,0.75,0.75,0.7,0.7
+gks set fill color 'c2'
+gks fill x y
+gks polyline x Y
+gus text 0.8 0.725 Trial 2
+
+y := 0.6,0.65,0.65,0.6,0.6
+gks set fill color 'c3'
+gks fill x y
+gks polyline x y
+gus text 0.8 0.625 Trial 3
+
+y := 0.5,0.55,0.55,0.5,0.5
+gks set fill color 'c4'
+gks fill x y
+gks polyline x y
+gus text 0.8 0.525 Trial 4
+
+gks set pline color_index black
+gks set pline linewidth 1.0
+gks set fill color black
+gks set text color black
+gks set text fontprec 3 string
+

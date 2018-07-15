@@ -1,0 +1,16 @@
+gks set text align center base
+gks set xform ndc
+gks set viewport 0.1 0.9 0.1 0.9
+gks set text height 0.027
+gus text .5 .96 DEMONSTRATION PLOT FOR RANDOM CONTOURS
+gks set xform wc
+x := 3 3 10 18 18 10 10 5 1 15 20 5 15 10 7 13 16
+y := 3 18 18 3 18 10 1 5 10 5 10 15 15 15 20 20 8
+h := -4(2)26
+!h := 0
+z := 25 25 25 25 25 -5 1 1 1 1 1 1 1 1 1 1 25
+gridit x y z
+gus set space 0 1 0 90
+gus autoscale_3d x y z
+gus contour x y h z
+gus axes_2d

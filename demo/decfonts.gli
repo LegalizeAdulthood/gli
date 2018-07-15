@@ -1,0 +1,91 @@
+gks set xform ndc
+gks set text align left cap
+gks set text font -101 string
+gks set text height 0.018
+gks set text upvec 0 1
+gks text .1 1 Times Roman
+gks set text font -102 string
+gks text .1 .975 Times Italic
+gks set text font -103 string
+gks text .1 .95 Times Bold
+gks set text font -104 string
+gks text .1 .925 Times Bold Italic
+gks set text font -105 string
+gks text .1 .9 Helvetica
+gks set text font -106 string
+gks text .1 .875 Helvetica Oblique
+gks set text font -107 string
+gks text .1 .85 Helvetica Bold
+gks set text font -108 string
+gks text .1 .825 Helvetica Bold Oblique
+gks set text font -109 string
+gks text .1 .8 Courier
+gks set text font -110 string
+gks text .1 .775 Courier Oblique
+gks set text font -111 string
+gks text .1 .75 Courier Bold
+gks set text font -112 string
+gks text .1 .725 Courier Bold Oblique
+gks set text font -114 string
+gks text .1 .7 ITC Lubalin Graph Book
+gks set text font -115 string
+gks text .1 .675 ITC Lubalin Graph Book Oblique
+gks set text font -116 string
+gks text .1 .65 ITC Lubalin Graph Demi
+gks set text font -117 string
+gks text .1 .625 ITC Lubalin Graph Demi Oblique
+gks set text font -118 string
+gks text .1 .6 New Century Schoolbook Roman
+gks set text font -119 string
+gks text .1 .575 New Century Schoolbook Italic
+gks set text font -120 string
+gks text .1 .55 New Century Schoolbook Bold
+gks set text font -121 string
+gks text .1 .525 New Century Schoolbook Bold Italic
+gks set text font -122 string
+gks text .1 .5 ITC Avant Garde Gothic Book
+gks set text font -123 string
+gks text .1 .475 ITC Avant Garde Book Oblique
+gks set text font -124 string
+gks text .1 .45 ITC Avant Garde Demi
+gks set text font -125 string
+gks text .1 .425 ITC Avant Garde Demi Oblique
+gks set text font -126 string
+gks text .1 .4 ITC Souvenir Light
+gks set text font -127 string
+gks text .1 .375 ITC Souvenir Light Italic
+gks set text font -128 string
+gks text .1 .35 ITC Souvenir Demi
+gks set text font -129 string
+gks text .1 .325 ITC Souvenir Demi Italic
+gks set text font -130 string
+gks text .1 .3 Helvetica Narrow
+gks set text font -131 string
+gks text .1 .275 Helvetica Narrow Oblique
+gks set text font -132 string
+gks text .1 .25 Helvetica Narrow Bold
+gks set text font -133 string
+gks text .1 .225 Helvetica Narrow Bold Oblique
+gks set text font -134 string
+gks text .1 .2 ITC Bookman Light
+gks set text font -135 string
+gks text .1 .175 ITC Bookman Light Italic
+gks set text font -136 string
+gks text .1 .15 ITC Bookman Demi
+gks set text font -137 string
+gks text .1 .125 ITC Bookman Demo Italic
+gks set text font -138 string
+gks text .1 .1 Palatino
+gks set text font -139 string
+gks text .1 .075 Palatino Italic
+gks set text font -140 string
+gks text .1 .05 Palatino Bold
+gks set text font -141 string
+gks text .1 .025 Palatino Bold Italic
+gks set text upvec -1 0
+gks set text font -113 string
+gks text .8 .1 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
+gks set text font -142 string
+gks text .85 .1 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
+gks set text font -143 string
+gks text .9 .1 ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz

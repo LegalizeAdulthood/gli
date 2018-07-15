@@ -1,0 +1,41 @@
+    page
+    gks set xform ndc
+    gks set text font 3 string
+    gks set text align centre bottom
+    gks set text height 0.027
+
+    gks set fill color_index cyan
+    gks set fill int_style solid
+    a:= 0 0 1 1 0
+    b:= 0 1 1 0 0
+    gks fill a b
+
+    gks text 0.5 0.9  XYZ WIDGET COMPANY
+    gks text 0.5 0.85  Earnings by Prod. Line, 1974-1984
+    gks set text height 0.021
+    gks text 0.5 0.05  Fiscal Year
+    gks set text align left bottom
+    gks text 0.1 0.8  Millions of Dollars
+
+    gks set fill color_index white
+    a:= 0.1 0.1 0.9 0.9 0.1
+    b:= 0.2 0.8 0.8 0.2 0.2
+    gks fill a b
+
+    gks set viewport  0.1,0.9  0.2,0.8
+    gks set window  1973.5,1984.5  0,100
+    gks set xform wc
+    gus axes_2d  1,10  1973.5,0  1,2  0.01
+    gus axes_2d  1,10  1984.5,100  0,0 -0.01 
+    read 'GLI_DEMO'demo6.dat  x,y1,y2,y3,y4
+    gks set fill color_index black
+    gus bar_graph x y4
+    gks set fill color_index red
+    gus bar_graph x y3
+    gks set fill color_index green
+    gus bar_graph x y2
+    gks set fill color_index blue
+    gus bar_graph x y1
+    gks set fill color_index black
+
+    del var *

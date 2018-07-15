@@ -1,0 +1,40 @@
+x:=-2(.5)12
+y:=-7(.5)7
+
+r1=sqrt((x-5)**2+y**2)
+r2=sqrt((x+5)**2+y**2)
+
+z1=exp(cos(r1))
+z2=exp(cos(r2))
+
+f1 = z1+z2
+f4 = (f1-0.9)*20
+
+gks set ws_viewport .14 .28 0 .14
+gks set window -2.1 12.1 -7.1 7.1
+gks set viewport 0 1 0 1
+gus set space -80 200 90 90
+gus surface x y f4 z_shaded_mesh
+
+x:=-2(.5)12
+y:=-7(.5)7
+
+r1=sqrt((x-5)**2+y**2)
+r2=sqrt((x+5)**2+y**2)
+
+z1=exp(cos(r1))
+z2=exp(cos(r2))
+
+f1 = z1+z2
+f4 = (f1-0.9)*25
+
+gks clear_ws
+gks set ws_viewport 0 .14 0 .14 
+gks set window -2 12 -7 7
+gks set viewport .1 .9 .1 .9
+gus set space 0 5 45 70
+gus axes_3d
+gus set space -80 200 45 70
+gus surface x y f4 z_shaded_mesh
+gus surface x y f4 mesh
+

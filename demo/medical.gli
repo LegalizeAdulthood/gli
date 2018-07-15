@@ -1,0 +1,52 @@
+!Open the terminal for animation
+gks open_ws term 217
+
+!Open workstation for a title
+gks open_ws wk1 210
+
+gks set ws_viewport 0.11 0.21 0.12 0.22
+gks set xform ndc
+x := 0 0 1 1 0
+y := 0 1 1 0 0
+gks set fill int_style solid
+gks set fill color cyan
+gks fill_area x y
+gks set text align center normal
+gks set text height 0.036
+gks text 0.5 0.7 NMR Brain Scan Data
+gks text 0.5 0.5 Animated
+gks text 0.5 0.3 With GLI
+gks deactivate_ws wk1
+
+!Open workstation for a message
+gks open_ws wk2 210
+gks set ws_viewport 0.11 0.21 0.12 0.22
+gks fill_area x y
+gks text 0.5 0.5 Reading and Storing Images...
+gks deactivate_ws wk2
+
+i := 0
+loop:
+    image read 'GLI_IMAGES'medical'i'.pgm medical
+    if i>0 then gks clear_ws
+    image display medical pixel
+    i := i+1
+    if i<64 then goto loop
+
+gus set color glowing
+
+!do the animation and reset all upon exit
+gks deactivate_ws term
+gks activate_ws wk2
+gks set ws_viewport 0.11 0.21 0.01 0.11
+@'GLI_DEMO'mouse
+gks activate_ws term
+gks close_ws term
+gks close_ws wk1
+gks close_ws wk2
+gks set color 7 1.0 0.0 1.0
+gks set xform wc
+gks set fill color black
+gks set fill int_style hollow
+gks set text height 0.027
+image delete medical

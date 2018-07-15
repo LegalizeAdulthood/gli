@@ -1,0 +1,5 @@
+gks set xform ndc
+gks set text font -51 stroke
+gks set text height 0.14
+gks text 0 .7 הצüִײÜß
+gus text 0 .3 הצüִײÜ

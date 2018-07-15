@@ -1,0 +1,11 @@
+gks set text align center half
+gks set xform ndc
+gus text .5 .95 Cell Array Example
+gks set xform wc
+read 'GLI_DEMO'kws z
+f = z/1790*(72-1)+8
+ci := f
+gks cell_array ci 64
+gks set xform ndc
+gus text .5 .05 64 x 64 Points
+gks set xform wc

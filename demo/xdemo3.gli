@@ -1,0 +1,63 @@
+        page
+	gks set text font 3 string
+	gks set text height 0.036
+	gks set text align center bottom
+
+! Background
+	gks set xform ndc
+	x := 0,1,1,0,0
+	y := 0,0,1,1,0
+	gks set fill color cyan
+	gks set fill int_style solid
+	gks fill x y
+	gks text 0.5 0.9 3D Surface Shading
+	gks set xform wc
+
+	gks set text font -3 stroke
+	gks set text height 0.027
+	gks set viewport 0.15 0.9 0.1 1
+
+	x := 1..540
+	y := 1..24
+	read 'GLI_DEMO'xdemo3.dat z
+	c = z*0.06
+	zz := c
+	smooth zz 5 540
+
+	gks set window 0.5 2.1 43 46.45
+	gus set space 0,80 45,60
+
+	gks set pline color_index blue
+	gus axes_3d  0.2,0,10   0.5,43,0   2,0,2  -0.02
+	gus axes_3d  0,0.5,0    2.1,43,0   0,2,0   0.02
+
+	gks set clip off
+	gks set xform ndc
+
+! Text
+	gks set text height 0.027
+	gks set text align center half
+	gks set text upvec 1 0
+	gus set text_slant -35
+	gus text 0.025 0.5 COUNT RATE
+	gks set text upvec -4 5.5
+	gus set text_slant -20
+	gus text 0.8 0.15 TILT ANGLE (DEG)
+	gks set text upvec 4 5.5
+	gus set text_slant 20
+	gus text 0.2 0.15 ENERGY (MEV)
+
+	gks set xform wc
+	gks set window 1,540 1,24
+	gks set pline linewidth 0.25
+
+	gus surface x y zz z_shaded_mesh
+
+	gks set pline color black
+	gus surface x y zz lines
+
+        del var *
+        del fun *
+	gks set text font -1 stroke
+	gks set clip on
+	gks set text upvec 0 1

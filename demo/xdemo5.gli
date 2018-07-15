@@ -1,0 +1,44 @@
+        page
+        gks set text color red
+        gks set text font 16 string
+        gks set text height 0.036
+        gks set text align center half
+	gks set pline linewi 1
+
+! Background
+        gks set xform ndc
+        gks set fill color cyan
+        gks set fill int solid
+        x := 0 1 1 0
+        y := 0 0 1 1
+        gks fill x y
+
+! text
+        gks text .5 .95 Longs Peak Colorado
+        gks text .5 .9  Southwest View
+        gks set xform wc
+
+! define variable        
+        read 'GLI_DEMO'xdemo5.dat z
+        x := 1..100
+        y := 1..100
+        h := 0(10)200
+        f = (z-2800)*0.075
+        zz := f
+
+! draw surface        
+        gks set window 1 100 1 100
+        gks set viewport 0 1 0 0.7
+        gus set space 0 100000 45 50
+	gus set colormap geologic
+        gus surface x y zz z_shaded_mesh
+        gus contour x y h zz
+
+        gks set viewport 0 1 0.3 1
+        gus set space 0 300 45 50
+        gus surface x y zz shaded_mesh
+	gks set text color black
+
+        del var *
+        del fun *
+        gks set text font -3 string

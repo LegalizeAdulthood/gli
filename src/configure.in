@@ -1,0 +1,297 @@
+AC_INIT
+AC_CONFIG_SRCDIR([gli.c])
+
+
+dnl #########################
+dnl set destination directory
+ 
+if test "$prefix" = "NONE"
+then
+  prefix="/usr/local/gli"
+fi
+
+if test "$exec_prefix" = "NONE"
+then
+  exec_prefix=$prefix
+fi
+
+
+
+dnl search for install program
+AC_PROG_INSTALL
+
+dnl define Systemtype specifig variables
+AC_CANONICAL_TARGET([])
+
+
+dnl ###################
+dnl check for programs
+
+dnl check for ranlib
+AC_CHECK_PROG(RANLIB, ranlib, ranlib)
+if test "x$RANLIB" = "x"
+then
+   RANLIB="ar -t"
+fi
+
+dnl check for compiler
+
+AC_CHECK_PROG(CC, cc, cc)
+if test -z $CC
+then
+  AC_CHECK_PROG(CC, gcc, gcc)
+  test -z $CC && AC_MSG_ERROR(no C compiler)
+fi
+
+AC_CHECK_PROG(F77, f77, f77)
+if test -z $F77
+then
+  AC_CHECK_PROG(F77, g77, g77)
+  if test -z $F77
+  then
+    AC_CHECK_PROG(F77, gfortran, gfortran)
+    test -z $F77 && AC_MSG_ERROR(no Fortran compiler)
+  fi
+fi
+
+dnl check for X path
+AC_PATH_X
+
+
+if test "$x_includes" != "NONE" -a "x$x_includes" != "x"
+then
+  INCLUDES="-I$x_includes"
+fi
+
+
+if test "$x_libraries" != "NONE" -a "x$x_libraries" != "x"
+then
+  XLIBS="-L$x_libraries"
+fi
+
+dnl check for X librarys
+# check for the needed x-libraries and include them in XLIBS
+PR_XLIBS
+
+
+
+####################################################
+# 
+# 'configure --disable-motif' to disable motif
+#
+####################################################
+
+#
+# check for motif include directory, uil and the Xmlibs
+#
+if test "$enable_motif" != "no"
+then
+  PR_PATH_MOTIF
+fi
+
+########################################################
+#
+# 'configure --disable-grsoft' to disable grsoft
+#
+########################################################
+
+
+if test "$enable_grsoft" != "no"
+then
+
+  dnl ###############
+  dnl check for grsoft
+
+  GRLIBS=
+  dnl check for GRLIBS
+  AC_CHECK_LIB(gr, main, [GRLIBS="-lgr"; CFLAGS="$CFLAGS -DGRSOFT"])
+fi
+
+
+
+dnl #####################
+dnl check for librarys
+
+AC_CHECK_LIB(crypt, main)
+AC_CHECK_LIB(m, main)
+AC_CHECK_LIB(c, main)
+AC_CHECK_LIB(cl, main)
+AC_CHECK_LIB(nsl, main)
+AC_CHECK_LIB(sun, main)
+AC_CHECK_LIB(socket, main)
+AC_CHECK_LIB(dl, main)
+
+
+F77LIBS=
+
+dnl check for fortran librarys
+AC_CHECK_LIB(for, main, [F77LIBS="$F77LIBS -lfor"])
+AC_CHECK_LIB(F77, main, [F77LIBS="$F77LIBS -lF77"])
+
+
+
+#######################################################
+#
+# 'configure --disable-tcl' to disable tcl
+#
+#######################################################
+
+# the macro PR_PATH_TCL_TK searchs for the include directory cotaining the
+# tcl and tk header files and appends it to the INCLUDES variable,
+# searches for the tcl and tk libraries and sets the path to TCLLIBS
+# 
+if test "$enable_tcl" != "no"
+then
+  PR_PATH_TCL_TK
+
+  if test "x$no_tcl" = "xtrue"
+  then
+     echo "Can't find Tcl/Tk headers or libraries."
+     echo "GLI will be built without Tcl/Tk."
+  fi
+fi
+
+
+
+DPSLIBS=
+DPS=
+
+if test -d /usr/lpp/DPS/lib
+then
+  DPSLIBS="-L/usr/lpp/DPS/lib"
+fi
+AC_CHECK_LIB(dps, main, [DPSLIBS="$DPSLIBS -ldps"; CFLAGS="$CFLAGS -DDPS"; DPS="psprint"], ,$DPSLIBS)
+
+
+
+
+dnl checking for zlib
+# setting the variable ZLIB and searching for zlib header file.
+if test "$with_zlib" != "no"
+then
+  PR_PATH_ZLIB
+fi
+
+
+
+dnl checking for rpc
+dnl try to compile and link a test program which calls '_rpc_dtablesize'
+dnl if not possible check for rpc lib
+
+AC_MSG_CHECKING(for rpc)
+AC_LINK_IFELSE([AC_LANG_PROGRAM([[]], [[_rpc_dtablesize();]])],[CFLAGS="$CFLAGS -DRPC"; AC_MSG_RESULT(yes)],[AC_MSG_RESULT(not in -lc); AC_CHECK_LIB(rpc, main, [CFLAGS="$CFLAGS -DRPC"])])
+
+
+
+
+SOFLAGS="-soname ${exec_prefix}/\$@"
+LD=ld
+SEGLD=cc
+CP="cp -p"
+
+case $host in
+  *alpha* ) CFLAGS="-O $CFLAGS"
+            GLIRPCD="glirpcd"
+            LD="ld -shared"
+            SEGLD="cc"
+	    SHLIBS="libgks.so libgus.so libcrtl.so"
+            F77LIBS="$F77LIBS -lUfor -lFutil -lots"
+	    F77FLAGS="$F77FLAGS -O -automatic"
+	    ;;
+  *aix*   ) CFLAGS="$CFLAGS -Daix"
+            GLIRPC="glirpc"
+            LD="xlf"
+            if test "x$F77" = "x"; then F77="xlf"; fi
+            F77FLAGS="$F77FLAGS -NQ20000"
+            SEGLD="$F77"
+	    SOFLAGS="-bM:SRE -bE:gks.exp -e gopks"
+	    SHLIBS="libgks.so"
+	    SEGLD="xlf"
+ 	    ;;
+  *linux* ) CFLAGS="$CFLAGS -fPIC"
+	    GLIRPCD="glirpcd"
+	    LD="cc -shared"
+	    SOFLAGS=""
+	    LDFLAGS="-u MAIN__"
+	    AC_CHECK_LIB(g2c, main, [F77LIBS="$F77LIBS -lg2c"], , $LDFLAGS $XLIBS)
+	    F77FLAGS="$F77FLAGS -fPIC"
+	    SHLIBS="libgks.so libgus.so"
+	    SEGLD="$F77"
+	    ;;
+  *netbsd*) F77LIBS="-lg2c"
+            ;;
+  *darwin*) SEGLD="$F77"
+	    XLIBS="-L/usr/X11R6/lib -lXt -lXext -lX11"
+	    LIBS="-framework Carbon -framework Tk -framework Tcl"
+            ;;
+  *irix*  ) SHLIBS="libgks.so libgus.so"
+	    SEGLD="$F77"
+            CP="cp"
+            LD="ld -shared"
+            GLIRPCD="glirpcd"
+            ;;
+  *cray*  ) CP="cp"
+            SEGLD="segldr"
+            F77="f90"
+            F77FLAGS="$F77FLAGS -en -dp -O3"
+	    ;;
+  *mips*  ) F77FLAGS="$F77FLAGS -O"
+            CFLAGS="-O -Olimit 1000 $CFLAGS"
+            LDFLAGS="-G 8"
+            SEGLD="$F77"
+            XLIBS="-lXt -lX11 -lXext"
+	    ;;
+  *solaris* ) LDFLAGS="-xlic_lib=sunperf"
+            SEGLD="$F77"
+            if test "x$DPS" != "x"; then
+	    INCLUDES="$INCLUDES -I/usr/openwin/include/X11"
+	    fi
+	    ;;
+  *sunos* ) SHLIBS="libgks.so libgus.so"
+            SOFLAGS="-G"
+	    ;;
+  *hp*    ) CFLAGS="$CFLAGS -Wp -H200000"
+            F77FLAGS="$F77FLAGS -K +e"
+	    ;;
+  *cygwin*) SEGLD="$F77"
+            F77FLAGS="$F77FLAGS -en -dp -O3"
+  	    AC_CHECK_LIB(advapi32, main)
+            AC_CHECK_LIB(user32, main)
+            AC_CHECK_LIB(gdi32, main)
+            AC_CHECK_LIB(comdlg32, main)
+	    ;;
+  *       ) ;;
+esac
+
+
+dnl #######################
+dnl substitute variables
+
+AC_SUBST(TCLLIBS)
+AC_SUBST(F77LIBS)
+AC_SUBST(XLIBS)
+AC_SUBST(XMLIBS)
+AC_SUBST(DPSLIBS)
+AC_SUBST(ZLIBS)
+AC_SUBST(DPS)
+AC_SUBST(UIL)
+AC_SUBST(UILDIR)
+AC_SUBST(MOTIF)
+AC_SUBST(GRLIBS)
+AC_SUBST(SOFLAGS)
+AC_SUBST(F77)
+AC_SUBST(F77FLAGS)
+AC_SUBST(LD)
+AC_SUBST(LDFLAGS)
+AC_SUBST(LIBS)
+AC_SUBST(SEGLD)
+AC_SUBST(CC)
+AC_SUBST(CP)
+AC_SUBST(GLIRPCD)
+AC_SUBST(SHLIBS)
+AC_SUBST(LD)
+AC_SUBST(INCLUDES)
+
+dnl create Makefile
+AC_CONFIG_FILES([Makefile])
+AC_OUTPUT

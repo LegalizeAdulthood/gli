@@ -1,0 +1,594 @@
+! In this demo, we draw a shaded surface with some controls
+
+! make a big window:
+	gks open_ws terminal			!open a window 
+	gks set ws_viewport 0 .22 0 .22
+	gks set xform ndc			!normalized device coords
+	x := 0 1 1 0 0				!border coords of window for
+	y := 0 0 1 1 0				!  erase
+	gks set fill int_style solid		!set fill mode to solid
+	gks set color 3 .95 1.0 1.0		!set color 3 to light red
+	gks set fill color_index green
+	gks fill_area x y			!erase window to light blue
+	h := 0(5)75				!used for contour drawing
+	maxheight:= 80				!used for drawing 3d surface
+
+	gks set text fontprec 2 string		!Courier font
+	gks set text color_index black		!draw button labels in black
+	erasex := 0 64 64 0
+	erasey := 0 0 64 64
+
+!draw_buttons:
+	x1 := .83 .95 .95 .83 .83
+	x2 := .68 .8 .8 .68 .68
+	x3 := .53 .65 .65 .53 .53
+	x1edge := .83 .835 .955 .955 .95 .95 .83 !define "shadow" behind buttons
+	x2edge := .68 .685 .805 .805 .8 .8 .68 	 !define "shadow" behind buttons
+	x3edge := .53 .535 .655 .655 .65 .65 .53 !define "shadow" behind buttons
+	yedge:= .07 .075 .075 .025 .02 .07 .07
+	y := .02  .02  .07  .07 .02		!define the button outlines
+	ystat := .09 .09 .14 .14 .09		!Stats button
+	ysedge := .14 .145 .145 .095 .09 .14 .14
+
+	b2State := 1			!maintain state of button 2
+	b3State := 1			!maintain state of button 3
+	maxB1 = Max(x1)
+	minB1 = Min(x1)
+	maxB2 = Max(x2)
+	minB2 = Min(x2)
+	maxB3 = Max(x3)
+	minB3 = Min(x3)
+	gks set text height .018	!set text height
+	gks set text expfac .8
+
+	gosub drawControls		!draw the controls
+
+!now draw status board
+	xstatus := .1 .3 .3 .1 .1
+	ystatus := .05 .05 .15 .15 .05
+	gks set pline linewidth 3.0
+	gks polyline xstatus ystatus
+	gks set pline linewidth 1.0
+	gks set text color_index black
+	gus text .15 .125 STATUS:
+	gosub ClearStatus
+	gus text .13 .07 Drawing...
+
+!Now draw the 3d shape
+	read 'GLI_DEMO'xdemo2.dat z	!get Z axis data values
+	cz = 0.045*z			!scale the data to fit in display
+	zz := cz
+        borderx := 1 64 64 1 1		!used in erasing the 3d area
+	bordery := 1 1 64 64 1
+	xc := 1..64			!used for drawing the surface
+	yc := 1..64
+	gks set viewport .1 .9 .3 .98	!area to be drawn in
+	gosub UpdateShape
+
+	gosub ClearStatus
+	gus text .15 .07 Ready
+
+! Now in this section poll buttons and slider
+Continue: !WHILE NOT DONE 
+	gks request locator xcoord, ycoord
+	IF xcoord < minSliderX  OR  xcoord > maxSliderX THEN goto Continue
+	IF ycoord > minS1Y AND ycoord < maxS2Y THEN goto CheckSliders
+	   IF xcoord > minB1 AND xcoord < maxB1 THEN gosub Button1
+	   IF xcoord > minB2 AND xcoord < maxB2 THEN gosub Button2
+	   IF xcoord > minB3 AND xcoord < maxB3 THEN gosub Button3
+	goto Continue
+CheckSliders:
+	   IF ycoord >= minS1Y AND ycoord <= maxS1Y THEN gosub AngleSlider 
+	   IF ycoord >= minS2Y AND ycoord <= maxS2Y THEN gosub TiltSlider
+	   IF b3State = 1 then gosub UpdateShape  !re-display shape w/changes
+	   IF b3State = 2 then gosub DispContour  !re-display contour w/changes
+	Goto Continue
+
+AngleSlider:		!subroutine to update the angle slider
+	gks set fill color_index white	!"clear" the slider
+	gks fill_area xslider y1slider
+	fillx := btmp xcoord xcoord
+	filly := tmpx Min(y1slider) Max(y1slider)
+	gks set fill color_index red
+	gks fill_area fillx filly		!fill up with "fluid"
+	gks set pline color_index black
+	gks polyline xslider y1slider		!redraw outline
+	anglePercent := (xcoord-Min(xslider))/(Max(xslider)-Min(xslider))
+	angle := Int(90.0*anglePercent)
+	gks set text color_index magenta	!really light blue 
+	gus text .82 .135 'lastAngle'
+	gks set text color_index red
+	gus text .82 .135 'angle'
+	lastAngle := angle
+	Return
+
+TiltSlider:	!subroutine to update the tilt slider
+	gks set fill color_index white	!"clear" the slider
+	gks fill_area xslider y2slider
+	fillx := btmp xcoord xcoord
+	filly := tmpx+0.075 Min(y2slider) Max(y2slider)
+	gks set fill color_index red
+	gks fill_area fillx filly		!fill up with "fluid"
+	gks set pline color_index black
+	gks polyline xslider y2slider		!redraw outline
+	tiltPercent := (xcoord-Min(xslider))/(Max(xslider)-Min(xslider))
+	tilt := Int(90.0*tiltPercent)
+	gks set text color_index magenta	!really light blue 
+	gus text .755 .209 'lastTilt'
+	gks set text color_index red
+	gus text .755 .209 'tilt'
+	lastTilt := tilt
+	Return
+
+UpdateShape:	!subroutine to implement rotation and tilt changes
+	gosub CleanUp
+	gosub ClearStatus
+	gus text .13 .07 Drawing...
+	gus set space 0 maxheight angle tilt		!change rotation, tilt
+	gks set xform wc
+	gks set window 1 64 1 64		!prepare to erase drawing area
+	gks set fill color_index green		!really light blue
+	gks fill_area borderx bordery
+	gks set pline color black
+goto Halfway
+	IF b2State = 2 THEN goto Halfway	!NOT in slice mode
+
+	gks set text fontprec 3 string		!IF in "3d" mode
+	gus text 8 60 3-D DATA DISPLAY
+	gks set text fontprec 2 string
+	gus set space 0 maxheight angle tilt		!change rotation, tilt
+	gus axes_3d 5 0 20 1 1 0 2 0 1 -0.02
+	gus axes_3d 0 5 0 64 1 0 0 2 0 0.02
+	gus set space 0 maxheight angle tilt		!change rotation, tilt
+
+Halfway:
+	gus surface xc yc zz z_shaded_mesh
+	gus surface xc yc zz mesh
+	gks set xform ndc
+	gosub ClearStatus
+	gus text .15 .07 Ready
+	Return
+
+Button1:	!Done button
+	gks set fill color_index blue
+	gks fill_area x1, y
+	gks set pline color_index black
+	gks polyline x1, y
+	gks set text color_index white
+	gus text .857 .035 Done
+	gks close_ws			!close the graphics window.
+	EXIT
+	Return
+
+Button2:	!Slice button
+	IF b2State = 2 THEN goto State2		!check button state 
+	b2State := 2			!toggle button state to pushed
+	gosub EraseSliders
+	gosub draw_statB		!draw in STATS button
+	gosub draw_b1
+	gosub draw_b2
+	gosub draw_b3			!effectively change contour mode
+	b3state := 1			!if we're here, then not Contour mode
+	gks set fill color_index blue
+	gks fill_area x2, y			!provide user with feedback:
+	gks set pline color_index black
+	gks polyline x2, y			!  change button and text color 
+	gks set text color_index white
+	gus text .699 .035 Slice
+	tilt := 0			!look at shaded surface sideways
+	xui choice ViewPlane Xaxis Yaxis
+	case ViewPlane Xaxis then gosub Xslice
+	case ViewPlane Yaxis then gosub Yslice
+	Return
+
+State2:
+	b2State := 1			!toggle button state to unpushed
+	gks set fill color_index cyan		!restore button state
+	gks fill_area x2, y
+	gks set pline color_index black
+	gks polyline x2, y
+	gks set text color_index black
+	gus text .699 .035 Slice
+	Return
+
+Button3:	!Contour button
+	IF b3State = 2 THEN goto State3		!check button state
+	gks set fill color_index blue
+	gks fill_area x3, y			!provide user with feedback:
+	gks set pline color_index black
+	gks polyline x3, y			!  change button and text color 
+	gks set text color_index white
+	gus text .535 .035 Contour
+	b3State := 2				!toggle button state to pushed
+	gosub DispContour
+	Return
+
+State3:
+	gks set fill color_index cyan		!restore button state
+	gks fill_area x3, y
+	gks set pline color_index black
+	gks polyline x3, y
+	gks set text color_index black
+	gus text .535 .035 Contour
+	b3State := 1				!toggle button state to unpushed
+	gosub UpdateShape
+	Return
+
+DispContour:	!this procedure displays a contour
+	gosub ClearStatus
+	gus text .13 .07 Drawing...
+	gosub CleanUp				!erase drawing area
+	gks set pline color_index red
+	gks set viewport .1 .9 .3 .98		!area to be drawn in
+	gus set space 0 maxheight angle tilt	!change rotation, tilt
+	gks set xform wc
+	gus contour xc yc h zz 
+	gks set xform ndc
+	gosub ClearStatus
+	gus text .15 .07 Ready
+	Return
+
+Yslice:		!this subroutine implements the slicing into the y-axis plane
+	angle := 90
+	maxheight := 80
+	gosub UpdateShape
+	maxheight := 60
+	gks set viewport .05 .95 .35 .98	
+	gks set text height .021
+	gus text .05 .8 Y Axis Plane
+	gks set text height .018		!restore previous height
+	gosub GetSlice
+	Return
+
+Xslice:		!this subroutine implements the slicing into the x-axis plane
+	angle := 0
+	maxheight := 80
+	gosub UpdateShape
+	maxheight := 60
+	gks set viewport .05 .95 .35 .98	
+	gks set text height .021
+	gus text .05 .8 X Axis Plane
+	gks set text height .018		!restore previous height
+	gosub GetSlice
+	Return
+
+GetSlice:
+	gks set fill color_index yellow		!draw arrowhead	with number
+	arrowx := 0.46 0.48 0.47 0.46
+	arrowy := 0.265 0.265 0.295 0.265
+	gks fill_area arrowx arrowy
+	gks set pline color black
+	gks polyline arrowx arrowy
+	base := 0.85894-0.14254
+	index := Int((0.17-0.14254)*64.0/base)+1  !convert the x coord to index
+	lindex := index
+	lastx := 0.17-0.02
+	gks set text color_index black
+	gus text lastx .24 'index'		!write out the initial index
+	gosub PlotSlice				!plot initial slice
+
+Top: 		!WHILE (Mode <> 3d) DO
+	gks request locator ax ay		!get new arrow x and arrow y
+	IF ay > maxBsy THEN goto UpdateIndex	!update index & arrow pos 
+	IF ax > minB1 AND ax < maxB1 THEN goto Test1 
+
+	IF ax > minB2 AND ax < maxB2 THEN goto SliceDone !done with Slice mode
+
+	IF ax > minB3 AND ax < maxB3 THEN goto SliceToContour  !do Contour
+	goto Top				!ELSE look for valid command
+
+Test1:
+	IF ay > minBsy AND ay < maxBsy THEN goto EnableStats
+	goto Button1				!else - EXIT
+
+SliceDone:
+	gosub theRest				!clean up drawing area
+	angle := lastAngle			!restore the last orientation
+	tilt := lastTilt
+	goto UpdateShape			!draw new 3d surface and return
+
+SliceToContour:
+	gosub theRest				!clean up drawing area
+	goto Button3				!then go to draw contour
+
+theRest:
+	gosub State2				!toggle button state
+	gks set fill color_index green		!really light blue
+	gks fill_area arrowx arrowy		!erase indexing arrowhead
+	gks set pline color green
+	gks polyline arrowx arrowy
+	gks set text color green		!really light blue
+	gus text lastx .24 'lindex'		!erase last index number
+	gosub CleanUp				!erase drawing area
+	gosub EraseSliders			!erase the Stats. button area
+	gosub drawControls			!redraw the controls
+	Return
+
+UpdateIndex:
+	IF ax < 0.14254 OR ax > 0.85894 then goto Top !x not in bounds
+	gks set fill color_index green		!erase arrowhead	
+	gks fill_area arrowx arrowy
+	gks set pline color green
+	gks polyline arrowx arrowy
+	newarrx := ax-0.01, ax+0.01, ax, ax-0.01
+	gks set text color green		!really light blue
+	gus text lastx .24 'lindex'		!erase last index number
+	gks set fill color_index yellow		!draw new arrowhead	
+	gks fill_area newarrx arrowy
+	gks set pline color black
+	gks polyline newarrx arrowy
+	arrowx := newarrx			!save coords for next erase
+	index := Int((ax-0.14254)*64.0/base)+1	!convert the x coord to index
+	lastx := ax-0.02
+	lindex := index
+	gks set text color black
+	gus text lastx .24 'index'
+	gosub PlotSlice
+	goto Top
+
+PlotSlice:
+	gosub ClearStatus
+	gus text .13 .07 Slicing...
+	IF angle = 90 then goto Yaxis	!ELSE do Xaxis case
+	title := "Y Profile:"
+	startindex := index*64
+	endindex := ((index+1)*64)-1
+	vector := zz[startindex]
+	ptr := startindex+1
+Xloop:
+	IF ptr > endindex then goto Plot  !ELSE copy another element, bump ptr
+	vector := vector zz[ptr]
+	ptr := ptr+1
+	goto Xloop
+
+Yaxis:
+	title := "X Profile:"
+	startindex := index
+	incr := 64
+	vector := zz[startindex]
+	ptr := startindex + incr
+Yloop:
+	IF ptr > 4096 then goto Plot		!ELSE copy another elem, ptr++
+	vector := vector zz[ptr]
+	ptr := ptr+incr
+	goto Yloop
+
+Plot:
+	gks deactivate_ws term
+	gks open_ws wk1			!open another window for the plot
+	gks set ws_viewport .2 .35 .08 .16
+	gks set fill color yellow
+	pwiny := 0 0 1 1
+	pwinx := 0 1 1 0
+	gks fill_area pwinx pwiny
+
+	gks set xform wc
+	gks set pline color black
+	gks set text color black
+	gks set viewport .1 .9 .15 .9
+	gks set text height .021
+	gus autoscale_2d xc, vector
+	gus axes_2d
+	gus polyline xc, vector
+	gks set xform ndc
+	gus text .14 .87 'title'
+	gks set text height .018		!restore previous height
+	gks set text expfac .8
+	gks deactivate_ws wk1
+
+	gks activate_ws term
+	gks set viewport .1 .9 .3 .98		!reset the viewport to original
+	gosub ClearStatus
+	gus text .15 .07 Ready
+	Return
+
+CleanUp: 	!This routine erases the drawing area, and resets the viewport
+	gks set viewport .01 .99 .28 .99	!erase the display
+	gks set window 0 64 0 64
+	gks set xform wc
+	gks set fill color_index green		!really light blue
+	gks fill_area erasex erasey
+	gks set xform ndc
+	gks set viewport .1 .9 .3 .98		!reset the viewport to original
+	Return
+
+draw_b1: !draw the DONE button
+	gks set fill color_index cyan
+	gks set pline color_index black
+	gks set text color_index black
+	gks fill_area x1,y
+	gks polyline x1,y
+	gus text .857 .035 Done
+	gks polyline x1edge,yedge
+	gks set fill color_index black
+	gks fill_area x1edge, yedge
+	Return
+
+draw_b2: !draw the SLICE button
+	gks set fill color_index cyan
+	gks set pline color_index black
+	gks set text color_index black
+	gks fill_area x2, y
+	gks polyline x2, y
+	gks polyline x2edge, yedge
+	gus text .699 .035 Slice
+	gks set fill color_index black
+	gks fill_area x2edge, yedge
+	Return
+
+draw_b3: !draw the Contour button
+	gks set fill color_index cyan
+	gks set pline color_index black
+	gks set text color_index black
+	gks fill_area x3, y
+	gks polyline x3, y
+	gus text .535 .035 Contour
+	gks polyline x3edge,yedge
+	gks set fill color_index black
+	gks fill_area x3edge, yedge
+	Return
+
+draw_statB: !draw the STATS button and redraw the control box border
+	xborder :=  .48 1 1 .48 .48
+	tborder := 0 0 .18 .18 0
+	gks set fill color_index magenta		!really light grey
+	gks fill_area xborder tborder
+	gks set pline linewidth 3.0
+	gks set pline color black
+	gks polyline xborder tborder
+	gks set pline linewidth 1.0
+	gks set fill color_index cyan
+	gks fill_area x1,ystat
+	gks polyline x1,ystat
+	gks set text color_index black
+	gus text .845 .105 Stats.
+	gks polyline x1edge,ysedge
+	gks set fill color_index black
+	gks fill_area x1edge, ysedge
+	maxBsy = Max(ystat)
+	minBsy = Min(ystat)
+
+	gks set text fontprec 3 string		
+	gks set text height .021			!restore previous height
+	gus text .63 .12  GLI
+	gks set text height .018		!restore previous height
+	gks set text fontprec 2 string		!restore font 
+
+	Return
+
+draw_sliders:
+	xtmp := -0.01(.001)0.01			!generate the arc ends
+	tmpx := 0.01(-.001)-0.01		!generate pts in opposite order
+	R = 0.01				!make fcn so that will "stretch"
+	ytmp := Sqrt(R**2-xtmp**2)
+	btmp := -ytmp+0.542
+	xtmp := xtmp+0.12
+	tmpx := tmpx+0.12
+	ytmp := ytmp+0.942
+
+!draw the rotation angle slider
+	xfill := .942 .542
+	yfill := .11 .11
+	xslider := btmp ytmp xfill
+	y1slider := xtmp tmpx yfill
+	gks set fill color_index white
+	gks fill_area xslider y1slider
+	gks polyline xslider y1slider
+	lastAngle := 30
+	angle := 30
+	gks set text color_index red
+	gks text .67 .136 ROTATION:
+	gus text .82 .135 'lastAngle'
+	gks set text height .012
+	gks text .851 .148 o
+	gks set text height .018
+	gks text .51 .09 0
+	gks text .949 .09 90
+	gks set text height .012
+	gks text .525 .104 o
+	gks text .979 .104 o
+	gks set text height .018
+	maxSliderX := Max(xslider)
+	minSliderX := Min(xslider)
+	minS1Y := Min(y1slider)
+	maxS1Y := Max(y1slider)
+	xcoord = ((30.0/90.0)*(maxSliderX-minSliderX))+minSliderX
+	gosub AngleSlider
+
+!draw tilt angle slider
+	y2slider := y1slider+0.075		!shift the tilt slider up
+	gks set fill color_index white
+	gks fill_area xslider y2slider
+	gks polyline xslider y2slider
+	lastTilt := 60
+	tilt := 60
+	gks set text color_index red
+	gks text .67 .210 TILT:
+	gus text .755 .209 'lastTilt'
+	gks set text height .012
+	gks text .786 .222 o
+	gks set text height .018
+	gks text .51 .164 0
+	gks text .949 .164 90
+	gks set text height .012
+	gks text .525 .178 o
+	gks text .979 .178 o
+	gks set text height .018
+	maxS2Y := Max(y2slider)
+	minS2Y := Min(y2slider)
+	xcoord = ((60.0/90.0)*(maxSliderX-minSliderX))+minSliderX
+	gosub TiltSlider
+	Return
+
+EraseSliders:
+	xregion :=  .45 1 1 .45
+	yregion :=  .11 .11 .28 .28 
+	gks set fill color_index green		!really light blue
+	gks fill_area xregion yregion
+	Return
+
+EnableStats:
+	gks set fill color_index blue		!fill in Stats button with blue
+	gks set pline color_index black
+	gks fill_area x1,ystat
+	gks polyline x1,ystat
+	gks set text color_index white
+	gus text .845 .105 Stats.
+
+WholeSlice:
+	gks deactivate_ws term
+	gks activate_ws wk1
+	gks set text color_index black
+	gks set text height .021
+	maxvec = Max(vector)
+	minvec = Min(vector)
+	meanvec = Mean(vector)
+	stdvec = StdDev(vector)
+	gus text .15 .77 Max: 'maxvec'
+	gus text .15 .72 Min: 'minvec'
+	gus text .15 .67 Mean: 'meanvec'
+	gus text .15 .62 StDev: 'stdvec'
+	gks deactivate_ws wk1
+	gks activate_ws term
+	gks set text height .018
+
+ExitRoutine:
+	gks set fill color_index cyan		!restore Stats button
+	gks set pline color_index black
+	gks fill_area x1,ystat
+	gks polyline x1,ystat
+	gks set text color_index black
+	gus text .845 .105 Stats.
+
+	goto Top
+
+ClearStatus:
+	xline := .1 .3 .3 .1 .1
+	yline := .05 .05 .12 .12 .05
+	gks set pline linewidth 3.0
+	gks set fill color green		!really light blue
+	gks fill_area xline yline
+	gks set pline color black
+	gks polyline xline yline
+	gks set pline linewidth 1.0
+	gks set text color_index black
+	Return
+
+drawControls:	!draw border around controls and background fill, etc.
+	xborder :=  .48 1 1 .48 .48
+	yborder := 0 0 .25 .25 0
+	gks set pline linewidth 3.0
+	gks set pline color black
+	
+	gks set color 7 .92 .92 .92	!set color 7 to light grey used be 82
+	gks set fill color magenta		!really light grey
+	gks fill_area xborder yborder
+	gks polyline xborder yborder
+	gks set pline linewidth 1.0
+
+	gosub draw_b1
+	gosub draw_b2
+	gosub draw_b3
+	gosub draw_sliders
+	Return
+

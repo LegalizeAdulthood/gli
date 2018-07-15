@@ -1,0 +1,200 @@
+      SHELL = /bin/sh
+    DESTDIR = @exec_prefix@
+         AR = ar
+         PC = pc
+         CD = cd
+      CHMOD = chmod
+      MKDIR = mkdir
+         RM = rm
+         CP = cp
+    TERMCAP =
+     GRSOFT =
+        DIR = src
+
+    GLIOBJS = gligus.o gligr.o gligks.o glisimp.o glisight.o gliimage.o \
+	      glixui.o glicgm.o glirpc.o gkstest.o
+  SIGHTOBJS = sightmai.o sight.o sightdev.o
+  IMAGEOBJS = imagemai.o image.o imageuti.o imageapp.o imagedev.o
+    GUSOBJS = gus.o gustext.o gusauto.o gusplo10.o
+    GKSOBJS = gksio.o gkscbnd.o gks.o gksinq.o gkserror.o gksroot.o gksmisc.o \
+	      gksdidd.o gksdps.o gksdtek.o gksdtek2.o gksdx11.o gksdwin.o \
+	      gksdcgm.o gksdpbm.o gksdwiss.o gkswiss.o gksdhpgl.o gksdvt.o \
+	      gksdgksm.o gksdpdf.o gksforio.o gksafm.o compress.o
+   CRTLOBJS = formdrv.o command.o terminal.o function.o variable.o symbol.o \
+	      string.o math.o help.o system.o com.o
+   FRTLOBJS = contour.o spline.o pixel.o gridit.o
+
+.SUFFIXES: .a .o .uid .c .f .uil
+
+.uil.uid:
+	@UIL@ -o $@ $< -I@UILDIR@
+.c.o:
+	@CC@ -c @CFLAGS@ @INCLUDES@ $<
+.f.o:
+	@F77@ -c @F77FLAGS@ $<
+
+default: @MOTIF@ gli gligksm @DPS@ cgmview @SHLIBS@ @GLIRPCD@
+	@true
+
+motif: sight.uid aeliter.uid deliter.uid image.uid cgmview.uid
+	@true
+
+gli: gli.o \
+     libgli.a libsight.a libimage.a libgus.a libcrtl.a libfrtl.a libgks.a
+	@SEGLD@ -o gli gli.o \
+	libgli.a libsight.a libimage.a libgus.a libcrtl.a libfrtl.a \
+	@GRLIBS@ libgks.a \
+	@LDFLAGS@ @ZLIBS@ @TCLLIBS@ @XMLIBS@ @XLIBS@ @F77LIBS@ @LIBS@
+
+gli5: gli.o \
+     libgli.a libsight.a libimage.a libgus.a libcrtl.a libfrtl.a
+	@SEGLD@ -o gli5 gli.o \
+	libgli.a libsight.a libimage.a libgus.a libcrtl.a libfrtl.a \
+	@GRLIBS@ -L/usr/local/gr/lib -lGKS -Wl,-rpath /usr/local/gr/lib \
+	@LDFLAGS@ @ZLIBS@ @TCLLIBS@ @XMLIBS@ @XLIBS@ @F77LIBS@ @LIBS@
+
+gligksm: gligksm.o libcrtl.a libgks.a
+	@SEGLD@ -o gligksm gligksm.o libcrtl.a libgks.a \
+	@LDFLAGS@ @ZLIBS@ @XLIBS@ @F77LIBS@ @LIBS@
+
+glidecgks: gli.o \
+     libgli.a libsight.a libimage.a libgus.a libcrtl.a libfrtl.a
+	@SEGLD@ -o glidecgks gli.o \
+	libgli.a libsight.a libimage.a libgus.a libcrtl.a libfrtl.a \
+	@GRLIBS@ -lGKSforbnd -lGKS \
+	@TCLLIBS@ @XMLIBS@ @XLIBS@ -lcda -ldnet_stub -llmf \
+	@F77LIBS@ @LIBS@ 
+
+psprint: psprint.o compress.o
+	@CC@ -o psprint psprint.o compress.o \
+	@LDFLAGS@ @DPSLIBS@ @XLIBS@ @LIBS@
+
+libgli.a: $(GLIOBJS)
+	$(AR) crv $@ $?
+	@RANLIB@ $@
+
+libsight.a: $(SIGHTOBJS)
+	$(AR) crv $@ $?
+	@RANLIB@ $@
+
+libimage.a: $(IMAGEOBJS)
+	$(AR) crv $@ $?
+	@RANLIB@ $@
+
+libgus.a: $(GUSOBJS)
+	$(AR) crv $@ $?
+	@RANLIB@ $@
+
+libgus.so: $(GUSOBJS)
+	@LD@ -o $@ @SOFLAGS@ $(GUSOBJS) \
+	-L./ -lcrtl -lfrtl -lgks \
+	@LDFLAGS@ @TCLLIBS@ @XLIBS@ @F77LIBS@ @LIBS@
+
+libgks.a: $(GKSOBJS)
+	$(AR) crv $@ $?
+	@RANLIB@ $@
+libgks.so: $(GKSOBJS)
+	@LD@ -o $@ @SOFLAGS@ $(GKSOBJS) \
+	@LDFLAGS@ @ZLIBS@ @XLIBS@ @F77LIBS@ @LIBS@
+
+libcrtl.a: $(CRTLOBJS)
+	$(AR) crv $@ $?
+	@RANLIB@ $@
+libcrtl.so: $(CRTLOBJS)
+	@LD@ -o $@ @SOFLAGS@ $(CRTLOBJS) \
+	@LDFLAGS@ @TCLLIBS@ @XLIBS@ @LIBS@
+
+libfrtl.a: $(FRTLOBJS)
+	$(AR) crv $@ $?
+	@RANLIB@ $@
+
+gridit.o: gridit.f
+	@F77@ -c $<
+
+cgmview.o: cgmview.c
+	@CC@ -c @CFLAGS@ $< @INCLUDES@
+
+cgmview: cgmview.o \
+	libgli.a libsight.a libgus.a libcrtl.a libfrtl.a libgks.a
+	@SEGLD@ -o cgmview cgmview.o \
+	libgli.a libsight.a libimage.a libgus.a libcrtl.a libfrtl.a libgks.a \
+	@LDFLAGS@ @ZLIBS@ @XMLIBS@ @XLIBS@ @F77LIBS@ @LIBS@
+
+glirpcd: glirpcd.o libgli.a libcrtl.a
+	@CC@ -o glirpcd glirpcd.o libgli.a libcrtl.a \
+	@LDFLAGS@ @LIBS@
+
+install: default dist
+	@true
+
+dist:
+	@if [ -d $(DESTDIR) ]; then \
+	echo "Directory $(DESTDIR) already exists"; \
+	else $(MKDIR) $(DESTDIR); $(CHMOD) 755 $(DESTDIR); fi 
+	@if [ -d $(DESTDIR)/demo ]; then \
+	echo "Directory $(DESTDIR)/demo already exists"; \
+	else $(MKDIR) $(DESTDIR)/demo; $(CHMOD) 755 $(DESTDIR)/demo; fi
+	@if [ -d $(DESTDIR)/demo/images ]; then \
+	echo "Directory $(DESTDIR)/demo/images already exists"; \
+	else $(MKDIR) $(DESTDIR)/demo/images; \
+	$(CHMOD) 755 $(DESTDIR)/demo/images; fi
+	@if [ -d $(DESTDIR)/tcl ]; then \
+	echo "Directory $(DESTDIR)/tcl already exists"; \
+	else $(MKDIR) $(DESTDIR)/tcl; $(CHMOD) 755 $(DESTDIR)/tcl; fi
+	@if [ -f sight.uid ]; then \
+	echo "Installing GLI Motif user interfaces"; @CP@ *.uid $(DESTDIR); \
+	else true; fi
+	@echo "Installing GLI executables"
+	@@INSTALL@ gli $(DESTDIR)
+	@@INSTALL@ gligksm $(DESTDIR)
+	@@CP@ gli.o $(DESTDIR)
+	@if [ -f psprint ]; then \
+	@INSTALL@ psprint $(DESTDIR); \
+	else true; fi
+	@@CP@ *.sh *.csh *.ksh $(DESTDIR)
+	@@INSTALL@ cgmview $(DESTDIR)
+	@@CP@ cgmview.o $(DESTDIR)
+	@if [ -f glirpcd ]; then \
+	@INSTALL@ glirpcd $(DESTDIR); \
+	@CP@ glirpcd.c $(DESTDIR); \
+	else true; fi
+	@echo "Installing GLI archive files"
+	@@CP@ lib*.a* $(DESTDIR)
+	@if [ -f libgks.so ]; then \
+	echo "Installing GLI shared object libraries"; \
+	@CP@ lib*.so $(DESTDIR); \
+	else true; fi
+	@echo "Installing GLI environment files"
+	@@CP@ Readme $(DESTDIR)
+	@@CP@ *.gli $(DESTDIR)
+	@@CP@ *.fdv $(DESTDIR)
+	@@CP@ *.h $(DESTDIR)
+	@@CP@ *.i $(DESTDIR)
+	@echo "Installing GLI help file"
+	@@CP@ gli.hlp $(DESTDIR)
+	@if [ -d ../font ]; then \
+	echo "Installing GLI Hershey fonts"; \
+	@CP@ ../font/gksfont.dat $(DESTDIR); \
+	else true; fi
+	@if [ -d ../demo ]; then \
+	echo "Installing GLI example scripts"; \
+	@CP@ ../demo/*.* $(DESTDIR)/demo; \
+	@CP@ ../demo/images/*.* $(DESTDIR)/demo/images; \
+	else true; fi
+	@if [ -d ../tcl ]; then \
+	echo "Installing Tcl/Tk environment files"; \
+	@CP@ -p -r ../tcl $(DESTDIR); else true; fi
+
+clean:
+	$(RM) -f gli gligksm glidecgks psprint cgmview glirpcd \
+	so_locations
+	$(RM) -f *.exe
+	$(RM) -f *.o
+	$(RM) -f lib*.a* lib*.so
+	$(RM) -f *.uid
+	$(RM) -f *.bak *.jou *.sav *.log
+
+distclean: clean
+	$(RM) -f Makefile config.status config.cache config.log
+	$(CP) -p Makefile.std Makefile
+

@@ -1,0 +1,513 @@
+
+May 3,1991, gli.c - changed READ command
+May 3,1991, makefile - added `dec' target
+May 3,1991, sight.c - modified symbol handling
+May 6,1991, glisetup - added `GLI_LANG' environment variable
+May 6,1991, ../demo/demo7.dat - added space characters
+May 6,1991, glistartup.gli - changed default marker type to `asterisk'
+May 6,1991, gksdx11.c (text_routine) - removed reassignment of `nchars'
+May 6,1991, glisimple.c - choice list now printed after clearing workstation
+May 7,1991, gksunixio.c (bufin) - allow i/o processing for default conid
+May 7,1991, gksdvt3xx.f (gk3gin) - completely changed input buffer decoding
+May 7,1991, gksdx11.c - added font aliases
+May 7,1991, terminal.c (get_char) - allow <esc>1..4 to be recognized as PF1..4
+May 8,1991, gksdx11.c - removed call to XUnmapWindow for sun
+May 8,1991, glixui.c - removed call to XUnmapWindow for sun
+May 8,1991, *.h - removed unnecessary function prototype definitions
+May 9,1991, gksdvt3xx.f - changed color mapping
+May 9,1991, gli.c - added GRAFkit interface
+May 9,1991, gligrafkit.c - new
+May 9,1991, makefile - added `mipsGK' target (GRAFkit)
+May 9,1991, function.c - fixed a bug in the logical expression evaluation
+May 9,1991, gksdps.f - added special FrameMaker include format (WSTYPE 63,64)
+May 10,1991, gli.c - added PRINT command
+May 10,1991, gksdx11.c (get_string) - improved string input routine
+May 10,1991, symbol.c (str_getenv) - allowed data items in symbol expressions
+May 10,1991, gli.c - allowed string recognition in WRITE/PRINT commands
+May 10,1991, command.c (data_descriptor) - deferred capitalization of data item
+May 10,1991, gksforbnd.f,gks.h - added routines GQASF,GQWKCA (for GRAFkit)
+May 10,1991, system.c - added routine `s_abort' (Ultrix only)
+May 12,1991, glixui.c - fixed keyboard problems on sun
+May 12,1991, gligrafkit.c - added GRAFkit routines CONRAN,STRMLN,VELVCT
+May 13,1991, gliimport.c - removed `dummy' keyword
+May 13,1991, makefile - changed directory structure
+May 13,1991, gksforbnd.f,gksroot.f,gksdps.f - removed float.i include statement
+May 14,1991, gksroot.f - added `IAND' intrinsic function (for AIX)
+May 14,1991, gksdps.f,gkshpgl.f - changed the maximum character length to 500
+May 14,1991, gks*.f - removed old-fashioned array declarations (for AIX)
+May 14,1991, gli.c,glixui.c - added `xui_close' routine
+May 14,1991, gusautoplot.fdv - replaced by `autoplot.fdv' (for UniCOS)
+May 14,1991, glisetup.env - changed `gusautoplot.fdv' to `autoplot.fdv'
+May 14,1991, gligus.c - added GUS AUTOSCALE_3D command, enhanced 3D axes command
+May 14,1991, gus.c (gus_axes_3d) - changed GKS text precision to GSTRKP
+May 15,1991, variable.c - added `var_examine_entry' routine
+May 15,1991, function.c - allow array indexing
+May 16,1991, function.*,variable.c - added statistical routines (min,max,mean)
+May 16,1991, gli.c - display file name and line number with error message
+May 16,1991, math.c - added `mth_rand' function (normally distributed deviates)
+May 16,1991, gksdx11.c,glixui.c - established local X error handler
+May 17,1991, makefile - changed makefile to work on HP's 700 Series
+May 17,1991, gksdx11.c - changed event_mask to avoid queueing of button events
+May 17,1991, gligks.c - allowed up to 16 simultaneously open workstations
+May 18,1991, gli.c - added traceback for errors in nested command procedures
+
+*** GLI V4.0 freeze date ***
+
+May 20,1991, make.com,descrip.mms - changed for VMS compatibility
+May 21,1991, gli.c (read_command) - changed %g format to %e (in scanf)
+May 21,1991, gligks.c - removed escape function for color/intensity system
+May 21,1991, demo1.gli,xdemo1.gli - removed `gks escape color' command
+May 21,1991, formdrv.c - added `align' macro
+May 21,1991, gksd*.f - changed array declarations
+May 23,1991, gli.c - changed output format (for WRITE and PRINT commands)
+May 24,1991, command.c (cli_read_data) - check for `var__eos' in functions
+May 24,1991, gli.c (define_variable) - fixed problem with segmented variables
+May 24,1991, variable.c,function.* - added statistical routines (total,size)
+May 27,1991, gli.c - changed DEFINE VARIABLE command
+May 27,1991, variable.c - added `var_redefine' and `var_truncate' routines
+May 28,1991, sight.c,sight.h,sightdevice.c,glisight.c - Sight V1.1 update
+May 29,1991, glisetup.com - added `glidecgks' command symbol
+May 29,1991, descrip.mms - added `glidecgks' target
+May 29,1991, gus.c,gligus.c - added `gus_set_colormap' routine
+May 31,1991, gus.c - allow axis labeling at axis limts
+May 31,1991, gligus.c,glisight.c - improved `plot' commands
+May 31,1991, string.c (str_integer) - allow bin/oct/hex notation
+Jun 3,1991, gustext.c - changed `stat' variable name to `ret_stat'
+Jun 3,1991, glixui.c - clear window before handling expose events
+Jun 11,1991, gks - added workstation type 7 (CGM)
+Jun 12,1991, gligkgks.f - new
+Jun 14,1991, gksdx11.c,gksdps.f - added support for pattern fill style
+Jun 24,1991, gli.c - improved read command
+Jun 24,1991, function.c - fixed a problem with the random generators
+Jun 26,1991, gksdx11.c - improved cell array command
+Jun 26,1991, sight.c,sight.h,sightdevice.c,glisight.c - Sight V1.2 update
+Jun 27,1991, gksdx11.c - improved `set color representation' function
+Jun 28,1991, makefile - added `sgi' target (Silicon Graphics Iris)
+Jun 28,1991, glisecure.c - changed `mips' symbol to `MIPSEL'
+Jun 28,1991, glixui.c - improved load/query of menu font
+Jul 5,1991, gksdx11.c - allow setting the color representation for b/w displays
+Jul 5,1991, gksdcgm.c - new (GKS CGM logical device driver)
+Jul 8,1991, gligks.c - added GKS INQ GKS_STATE command
+Jul 15,1991, gli.c - established an exception handler (VMS)
+Jul 17,1991, command.c - established a Ctrl/C handler (Unix)
+Jul 18,1991, gksdps.c - added cell array function
+Jul 22,1991, gksdx11.c - added text recall (up arrow) for string input
+Jul 23,1991, variable.c (var_examine) - added `var__constant' return code
+Jul 23,1991, glixui.c - added xrdb inquiries for color resources
+Jul 29,1991, gksdx11.c (cell_array) - added Floyd-Steinberg dithering routines
+Aug 2,1991, gusautoplot.c - fixed a bug in a call to `gus_spline'
+Aug 2,1991, gli.c,glicgm.c - added CGM viewer
+Aug 7,1991, gli.c,gridit.f - added GRIDIT command
+Aug 7,1991, cgmview.c - new (OSF/Motif based viewer for CGM's)
+Aug 8,1991, gus.c,gligus.c - added `gus_show_colormap' routine
+Aug 9,1991, gus.c - added `_BBCCI' and `_BBSSI' builtins for VAX C
+Aug 13,1991, gksdvt3xx.f - improved polygon fill operations
+Aug 14,1991, gksdps.f - changed default viewport size to 7.5x7.5 inch
+Aug 15,1991, gksdx11.c,icon.bm - added bitmap icon
+Aug 16,1991, terminal.c - fixed a bug in the command recall
+Aug 16,1991, gli.c,command.c - allow input redirection (cli_open_pipe)
+Aug 16,1991, gli.c - added `parse_args' routine
+Sep 11,1991, sight.c,sightmain.c - added `SightDefineX' routine
+Sep 16,1991, gusplot10.c - improved parsing of Tek coordinates
+Sep 20,1991, gksdx11.c - added call to `XtRemoveEventHandler' routine
+Sep 20,1991, relink.com - new (VMS)
+Sep 25,1991, glisetup.com - corrected `GLI_MENU' logical name
+Sep 25,1991, gks*io.* - allow GKS font file open failures
+Sep 26,1991, gustext.c - added `vartheta' and `varphi' greek symbols
+Oct 2,1991, gli.c - improved main command loop
+Oct 4,1991, gksdps.f - added 8-Bit character support (ISO Latin 1 encoding)
+Oct 7,1991, formdrv.c - allow 8-Bit character input
+Oct 10,1991, gksdx11.c - don't unmap window when closing a widget connection
+Oct 10,1991, math.c - fixed a bug in the `mth_histogram' routine
+Oct 10,1991, gli.c - improved read command (ignore space characters)
+Oct 10,1991, sightdevice.c (_SightSaveGC) - have regard to GKS text precision
+Oct 11,1991, makefile - changed if-statements for VAX/Ultrix compatibility
+
+*** GLI V4.1 freeze date ***
+
+Oct 14,1991, des.f - added check for negative ICHAR function results
+Oct 15,1991, makefile - changed `hpux' target
+Oct 15,1991, gksdx11.c - improved error message for `XOpenDisplay' failures
+Oct 15,1991, sight.uil - added accelerators for some select operations
+Oct 15,1991, gksdx11.c - search closest color for unallocated pixels
+Oct 16,1991, gli.c (read_command) - allow reading of float numbers in D format
+Oct 16,1991, gksdx11.c,glixui.c - changed font names (for DEC VT1300)
+Oct 16,1991, gus.c,gligus.c - added `gus_bar_graph' routine
+Oct 16,1991, *sight*.* - added `BarGraph' object
+Oct 17,1991, sight.*,system.c - added more detailed error messages
+Oct 21,1991, sight.uil - added scrolled window widget
+Oct 25,1991, gksdx11.c - allocate colors depending on the screen's depth
+Oct 28,1991, gustext.c - added 8-Bit character support
+Oct 30,1991, command.c - corrected parsing of (") and (') characters
+Oct 31,1991, gus.c,gksdx11.c - added function descriptors for HP's 800 series
+Oct 31,1991, formdrv.c - replaced `#elif' directive
+Nov 8,1991, gli.c,gridit.f - added `nxy' and `nyi' parameters
+Nov 15,1991, gksdvt3xx.f,gksdtek42xx.f - changed color mapping
+Nov 15,1991, gks*io.*,*io.* - obsolete
+Nov 18,1991, gksio.c,gksforio.f - new GKS input/output modules
+Nov 19,1991, gksroot.f - improved polygon clipping
+Nov 19,1991, gksdx11.c - added call to `XSetClipRectangles' routine
+Nov 29,1991, gksdps.f - set clipping path during cell array operations
+Nov 29,1991, gligks.c - changed default `log_devnam' table entry to `GLI_CONID'
+Nov 29,1991, gksdps.f - be sure that the scalefont operand is nonzero
+Dec 5,1991, gligks.c - added GKS CELL_ARRAY command
+Dec 5,1991, command.h,system.c - added `cli__nospace' status code
+Dec 6,1991, gli.c - added SET [NO]TRACE command
+Dec 6,1991, descrip.mms - added `cgmview.exe' target
+Dec 11,1991, gus.c,gus.h,gligus.c - added new colormaps
+Dec 12,1991, gksdx11.c (set_color_rep) - added a call to `XFreeColors'
+Dec 12,1991, library.c,gksio.c - moved `LIBSIG' routine to `gksio.c'
+Dec 12,1991, gksforbnd.f - added dummy enties for segment functions
+Jan 3,1992, gligrafkit.c - changed `scale' parameters to -1
+Jan 3,1992, gustext.c - be sure that the GKS state is either `WSAC' or `SGOP'
+Jan 14,1992, math.h - corrected `mth_rand' prototype definition
+Jan 21,1992, gusautoplot.c - respect GKS attribute settings
+Jan 22,1992, gus.c - normalize input arrays for cubic spline interpolation
+Jan 22,1992, *sight*.* - allow metric snap grid specifications
+Jan 27,1992, system.c - added code for BSD machines
+Jan 27,1992, *.uil - limited filenames to 14 characters
+Jan 27,1992, gksdx11.c - added `SunServer' flag for window (un)map operations
+Jan 27,1992, system.c - added `putenv' routine (apollo)
+Jan 27,1992, makefile, gli.c - added `apollo' and `alliant' targets
+Jan 27,1992, gliimport.c - allocate data buffer using `malloc'
+Jan 27,1992, terminal.c - replaced cursor save/restore escape sequences
+Jan 27,1992, glicgm.c,gligks.c,gusplot10.c,gustext.c - modified `GTXS' calls
+Jan 30,1992, gligks.c - added GCRSG, GCLSG and GCSGWK segment functions
+Feb 4,1992, gksdwiss.f - new (GKS WISS logical device driver)
+Feb 6,1992, *gks*.*,*sight*.*,*.uil - added GTS-GRAL GKS marker types
+Feb 14,1992, gligks.c,sightdevice.c - changed file mode to 0644
+Feb 15,1992, glixui.c,command.c - allow MB3 to work as a pulldown button
+Feb 15,1992, gksdps.f - changed bounding box for FrameMaker output
+Feb 18,1992, math.c - take care of input args in `mth_ran' function
+Feb 19,1992, cgmview.c - new command line version for systems without OSF/Motif
+Feb 20,1992, gksdps.f - allow creation of multiple page PostScript files
+Feb 26,1992, gksdwiss.f - use dynamic storage for WISS I/O buffers
+Feb 26,1992, gkswiss.c - new (handles dynamic buffer storage)
+Feb 27,1992, gksdwiss.f - remove trailing blanks for GKS text output primitive
+
+*** GLI V4.2 freeze date ***
+
+Mar 4,1992, gksdcgm.c - fixed a bug in the binary CGM part (cell array)
+Mar 4,1992, gksdx11.c - added support for 4-plane color or grayscale devices
+Mar 9,1992, gus.c - fixed a problem in the hidden-line removal
+Mar 11,1992, cgmview.* -  CGMview V1.2 update
+Mar 12,1992, descrip.mms,relink.com,install.com - modified for VMS V5.5
+Mar 12,1992, gliimport.c - corrected references to the data buffer
+Mar 16,1992, math.c - added `mth_b_spline' routine
+Mar 17,1992, gligus.c - use X and Y values as an index into the Z array
+Mar 18,1992, glicgm.c - allow display resolution ratios <> 1 (Ultrix 4.2A)
+Mar 18,1992, gus.c - fixed a bug in the `gus surface' cell array part
+Mar 19,1992, gksd*.f,glicgm.c - made some miscellaneous changes for AIX
+Mar 19,1992, glisetup.ksh - new (setup template for ksh)
+Mar 23,1992, command.c - fixed a bug in the `gli_item' routine
+Mar 23,1992, *.c - changed routine order for compatibility with ANSI C
+Mar 24,1992, gligks.c - added `GKS UPDATE_WS' command
+Mar 24,1992, gksdx11.c - handle expose events during GKS update
+Mar 25,1992, gli.c - added `SET [NO]UPDATE' command
+Mar 25,1992, gligks.c - added asynchronous GKS update procedure
+Mar 25,1992, gksdx11.c - changed window and icon name
+
+*** GLI V4.2A freeze date ***
+
+Mar 26,1992, gligus.c,gus.c - added `flame' colormap
+Mar 31,1992, system.c - don't call `ioctl' routine for printable characters 
+Mar 31,1992, cgmview.c - added `-big' option
+Mar 31,1992, gksroot.f,gustext.c - changed nominal character expansion factor
+Apr 1,1992, system.c - check character count after `read' system call
+Apr 3,1992, makefile - added `-no' CFLAGS option
+Apr 3,1992, gligks.c - immediately re-install SIGALRM signal handler
+Apr 6,1992, gksdx11.c - added more fill patterns
+Apr 8,1992, gus.c - allow B-spline curves for unsorted domain values
+Apr 9,1992, variable.* - improved internal data storage
+Apr 9,1992, system.c - reset terminal characteristics after escape sequences
+Apr 16,1992, math.c - use `qsort' (quicker sort) subroutine from C library
+Apr 16,1992, terminal.c - allow recognition of IRIX function keys
+Apr 16,1992, gli.c - changed `exit' status codes
+Apr 16,1992, sightmain.c - remove all event handlers on exit
+Apr 21,1992, command.c - avoided usage of `strncat' routine
+Apr 21,1992, string.c - optimized `str_match' routine
+Apr 23,1992, sightmain.c - implemented HELP push button
+Apr 23,1992, dxm/* - added `glidxmhelp' application
+Apr 27,1992, gligks.c - allow numeric values for GKS connection identifiers
+Apr 29,1992, *.uil,makefile - changed for compatibility with OSF/Motif v.1.0
+May 4,1992, gli.c - exit program if it fails to (re)open the journal file
+May 4,1992, sightmain.c - don't initialize the Motif environment (Xt, Mrm) twice
+May 7,1992, glisight.c,sight.uil - added 4pt marker size
+May 7,1992, gksduis.c - new (GKS UIS logical device driver)
+May 14,1992, variable.c - fixed a bug in the `var_redefine' routine
+May 15,1992, gli.c - increased maximum record size to 800 bytes
+May 29,1992, gligks.c - fixed a bug in the `GKS CLOSE_WS' command
+May 29,1992, makefile - added `$(LDFLAGS)' to all `$(SEGLD)' commands
+Jun 1,1992, gli.c - fixed blank line problem in the `PRINT' and `WRITE' commands
+Jun 1,1992, sightdevice.c - changed GKS viewport to fit into drawing area widget
+Jun 2,1992, terminal.c,formdrv.c - allow backspace erase character (Unix only)
+
+*** GLI V4.2B freeze date ***
+
+Jun 5,1992, makefile - added `mips-gcc' target
+Jun 5,1992, gustext.c - changed for GNU C compatibility
+Jun 10,1992, glicgm.c - slightly enlarged the clipping rectangle
+Jun 11,1992, gli.c - added `-display' option
+Jun 12,1992, *.c - print error messages using `fprintf' function
+Jun 12,1992, gli.c - call `shut_down' procedure before exiting batch mode
+Jun 12,1992, glicgm.c - set `GLI_GKS' environment according to CGM description
+Jun 24,1992, gli.c - improved read command 
+Jun 25,1992, gksdx11.c - changed icon depth to 1 (for mwm)
+Jun 30,1992, des.f - changed `STRDES' procedure
+Jun 30,1992, glisimple.c - improved command input/output
+Jul 3,1992, gus.c,gligus.c - added pie chart routine
+Jul 6,1992, gli.c - declare signal/exit handler routines
+Jul 6,1992, gus.c - don't draw tick marks if there are more than 40 error bars
+Jul 21,1992, gksdps.f - added `end % GLI_GKS_dict' command for DECwrite
+Jul 23,1992, gus.c - added code for drawing light shaded surfaces
+Aug 6,1992, gus.c - optimized hidden-line removal
+Aug 7,1992, gli.c - catch SIGPIPE signal; emergency close GKS in exit handler
+Aug 13,1992, gksdx11.c - use stroke fonts for unavailable font pitches
+Aug 14,1992, gksforbnd.f (GQTXX) - added `PS' (PostScript open) flag
+Aug 18,1992, gli.c - added RPC command
+Aug 26,1992, gksdx11.c - added frame buffer support (WSTYPE 213)
+Aug 27,1992, gksdps.f - allow colored marker symbols
+Aug 28,1992, *image*.* - GLI Image (Beta Version)
+Aug 31,1992, makefile - changed `dgux' target
+Aug 31,1992, gus.c - create local copies for strings passed to GKS (AViiON)
+Aug 31,1992, glixui.c - fixed a bug in the `xui_get_text' routine
+Sep 2,1992, gli.c - added SLEEP command
+Sep 3,1992, gli.c - allow recognition of `RPC_MESSAGE' information
+Sep 4,1992, glicgm.c - only use transformation number 1 (WC)
+Sep 4,1992, gksdcgm.c - use binary as the default CGM format
+Sep 5,1992, gksdx11.c - try to allocate r/w color cells, if possible
+Sep 7,1992, gksd*.c,gus.c,imagedevice.c - reduced number of colors to 72
+Sep 8,1992, gligks.c - enhanced the GKS SET COLOR command
+Sep 16,1992, gli.c - added `-trace' program argument
+Sep 16,1992, glisimple.c - corrected `FFT' and `Inverse FFT' functions
+Sep 16,1992, *image*.c - GLI Image V1.0
+Sep 16,1992, makefile - changed for SGI
+Sep 29,1992, gus.c - fixed a bug in the `gus___hide' routine
+Sep 31,1992, gksdtek401x.f - added code for LN03 PLUS TEKtronix emulation
+Oct 9,1992, *image*.c - fixed memory allocation problem
+Oct 27,1992, gksdps.f - solved `limitcheck' problem for large polyline requests
+
+*** GLI V4.3 freeze date ***
+
+Nov 16,1992, gksdx11.c - added PCM image dump (WSTYPE 211)
+Nov 20,1992, imageutil.c (img_read) - allow multiple images in a single file
+Nov 26,1992, gksdx11.c - changed `event_mask' handling for widgets
+Nov 26,1992, *.c - changed default path (`/usr/gli') to `/usr/local/gli'
+Nov 27,1992, gli.c - allow SIGHT/IMAGE commands in non-interactive mode
+Nov 27,1992, gksio.c - delayed printing of error messages
+Nov 27,1992, gksdx11.c (line_routine) - added software clipping
+Nov 27,1992, gksdps.f - added support for pattern fill style
+Dec 4,1992, gksio.c - improved GKS I/O error handling
+Jan 21,1993, gksdx11.c (fill_routine) - fixed a fill area problem on Sun
+Feb 8,1993, gksdps.f - fixed `color' problem for polymarker output primitive
+Feb 16,1993, gksdx11.c - added compose key handling
+Feb 24,1993, math.c - corrected `mth_erf' function
+Feb 24,1993, gksdx11.c - fixed dual-screen problem
+Mar 4,1993, gksdps.f (GKPSMA) - added marker symbol rotation
+Mar 5,1993, gksdx11.c - added `GLI_GKS_RGB' environment variable (r/o colors)
+May 5,1993, gks*.* - added basic segment functions
+May 6,1993, gus.c,gligus.c - added `primitive' option to `GUS CURVE' command
+May 28,1993, gksforbnd.f - changed GKS error handling
+
+*** GLI V4.4 freeze date ***
+
+Jun 19,1993, gksio.c (BUFOUT) - use `getname' instead of `fstat' (VMS only)
+Jun 23,1993, system.c - fixed help key problem
+Jul 8,1993, gksdx11.c - corrected `line_routine' function
+Jul 23,1993, gli - added GR/GR3 interface
+Jul 23, 1993, gligrsoft - new
+Jul 23, 1993, gligrafkit.c - obsolete
+Jul 29, 1993, gksio.c - fixed VMS `getenv' problem
+Jul 29, 1993, gksforbnd.f - corrected `GCA' (GKS cell array) function
+Aug 2, 1993, gksdtek401x.f - added TAB 132/15-G support (WSTYPE 201)
+Aug 11, 1993, gksdps.f - fixed `dictstackoverflow' problem
+Aug 12, 1993, gksdps.f - added `%%Page:' comments
+Aug 12, 1993, gligks.c, gksdx11.c, gksdps.f - allow up to 980 colors
+Aug 23, 1993, gksdx11.c, gksdcgm.c - allow 64-Bit pointers (DEC Alpha)
+Aug 31, 1993, gksdcgm.c - set VDC extent according to GKS workstation window
+Aug 31, 1993, gksd*.* - prepared drivers for outline fonts
+Aug 31, 1993, gksroot.f - added italic and mono spaced fonts (stroke precision)
+Aug 31, 1993, gksdcgm.c - added segment transformation
+Sep 2, 1993, gksdps.f, gksdx11.c - changed linejoin-style to `round'
+Sep 7, 1993, gksroot.f, gksio.c - added font -51 (fillfont)
+Sep 7, 1993, gksdcgm.c - normalize char-up vector (to avoid roundoff errors)
+Sep 8, 1993, cgmview.c - improved command interface
+Sep 9, 1993, *sight*.c - added `VIEW ORIENTATION' menu
+Sep 16, 1993, glisetup.com, descrip.mms - established FORTRAN V5.x compatibility
+Sep 16, 1993, gksdps.f - clip against workstation window
+Sep 16, 1993, *sight*.* - added `SightSimpleText' routine
+Sep 16, 1993, glicgm.c - allow stroke precision fonts
+Sep 17, 1993, gksforbnd.f - corrected GDDM hatch styles
+Sep 17, 1993, sight.c - improved `SightSetOrientation' routine
+Sep 21, 1993, gksdcgm.c - corrected `CSpace' command
+Oct 6, 1993, gksforio.f - use formatted write statement
+Oct 8, 1993, gksdx11.c - added Sun rle rasterfile dump (WSTYPE 214)
+Oct 18, 1993, gksroot.f - fixed character up vector problem
+Oct 25, 1993, gksdps.f - added `GLI_GKS_MAGSTEP' environment variable
+Nov 12, 1993, gksdhpgl.f, gksdtek401x.f - fixed fill font problem 
+Nov 12, 1993, gksdx11.c - allow `ConfigureNotify' events during input mode
+Nov 18, 1993, *.c - reduced number of GLI environment variables
+Nov 18, 1993, sight.c - added `SightAutoSave' routine
+Nov 24, 1993, glicbnd.c - new
+Nov 24, 1993, gks.h,gksdefs.h - modified
+Nov 25, 1993, gligks.c,gusplot10.c,cgmview.c - changed GKS error file to 0
+Dec 16, 1993, gks*.* - truncated file names for MS-DOS
+Dec 21, 1993, gksdcgm.c - deferred CGM header output
+Dec 21, 1993, gksdx11.c, gksdps.f, gksdcgm.c - improved GKS cell array function
+Dec 21, 1993, gksforio.f - check record length
+Jan 25, 1994, gli.c - added PIPE command
+Jan 25, 1994, gus.c - removed `error_tick_thresh' criterion
+Jan 26, 1994, gksio.c - fixed GIN problem
+Jan 27, 1994, gksroot.f (GQTEXT) - fixed concatenation point problem
+Feb 28, 1994, sightdevice.c - changed viewports for portrait/landscape format
+Mar 4, 1994, gksddos.f - added crosshair cursor (MS-DOS version)
+Mar 10, 1994, gksdps.f - increased translation for Color PostScript by 1/24 inch
+Mar 10, 1994, gksio.f - corrected default `magstep' value (0.0)
+Mar 10, 1994, gksdps.f - increased clip rectangle to avoid roundoff problems
+Mar 11, 1994, gus.c - increased resolution for hidden-line removal
+Mar 11, 1994, gksio.c - correctly map GTS-GRAL GKS greek letters
+Mar 11, 1994, gus.c (gus_surface) - fixed `malloc' problem
+Mar 14, 1994, gksroot.f - corrected `GQTEXT' function
+Mar 21, 1994, glicgm.c - improved page handling
+Mar 22, 1994, gks.f - added DEC GKS hardware fonts
+Mar 22, 1994, descrip.mms - added `gks.olb' target (VMS sharable image library)
+Mar 23, 1994, gksdx11.c - added `GLI_GKS_BS' environment (disable backing store)
+Mar 23, 1994, gksio.c - implemented buffer cache
+Mar 25, 1994, gksdx11.c - fixed `ConfigureNotify' problem
+Mar 30, 1994, descrip.mms, glisetup.com - added GR shareable image support
+Mar 31, 1994, gksdx11.c - added `free_tile_patterns' routine
+Apr 5, 1994, gks.f - improved attribute functions
+Apr 5, 1994, gksio.f - implemented buffer cache
+Apr 29, 1994, gksdx11.c - added `FillStippled' fill style
+May 3, 1994, gks.f - changed `GESC' function (escape)
+Jun 3, 1994, Makefile - added `libgks.so' target
+Jun 17, 1994, gli.c - fixed FPE problem in GRIDIT command
+Jun 17, 1994, gli.c - improved READ command (FORTRAN formatted files)
+Jun 22, 1994, gli.c - added SET TCL command
+Jul 20, 1994, gksdcgm.c - null the output buffer
+Jul 21, 1994, gksdx11.c,gksdcgm.c - fixed memory leak problems
+Aug 16, 1994, gus.c - fixed FPE problem
+Aug 16, 1994, gustext.c - fixed hardware font problem
+Aug 16, 1994, gksdps.f - fixed stroke problem
+Aug 17, 1994, gus.c - corrected `gus___hide' routine
+Aug 25, 1994, system.c - added GNU malloc routines for DEC Alpha
+Sep 15, 1994, gksdx11.c - added support for 100dpi fonts
+Sep 16, 1994, sight*.c - check `GLI_GKS_DPI' environment variable
+Sep 16, 1994, terminal.c - added support for IBM function keys (F1-F12)
+Sep 19, 1994, sightmain.c, imagemain.c, glixui.c - added fallback resources
+Sep 19, 1994, gksdps.f - improved markers
+Sep 20, 1994, terminal.c - changed default input mode to insert
+Oct 5, 1994, gks.f - initialized STATE variable
+Oct 19, 1994, gli.c - improved performance of READ command
+Oct 25, 1994, gli.c - added `strtof' function
+Oct 31, 1994, sightdevice.c - fixed page orientation problem for EPS output
+Nov 3, 1994, compress.c - new
+Nov 3, 1994, gksdx11.c - added GIF output
+Nov 17, 1994, gks*.c,gks/Makefile - changed for Solaris 2.3 (SVR4)
+Nov 17, 1994, gksdps.f - optimized output stream
+Nov 21, 1994, cgmview.c,*main.c - misc. changes for Irix
+Dec 12, 1994, system.c - fixed problem with network terminal I/O
+Dec 13, 1994, math.h - renamed to mathlib.h
+Dec 13, 1994, string.h - renamed to strlib.h
+Dec 13, 1994, system.c,gksio.c,terminal.c - replaced `BSD' flag by `NO_TERMIO'
+Mar 6, 1995, gksdpbm.f - new (GKS PBM device driver)
+Mar 8, 1995, gkserror.f - fixed a bug in routine `GERLOG'
+Mar 17, 1995, gksdpbm.f - added new workstation type (103) for 72 dpi output
+Mar 17, 1995, gksdx11.c - added `GLI_GKS_DARK_BG' environment variable
+Mar 22, 1995, *image*.c - added FFT routines
+Apr 13, 1995, gksmisc.f,gksdx11.c,gksdps.f,gksio.c - added 16-Bit patterns
+May 5, 1995, gustext.c - corrected character code for greek Psi
+Jun 8, 1995, gli.c - renamed VIEW command to IMPORT, improved TEK filter
+Jun 8, 1995, gliimage.c - obsolete
+Jul 10, 1995, gksdx11.c - enable backing store for pre-existing drawables
+Jul 11, 1995, gksdx11.c - added `GLI_GKS_DOUBLE_BUF' environment variable
+Aug 31, 1995, gli.c,command.c - added full Tcl/Tk support
+
+*** GLI V4.5 freeze date ***
+
+Sep 4, 1995, gus.c (gus_set_colormap) - added `colormode` parameter
+Sep 6, 1995, gli.c - improved RPC error handling
+Sep 6, 1995, glirpc.c - fixed RPC authentication problem
+Sep 6, 1995, gus.c - fixed a bug in routine `gus_set_space'
+Sep 7, 1995, gli.c,glirpc.c - allow 32 arguments for the RPC command
+Sep 8, 1995, gus.c,gligus.c - added GUS TITLES_3D command
+Sep 28, 1995, gks/demo.f - set aspect source flags
+Sep 28, 1995, gksdx11.c - fixed problem with GLI_GKS_MAGSTEP environment
+Sep 29, 1995, gksdx11.c - added workstation types 230 - 233 (DEC GKS)
+Oct 2, 1995, gksio.c - added Fortran IAND, IOR functions (for Linux)
+Oct 2, 1995, imagemain.c,sightmain.c - updated `MrmOpenHierarchy' call
+Oct 5, 1995, gksdcgm.c - added `GLI_GKS_SCALE_MODE_METRIC` environment variable
+Oct 9, 1995, gksdmf.c - new (GKS Metafile logical device driver)
+Oct 12, 1995, gksdps.f - fixed multiple page problem
+Oct 17, 1995, glicgm.c - workstation window/viewport now handled correctly
+Oct 17, 1995, gksdcgm.c - fixed cell array problem
+Oct 24, 1995, gksdps.f - miscellaneous changes for ps2ai (Adobe Illustrator)
+Oct 27, 1995, gus.c (gus_surface) - clip against axes boundaries
+Nov 6, 1995, gligks.c - added GKS INQ TEXT_EXTENT command
+Nov 7, 1995, gksdx11.c - improved GQXTXX routine (inquire text extent)
+Nov 8, 1995, *.f - avoid obsolete ARRAYNAME(1) syntax for assumed-size arrays
+Nov 8, 1995, Makefile - added shared object libraries for IRIX and SunOS
+Nov 13, 1995, gus.c (gus_titles_3d) - fixed FPE problem in GUS TITLES_3D command
+Nov 24, 1995, gli.c - added SPLIT command
+Nov 28, 1995, gksio.c - use underscore character (_) from fill font (23)
+Dec 5, 1995, Makefile - changed -ldxml to libdxml.a (for systems w\out DXML)
+Dec 12, 1995, gus.c (init_hlr, pline_hlr) - fixed FPE problem
+Dec 28, 1995, grsoft.c - added `GRPREC' routine (GKS string precision)
+Dec 28, 1995, math.c (mth_fft2) - load DXML FFT routines at runtime
+May 30, 1996, gligksm.c - added call to GKS GEVTM routine
+May 30, 1996, gligus.c,gus.c (gus_bar_graph) - added (optional) width parameter
+Jun 5, 1996, renamed some files (to be conform with Microsoft's 8.3 notation)
+Aug 12, 1996, glicgm.c - added code for `restricted text' token
+Oct 16, 1996, gksdx11.c - added support for 16-plane displays
+Oct 21, 1996, gksdx11.c (set_font) - corrected text height calculation
+Oct 28, 1996, gli.c - added COM comand
+Oct 28, 1996, gksio.c - added `GLI_GKS_TMP' environment variable
+Jan 24, 1997, gus.c (gus_surface) - fixed a bug in the surface routine
+Jan 27, 1997, string.c (str_parse) - allow UNIX style file specifications
+Sep-Dec, 1997, *.* - (hundreds of) changes for Windows 95 / NT4.0
+Dec 22, 1997, win/gksdwin.c (new) - device driver for Win32 (GDI)
+Feb 6, 1998, gksio.c (DPSOP) - fixed a bug in the DPS open routine
+
+*** GLI V4.5.19  first official release for UNIX/Windows
+
+Feb 9, 1998, gli.c - added registry code for "Software\GLI\Directory" key
+Feb 9, 1998, *sight*.* - changed AXES command, added SELECT LAST command
+Mar 6, 1998, gksdx11.c - allow fill areas with unlimited number of points
+Mar 9, 1998, gksdx11.c - changed `mono_flag` criterion
+Mar 9, 1998, tkfbox.tcl - added '-palette' option to image commands
+Apr 6, 1998, gksdwin.c - added event for thread synchronization
+Apr 16, 1998, formdrv.c - several fixes for varying strings (DEC Pascal)
+Apr 24, 1998, gksdps.f, gksdx11.c - added AI fonts
+Apr 27, 1998, gks*.* - added more linetypes
+Apr 30, 1998, *sight*.* - added SIGHT IMAGE commands
+May 7, 1998, gus.c (gus_show_colormap) - fixed a bug in the colormap routine
+May 7, 1998, gus.c (gus_surface) - added 'GUS_MISSING_VALUE' variable
+May 12, 1998, *sight*.* - changed SIF header (encoding -> orientation)
+May 14, 1998, glicgm.c (set_xform) - changed data type for 'clip_rect'
+May 25, 1998, gligksm.c - adjust translation values if factor < 1
+Oct 12, 1998, tek2ps.c - new (TEKtronix-to-PostScript converter)
+Dec 1, 1998, Makefile - added 'cygwin32' target
+Dec 3, 1998, gks*.* (GSIMTX) - added NCHARS parameter
+Dec 9, 1998, gridit.f, contour.f - avoid arithmetic IF statements
+Dec 15, 1998, formdrv.c (read_data) - fixed alignment problem
+Mar 1, 1999, gksdpdf.c - new (GKS PDF logical device driver)
+Mar 3, 1999, gksdx11.c,gksroot.f - fixed clipping problem (FIXME)
+May 10, 1999, gksdx11.c - added GIF89a output (transparent GIFs)
+Jul 20, 1999, gksdgksm.c - added metafile input functions: GGTITM, GRDITM, GIITM
+Oct 22, 1999, formdrv.c - added graphical user interface (Tcl/Tk)
+Oct 25, 1999, *.c - allow GLI to run as a client/server application
+Nov 19, 1999, system.c - added authentication code for client applications
+Nov 25, 1999, Makefile* - added NetBSD target
+Dec 7, 1999, glicgm.c - applied Tijs' patch (ArcCtr, ArcCtrClose)
+Dec 13, 1999, gks*.c - corrected CHARARG macro (for Cray J90)
+Jan 13, 2000, command.c - added support for ~ character
+Feb 10, 2000, com.c - added 'old-style' tty i/o (for ULTRIX)
+Feb 22, 2000, system.c - added 'sys_shutdown' function
+Feb 24, 2000, gli.c (read_command) - fixed read problem (w\ pipe I/O)
+May 10, 2000, gks.f,gksroot.f,gksdx11.c - added GR_BC environment variable
+May 16, 2000, gksdx11.c - always try to get a 24 plane X visual (TrueColor)
+Jul 26, 2000, terminal.c (get_char) - fixed timeout handling
+Aug 23, 2000, Makefile - added 'pclinux-pgi' target
+Nov 1, 2000, gksdps.c - new (replacement for gksdps.f)
+Nov 7, 2000, gksdps.c - added LZW compression for images
+Nov 20, 2000, spline.c - new (replacement for spline.f)

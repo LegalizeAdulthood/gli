@@ -1,0 +1,43 @@
+gks set xform ndc
+gks set text height 0.025
+gks set text align left base
+
+y:=0.9
+gks set text font -1 stroke
+gks text .1 y Standard -1
+y := y-0.065
+gks set text font -2 stroke
+gks text .1 y Standard Thick -2
+y := y-0.065
+gks set text font -51 stroke
+gks text .1 y Standard Filled -51
+y := y-0.065
+gks set text font -3 stroke
+gks text .1 y Roman -3
+y := y-0.065
+gks set text font -4 stroke
+gks text .1 y Roman Thick -4
+y := y-0.065
+gks set text font -5 stroke
+gks text .1 y Italic -5
+y := y-0.065
+gks set text font -6 stroke
+gks text .1 y Italic Thick -6
+y := y-0.065
+gks set text font -7 stroke
+gks text .1 y Script -7
+y := y-0.065
+gks set text font -8 stroke
+gks text .1 y Script Thick -8
+y := y-0.065
+gks set text font -9 stroke
+gks text .1 y Gothic English -9
+y := y-0.065
+gks set text font -10 stroke
+gks text .1 y Gothic German -10
+y := y-0.065
+gks set text font -11 stroke
+gks text .1 y Gothic Italian -11
+y := y-0.065
+gks set text font -13 stroke
+gks text .1 y Greek - Sonderzeichen

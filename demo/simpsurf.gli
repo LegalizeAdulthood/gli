@@ -1,0 +1,17 @@
+!create a simple surface plot
+
+gks set xform wc
+gks set viewport 0.15 0.95 0.15 0.95
+gks set window 1 100 1 100
+
+read temp.dat x y
+f = exp(-x**2-y**2)
+
+gks set pline color_index blue
+gks set pline linetype solid
+gks set pline linewidth 1.0
+
+gus autoscale_3d x y f
+gus axes_3d
+
+gus surface x y f

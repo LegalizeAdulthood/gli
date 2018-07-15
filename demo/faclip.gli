@@ -1,0 +1,31 @@
+dx := 0
+dy := 0
+gosub test
+dx := 0.7
+gosub test
+dy := -0.5
+gosub test
+dy := -0.9
+gosub test
+dx := 0
+gosub test
+dx := -0.25
+gosub test
+dy := -0.5
+gosub test
+dy := 0
+gosub test
+return
+test:
+gks set fill int solid
+x := 0.2 0.3 0.4
+y := 0.8 1.2 0.9
+x := x+dx
+y := y+dy
+gks set clip off
+gks set fill color green
+gks fill x y
+gks set clip on
+gks set fill color red
+gks fill x y
+return

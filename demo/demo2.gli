@@ -1,0 +1,103 @@
+	page
+	gks set text font 3 string
+	gks set pmark color black
+	a := 4 4 51 51 4
+	b := 0.59 0.81 0.81 0.59 0.59 
+
+! background
+	gks set xform ndc
+	x := 0 0 1 1 0
+	y := 0 1 1 0 0
+        gks set fill color_index yellow
+      	gks set fill int_style solid
+       	gks fill x y 
+	gks set xform wc
+	gks set fill color_index cyan
+
+! smooth
+	gks set viewport 0.05 0.45 0.05 0.41
+	gks set window 4 51 0.59 0.81
+	gks fill a b 
+	gks set pline linewidth 2
+	gks set text height 0.015
+	gus axes_2d 5 0.05 4 0.59 2 1 0.005
+	gus axes_2d 5 0.05 51 0.81 -2 -1 -0.005
+	gks set pmark type circle
+	gks set pline linewidth 1
+	gks set pline linetype dashed
+	read 'GLI_DEMO'demo2.dat x y
+
+	gus polyline x y
+	gus polymark x y
+	smooth y
+	gks set pline linewidth 1.7
+	gks set pline linetype solid
+	gus polyline x y 
+
+! spline
+	gks set viewport 0.05 0.45 0.59 0.95
+	gks set window 4 51 0.59 0.81
+	gks fill a b 
+	gks set pline linewidth 2
+	gks set text height 0.015
+	gus axes_2d 5 0.05 4 0.59 2 1 0.005
+	gus axes_2d 5 0.05 51 0.81 -2 -1 -0.005
+
+	gks set pline linewidth 1
+	gks set pline linetype dashed
+	gks set pmark type circle
+	read 'GLI_DEMO'demo2.dat x y
+	gks set pline linewidth 1.7
+	gks set pline linetype solid
+	gus spline x y 
+	gus polymark x y
+
+
+! linear regression
+	gks set viewport 0.55 0.95 0.59 0.95
+	gks set window 4 51 0.59 0.81
+	gks fill a b 
+	gks set pline linewidth 2
+	gks set text height 0.015
+	gus axes_2d 5 0.05 4 0.59 2 1 0.005
+	gus axes_2d 5 0.05 51 0.81 -2 -1 -0.005
+	gks set pmark type circle
+	gks set pline linewidth 1
+	gks set pline linetype dashed
+	gus polyline x y
+	gus polymark x y
+	gks set pline linewidth 1.7
+	gks set pline linetype solid
+	gus linreg x y 
+
+! linear fit
+	gks set viewport 0.55 0.95 0.05 0.41
+	gks set window 4 51 0.59 0.81
+	gks fill a b 
+	gks set pline linewidth 2
+	gks set text height 0.015
+	gus axes_2d 5 0.05 4 0.59 2 1 0.005
+	gus axes_2d 5 0.05 51 0.81 -2 -1 -0.005
+	gks set pmark type circle
+	gks set pline linewidth 1
+	gks set pline linetype dashed
+	gus polyline x y
+	gus polymark x y
+	gks set pline linetype solid
+	gks set pline linewidth 1.7
+	gus linfit x y 
+
+! text
+	gks set xform ndc
+	gks set text font 3 string
+	gks set text align centre half
+	gks set text height 0.027
+	gks text 0.25 0.36 Smooth Curve
+	gks text 0.25 0.91 Spline
+	gks text 0.75 0.91 Linear Regression
+	gks text 0.75 0.36 Straight-Line Fit
+	gks set text height 0.036
+	gks text 0.5 0.5 Data Fitting
+	gks set text font 3 string
+
+	del var *

@@ -1,0 +1,4 @@
+#!/bin/csh -f
+#
+setenv GLI_HOME /usr/local/gli
+env GLI_POINTS=1048576 GLI_GKSM=/tmp/gli$$.gksm $GLI_HOME/gli -f $GLI_HOME/tcl/modules/modules.tcl

@@ -1,0 +1,13 @@
+gks open_ws wiss 5
+gks set xform wc
+gks set viewp 0.1 0.95 0.1 0.95
+gks set window 0 100 0 100
+gus set space 0 150
+read 'GLI_DEMO'3d.dat z
+x := 1..95
+y := 1..95
+gus surface x y z mesh
+gus axes_3d
+gks clear_ws
+gks set seg_xform 0.5 0.5 0 0 Pi/2 1 1
+gks copy_sg

@@ -1,0 +1,6 @@
+i := 0..79
+r := 0.1(0.01)0.9
+g := r
+b := r
+gks set color i 1-r 1-g 1-b
+gks cell i 8

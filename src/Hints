@@ -1,0 +1,4 @@
+If your Tcl/Tk files are installed in a non-standard path,
+simply try something like this:
+
+./configure --with-tkinclude=/usr/local/tcl8.3.3/include --with-tclinclude=/usr/local/tcl8.3.3/include --with-tklib=/usr/local/tcl8.3.3/lib --with-tcllib=/usr/local/tcl8.3.3/lib

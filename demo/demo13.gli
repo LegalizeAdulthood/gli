@@ -1,0 +1,98 @@
+	page
+	gks set text font 3 string
+	gks set pmark color black
+	gks set text color yellow
+	gks set pline linetype solid
+
+! background
+	gks set xform ndc
+	x := 0 0 1 1 0
+	y := 0 1 1 0 0
+	gks set fill color_index blue
+	gks set fill int_style solid
+	gks fill x y 
+	gks set fill color_index cyan
+	a := 0.05 0.05 0.45 0.45 0.05
+	b := 0.05 0.41 0.41 0.05 0.05
+	gks fill a b
+	a := 0.55 0.55 0.95 0.95 0.55
+	gks fill a b
+	a := 0.05 0.05 0.45 0.45 0.05
+	b := 0.59 0.9 0.9 0.59 0.59
+	gks fill a b
+	a := 0.55 0.55 0.95 0.95 0.55
+	gks fill a b
+	gks set xform wc
+
+! signal
+	gks set viewport 0.05 0.45 0.59 0.9
+	gks set window 2 15 -50 60 
+	gks set pline linewidth 2
+	gks set text height 0.018
+	gus axes_2d 2 10 2 -50 2 2 0.005
+	gus axes_2d 2 10 15 60 -2 -2 -0.005
+	gks set pmark type circle
+	gks set pline linewidth 1
+	read 'GLI_DEMO'demo13_1.dat x y
+	gus polyline x y
+
+! FFT
+	gks set viewport 0.55 0.95 0.59 0.9
+	gks set window 0 256 0 12 
+	gks set pline linewidth 2
+	gks set text height 0.018
+	gus axes_2d 50 1 0 0 2 2 0.005
+	gus axes_2d 50 1 256 12 -2 -2 -0.005
+	gks set pline linewidth 1
+	gus set log
+ 	gus fft y
+	gus set nolog
+	read 'GLI_DEMO'demo13_2.dat bpx bpy
+	gks set pline linewidth 2
+	define function f bpy*11.5
+	gus polyline bpx f
+
+
+! weighted FFT
+	gks set viewport 0.05 0.45 0.05 0.41
+	gks set window 0 256 0 12
+	gks set pline linewidth 2
+	gks set text height 0.018
+	gus axes_2d 50 1 0 0 2 2 0.005
+	gus axes_2d 50 1 256 12 -2 -2 -0.005
+	gks set pline linewidth 1
+	read gus.log r i
+	re = bpy * r
+	im = bpy * i
+	define function f sqrt(re**2 + im**2)
+ 	gus polyline bpx f
+
+
+! filtered signal
+	gks set viewport 0.55 0.95 0.05 0.41
+	gks set window 0 333 -50 60 
+	gks set pline linewidth 2
+	gks set text height 0.018
+	gus axes_2d 50 10 0 -50 2 2 0.005
+	gus axes_2d 50 10 333 60 -2 -2 -0.005
+	gks set pline linewidth 1
+ 	gus inverse_fft re im 
+
+! text
+	gks set xform ndc
+	gks set text font 3 string
+	gks set text align centre half
+	gks set text height 0.027
+	gks text 0.25 0.96 Signal
+	gks text 0.75 0.96 FFT
+	gks text 0.25 0.46 Weighted FFT
+	gks text 0.75 0.46 Filtered Signal
+	gks set text height 0.036
+	gks text 0.5 0.52 Fast Fourier Transformations
+	gks set pline linewidth 1
+	gks set text color black
+
+        del var *
+	del fun *
+	gus set nolog
+	gks set text font 3 string

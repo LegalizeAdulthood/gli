@@ -1,0 +1,102 @@
+gks set xform ndc
+gks set pmark color black
+y := 0.8
+gosub markers
+gks set pmark color red
+y := 0.7
+gosub markers
+gks set pmark color green
+y := 0.6
+gosub markers
+gks set pmark color blue
+y := 0.5
+gosub markers
+gks set pmark color cyan
+y := 0.4
+gosub markers
+gks set pmark color yellow
+y := 0.3
+gosub markers
+gks set pmark color magenta
+y := 0.2
+gosub markers
+return
+
+markers:
+    x := 0.05
+    d := 0.9/25
+    gks set pmark type dot
+    gks polymarker x y
+    x := x+d
+    gks set pmark type plus
+    gks polymarker x y
+    x := x+d
+    gks set pmark type asterisk
+    gks polymarker x y
+    x := x+d
+    gks set pmark type circle
+    gks polymarker x y
+    x := x+d
+    gks set pmark type diagonal_cross
+    gks polymarker x y
+    x := x+d
+    gks set pmark type solid_circle
+    gks polymarker x y
+    x := x+d
+    gks set pmark type triangle_up
+    gks polymarker x y
+    x := x+d
+    gks set pmark type solid_tri_up
+    gks polymarker x y
+    x := x+d
+    gks set pmark type triangle_down
+    gks polymarker x y
+    x := x+d
+    gks set pmark type solid_tri_down
+    gks polymarker x y
+    x := x+d
+    gks set pmark type square
+    gks polymarker x y
+    x := x+d
+    gks set pmark type solid_square
+    gks polymarker x y
+    x := x+d
+    gks set pmark type bowtie
+    gks polymarker x y
+    x := x+d
+    gks set pmark type solid_bowtie
+    gks polymarker x y
+    x := x+d
+    gks set pmark type hourglass
+    gks polymarker x y
+    x := x+d
+    gks set pmark type solid_hglass
+    gks polymarker x y
+    x := x+d
+    gks set pmark type diamond
+    gks polymarker x y
+    x := x+d
+    gks set pmark type solid_diamond
+    gks polymarker x y
+    x := x+d
+    gks set pmark type star
+    gks polymarker x y
+    x := x+d
+    gks set pmark type solid_star
+    gks polymarker x y
+    x := x+d
+    gks set pmark type tri_up_down
+    gks polymarker x y
+    x := x+d
+    gks set pmark type solid_tri_left
+    gks polymarker x y
+    x := x+d
+    gks set pmark type solid_tri_right
+    gks polymarker x y
+    x := x+d
+    gks set pmark type hollow_plus
+    gks polymarker x y
+    x := x+d
+    gks set pmark type omark
+    gks polymarker x y
+    return

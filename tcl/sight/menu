@@ -1,0 +1,280 @@
+# menu definitions for sight.tcl
+#
+# Lines without leading tabs:
+#   main-menu definitions
+#   Components/line:
+#    - Internal Name
+#    - Number of line for the (menu-)buttons
+#
+# Lines with leading tab(s):
+#   menu definitions
+#   Components/line:
+#    - Internal Name (* for separator)
+#    - Name of the bitmapfile for buttons (* for none, + for sight-generated
+#      filename), program adds .xbm
+#    - command to execute (only for button-menu, forces button to be
+#      command-button) (* for default)
+#    - index for shorthelp (* for none)
+
+file 0
+	create				+
+	open				+
+	save				+
+	close				+
+	*
+	read				+
+	write				+
+	*
+	image				+
+	*
+	import				+
+		image_file
+		binary			+
+		clear_text		+
+	*
+	print				+
+	capture				+
+	*
+	exit
+
+edit 1
+	redraw				+
+	*
+	select				+	"edit_select next"
+		object
+		previous
+		next
+		group
+		excluded
+		all
+	deselect			+
+	*
+	cut				+
+	paste				+
+	pop				+
+	push				+
+	move				+
+	remove				+
+	*
+	pick
+		object
+		element
+		region
+	digitize			+
+		input			+
+		points			+
+		bars			+
+			vertical	+
+			horizontal	edit_digitize_bars_hori
+	*
+	clear				+
+
+tools 2
+	line				+ 	"tools_line locate"
+		locate
+		data
+	spline				+	"tools_spline natural"
+		natural
+		smooth
+		bspline
+	error				edit_digitize_bars
+		vertical		edit_digitize_bars_vertical
+		horizontal		edit_digitize_bars_hori
+	marker				+	"tools_marker locate"
+		locate
+		data
+	text				+
+	fill				+	"tools_fill locate"
+		locate
+		data
+	bar				+	"tools_bar locate"
+		locate
+		data
+	*
+	plot				+	"tools_plot locate"
+		locate
+		data
+	axes				+
+	grid				+
+
+attr 3
+	ltype				+
+		solid			+
+		dashed			+
+		dotted			+
+		dash_dotted		+
+		dash_2_dot		+
+		dash_3_dot		+
+		long_dash		+
+		long_short_dash		+
+		spaced_dash		+
+		spaced_dot		+
+		double_dot		+
+		triple_dot		+
+	linewidth			+
+		1pt			+
+		2pt			+
+		3pt			+
+		4pt			+
+		5pt			+
+		6pt			+
+	linecolor			+
+		black			attr_linewidth_3pt
+		white			+
+		red			+
+		green			+
+		blue			+
+		cyan			+
+		yellow			+
+		magenta			+
+	*
+	mtype				+
+		dot			+
+		plus			+
+		asterisk		+
+		diagonal_cross		+
+		circle			+
+		solid_circle		+
+		square			+
+		solid_square		+
+		triangle_up		+
+		solid_tri_up		+
+		triangle_down		+
+		solid_tri_down		+
+		bowtie			+
+		solid_bowtie		+
+		hourglass		+
+		solid_hglass		+
+		diamond			+
+		solid_diamond		+
+		star			+
+		solid_star		+
+		tri_up_down		+
+		solid_tri_right		+
+		solid_tri_left		+
+		hollow_plus		+
+		omark			+
+	markersize			+
+		4pt			+
+		6pt			+
+		8pt			+
+		10pt			+
+		12pt			+
+		14pt			+
+		18pt			+
+		24pt			+
+		36pt			+
+		48pt			+
+		72pt			+
+	markercolor			+
+		black			+
+		white			+
+		red			+
+		green			+
+		blue			+
+		cyan			+
+		yellow			+
+		magenta			+
+	*
+	textfamily			+
+		avant_garde		attr_family_avant_garde_n
+			normal		attr_family_avant_garde_n
+			boldface	attr_family_avant_garde_b
+			italic		attr_family_avant_garde_i
+			bold_italic	attr_family_avant_garde_bi
+		courier			attr_family_courier_n
+			normal		attr_family_courier_n
+			boldface	attr_family_courier_b
+			italic		attr_family_courier_i
+			bold_italic	attr_family_courier_bi
+		helvetica		attr_family_helvetica_n
+			normal		attr_family_helvetica_n
+			boldface	attr_family_helvetica_b
+			italic		attr_family_helvetica_i
+			bold_italic	attr_family_helvetica_bi
+		lubalin			attr_family_lubalin_n
+			normal		attr_family_lubalin_n
+			boldface	attr_family_lubalin_b
+			italic		attr_family_lubalin_i
+			bold_italic	attr_family_lubalin_bi
+		schoolbook		attr_family_schoolbook_n
+			normal		attr_family_schoolbook_n
+			boldface	attr_family_schoolbook_b
+			italic		attr_family_schoolbook_i
+			bold_italic	attr_family_schoolbook_bi
+		souvenir		attr_family_souvenir_n
+			normal		attr_family_souvenir_n
+			boldface	attr_family_souvenir_b
+			italic		attr_family_souvenir_i
+			bold_italic	attr_family_souvenir_bi
+		symbol			attr_family_symbol
+		times			attr_family_times_n
+			normal		attr_family_times_n
+			boldface	attr_family_times_b
+			italic		attr_family_times_i
+			bold_italic	attr_family_times_bi
+	textsize			+
+		8pt			+
+		10pt			+
+		12pt			+
+		14pt			+
+		18pt			+
+		24pt			+
+	textalignment			+
+		left			+
+		center			+
+		right			+
+	textdirection			+
+		right			+	
+		up			+
+		left			+
+		down			+
+	textcolor			+
+		black			+
+		white			+
+		red			+
+		green			+
+		blue			+
+		cyan			+
+		yellow			+
+		magenta			+
+	*
+	fillstyle			+
+	fillcolor			+
+		black			+
+		white			+
+		red			+
+		green			+
+		blue			+
+		cyan			+
+		yellow			+
+		magenta			+
+
+view 0
+	viewport			+
+	window				+
+	orientation			+
+		landscape		+
+		portrait		+
+	scale				view_scale_x
+		linear			+
+		x			+
+		y			+
+		xy			+
+	transformation
+		0
+		1
+		2
+		3
+		4
+		5
+		6
+		7
+		8
+
+customize 2
+	snapgrid			+
+		off			+
+		25			customize_snapgrid
+		50			+
+		100			+

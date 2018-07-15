@@ -1,0 +1,270 @@
+module aeliterals
+    version = 'V1.0'
+    names = case_sensitive
+
+value
+    k_file_label_text		: exported "File";
+	k_create_label_text	: exported "Create Drawing...";
+	k_open_label_text	: exported "Open Drawing...";
+	k_save_label_text	: exported "Save as...";
+	k_close_label_text	: exported "Close Drawing";
+	k_read_label_text
+	    : exported "Read Data from File...";
+	k_write_label_text
+	    : exported "Write Data to File...";
+	k_read_image_label_text : exported "Read Portable Image File...";
+	k_import_label_text	: exported "Import";
+	    k_image_label_text	: exported "Image File";
+	    k_cgm_binary_label_text :
+		exported "CGM Binary";
+	    k_cgm_clear_text_label_text :
+		exported "CGM Clear Text";
+	k_print_label_text	: exported "Print Drawing";
+	k_capture_label_text    : exported "Capture Drawing";
+	k_quit_label_text	: exported "Quit";
+	    k_quit_warning_label_text : exported compound_string (
+		"All changes will be lost.", separate=true) &
+		    compound_string (
+		"Please confirm quitting.");
+	k_exit_label_text	: exported "Exit";
+    k_edit_label_text		: exported "Edit";
+	k_redraw_label_text	: exported "Redraw";
+	k_select_label_text	: exported "Select";
+	    k_object_label_text	: exported "Object";
+	    k_previous_label_text
+		: exported "Previous Object";
+	    k_next_label_text	: exported "Next Object";
+	    k_last_label_text	: exported "Last Object";
+	    k_group_label_text	: exported "Group of Objects";
+	    k_all_label_text	: exported "All";
+	    k_excluded_label_text
+		: exported "Excluded";
+	k_deselect_label_text	: exported "Deselect";
+	k_cut_label_text	: exported "Cut";
+	k_paste_label_text	: exported "Paste";
+	k_pop_label_text	: exported "Pop in Front";
+	k_push_label_text	: exported "Push Behind";
+	k_move_label_text	: exported "Move";
+	k_remove_label_text	: exported "Remove";
+        k_pick_label_text	: exported "Pick";
+            k_element_label_text
+		: exported "Element";
+            k_region_label_text	: exported "Region";
+        k_digitize_label_text   : exported "Digitze";
+	    k_area_label_text	: exported "Input Area";
+	    k_points_label_text	: exported "Points";
+	    k_bars_label_text	: exported "Bars";
+	k_clear_label_text	: exported "Clear Drawing";
+     k_tools_label_text		: exported "Tools";
+	k_tool_box_label_text
+	    : exported "Create Tool Box...";
+	k_line_label_text	: exported "Line";
+	    k_locate_label_text	: exported "Locate";
+	    k_data_label_text	: exported "Data";
+	k_spline_label_text	: exported "Spline";
+	    k_natural_label_text: exported "Natural";
+	    k_smooth_label_text	: exported "Smooth";
+	    k_b_spline_label_text
+				: exported "B-Spline";
+	k_error_bars_label_text	: exported "Error Bars";
+	    k_vertical_label_text
+		: exported "Vertical";
+	    k_horizontal_label_text
+		: exported "Horizontal";
+	k_symbol_label_text	: exported "Marker";
+	k_text_label_text	: exported "Text";
+	k_fill_area_label_text	: exported "Fill Area";
+	k_bar_graph_label_text	: exported "Bar Graph";
+	k_plot_label_text	: exported "Plot";
+	k_axes_label_text	: exported "Axes...";
+	k_grid_label_text	: exported "Grid...";
+    k_attributes_label_text	: exported "Attributes";
+	k_attribute_box_label_text
+	    : exported "Create Attribute Box...";
+	k_linetype_label_text	: exported "Line Type";
+	    k_solid_label_text	: exported "Solid";
+	    k_dashed_label_text	: exported "Dashed";
+	    k_dotted_label_text	: exported "Dotted";
+	    k_dash_dotted_label_text
+		: exported "Dash-dotted";
+	    k_dash_2_dot_label_text
+		: exported "Dash, 2 Dots";
+	    k_dash_3_dot_label_text
+		: exported "Dash, 3 Dots";
+	    k_long_dash_label_text
+		: exported "Long Dash";
+	    k_long_short_dash_label_text
+		: exported "Long, short Dash";
+	    k_spaced_dash_label_text
+		: exported "Spaced Dash";
+	    k_spaced_dot_label_text
+		: exported "Spaced Dot";
+	    k_double_dot_label_text
+		: exported "Double Dots";
+	    k_triple_dot_label_text
+		: exported "Triple Dots";
+	k_linewidth_label_text	: exported "Line Width";
+	    k_1_pt_label_text	: exported "1 pt";
+	    k_2_pt_label_text	: exported "2 pt";
+	    k_3_pt_label_text	: exported "3 pt";
+	    k_4_pt_label_text	: exported "4 pt";
+	    k_5_pt_label_text	: exported "5 pt";
+	    k_6_pt_label_text	: exported "6 pt";
+	k_linecolor_label_text	: exported "Line Color";
+	    k_white_label_text	: exported "White";
+	    k_black_label_text	: exported "Black";
+	    k_red_label_text	: exported "Red";
+	    k_green_label_text	: exported "Green";
+	    k_blue_label_text	: exported "Blue";
+	    k_cyan_label_text	: exported "Cyan";
+	    k_yellow_label_text	: exported "Yellow";
+	    k_magenta_label_text
+		: exported "Magenta";
+	k_markertype_label_text	: exported "Marker Type";
+	    k_dot_label_text	: exported "Dot";
+	    k_plus_label_text	: exported "Plus";
+	    k_asterisk_label_text
+		: exported "Asterisk";
+	    k_diagonal_cross_label_text
+		: exported "Diagonal Cross";
+	    k_circle_label_text	: exported "Circle";
+	    k_solid_circle_label_text
+		: exported "Solid Circle";
+	    k_square_label_text	: exported "Square";
+	    k_solid_square_label_text
+		: exported "Solid Square";
+	    k_triangle_up_label_text
+		: exported "Triangle up";
+	    k_solid_tri_up_label_text
+		: exported "Solid Triangle up";
+	    k_triangle_down_label_text
+		: exported "Triangle down";
+	    k_solid_tri_down_label_text
+		: exported "Solid Triangle down";
+	    k_bowtie_label_text
+		: exported "Bowtie";
+	    k_solid_bowtie_label_text
+		: exported "Solid Bowtie";
+	    k_hourglass_label_text
+		: exported "Hourglass";
+	    k_solid_hourglass_label_text
+		: exported "Solid Hourglass";
+	    k_diamond_label_text: exported "Diamond";
+	    k_solid_diamond_label_text
+		: exported "Solid Diamond";
+            k_star_label_text   : exported "Star";
+            k_solid_star_label_text
+                : exported "Solid Star";
+            k_tri_up_down_label_text
+                : exported "Triangle up down";
+            k_solid_tri_left_label_text
+                : exported "Solid Triangle left";
+            k_solid_tri_right_label_text
+                : exported "Solid Triangle right";
+            k_hollow_plus_label_text
+               : exported "Hollow Plus";
+            k_omark_label_text  : exported "O-Marker";
+	k_markersize_label_text	: exported "Marker Size";
+	    k_8_pt_label_text	: exported "8 pt";
+	    k_10_pt_label_text	: exported "10 pt";
+	    k_12_pt_label_text	: exported "12 pt";
+	    k_14_pt_label_text	: exported "14 pt";
+	    k_18_pt_label_text	: exported "18 pt";
+	    k_24_pt_label_text	: exported "24 pt";
+	    k_36_pt_label_text	: exported "36 pt";
+	    k_48_pt_label_text	: exported "48 pt";
+	    k_72_pt_label_text	: exported "72 pt";
+	k_markercolor_label_text: exported "Marker Color";
+	k_font_label_text	: exported "Text Family";
+	    k_avant_garde_label_text
+		: exported "ITC Avant Garde Gothic";
+		k_normal_label_text
+		    : exported "Normal";
+		k_bold_label_text
+		    : exported "Bold";
+		k_italic_label_text
+		    : exported "Italic";
+		k_bold_italic_label_text
+		    : exported "Bold Italic";
+	    k_courier_label_text
+		: exported "Courier";
+	    k_helvetica_label_text
+		: exported "Helvetica";
+	    k_lubalin_label_text
+		: exported "ITC Lubalin Graph";
+	    k_schoolbook_label_text
+		: exported "New Century Schoolbook";
+	    k_souvenir_label_text
+		: exported "ITC Souvenir";
+	    k_symbol_font_label_text
+		: exported "Symbol";
+	    k_times_label_text	: exported "Times";
+	k_textsize_label_text	: exported "Text Size";
+	k_textalign_label_text	: exported "Text Alignment";
+	    k_left_label_text	: exported "Left justified";
+	    k_center_label_text	: exported "Centered";
+	    k_right_label_text	: exported "Right justified";
+	k_textcolor_label_text	: exported "Text Color";
+	k_textdirection_label_text
+	    : exported "Text Direction";
+	    k_ltoright_label_text
+		: exported "Right";
+	    k_up_label_text	: exported "Up";
+	    k_rtoleft_label_text: exported "Left";
+	    k_down_label_text	: exported "Down";
+	k_fillstyle_label_text	: exported "Fill Style";
+	    k_hollow_label_text	: exported "Hollow";
+	    k_filled_label_text	: exported "Filled";
+	    k_pattern_label_text
+		: exported "Pattern";
+	    k_hatch_label_text	: exported "Hatch";
+	k_fillindex_label_text	: exported "Fill Index";
+	k_fillcolor_label_text	: exported "Fill Color";
+    k_view_label_text		: exported "View";
+        k_viewport_label_text   : exported "Select Viewport";
+	k_window_label_text     : exported "Set Window";
+	k_orientation_label_text: exported "Orientation";
+	    k_landscape_label_text
+        	: exported "Landscape";
+	    k_portrait_label_text
+        	: exported "Portrait";
+	k_scale_label_text	: exported "Scale";
+	    k_linear_label_text	: exported "Linear";
+		k_flip_none_label_text
+		    : exported "None";
+		k_flip_x_label_text
+		    : exported "Flip X";
+		k_flip_y_label_text
+		    : exported "Flip Y";
+		k_flip_xy_label_text
+		    : exported "Flip XY";
+	    k_xlog_label_text	: exported "X Log";
+	    k_ylog_label_text	: exported "Y Log";
+	    k_xylog_label_text	: exported "XY Log";
+	k_xform_label_text	: exported "Select Transformation";
+    k_customize_label_text	: exported "Customize";
+	k_snap_grid_label_text	: exported "Snap Grid";
+	    k_snap_off_label_text
+		: exported "Off";
+	    k_snap_025_label_text
+		: exported ".25 cm";
+	    k_snap_05_label_text
+		: exported ".5 cm";
+	    k_snap_1_label_text
+		: exported "1 cm";
+    k_help_label_text		: exported "Help";
+
+    k_command_prompt_label_text	: exported "Sight> ";
+
+    k_information_label_text	: exported "Information";
+    k_warning_label_text	: exported "Warning";
+    k_error_label_text		: exported "Error";
+    k_file_selection_label_text	: exported "File Selection";
+    k_filter_label_text		: exported "File Filter";
+    k_directory_label_text	: exported "Directories";
+    k_list_label_text		: exported "Files";
+    k_selection_label_text	: exported "Selection";
+    k_ok_label_text		: exported "OK";
+    k_cancel_label_text		: exported "Cancel";
+
+end module;

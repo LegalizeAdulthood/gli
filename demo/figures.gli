@@ -1,0 +1,126 @@
+set verify
+gks set xform wc
+
+figure = "xygli"
+gosub openfigure
+a = -1(.1)1
+b = sin(a)
+write temp.dat a b
+read temp.dat x y
+gus plot x y
+gosub closefigure
+
+figure = "xygli2"
+gosub openfigure
+gus plot x y
+gus grid
+gus text -.25 .25 This is a Title
+delete variable *
+delete function *
+gosub closefigure
+
+figure = "gushistogram"
+gosub openfigure
+gks set viewport 0.15 0.95 0.15 0.95
+gks set window 1 100 1 100
+y = 1(1)100
+x = sin(y)
+gus autoscale_2d x y
+gus axes_2d
+gus histogram x
+delete variable *
+delete function *
+gosub closefigure
+
+figure = "gusbar"
+gosub openfigure
+gks set text height 0.015
+x := 1974 1975 1976 1977 1978 1979 1980 1981 1982 1983 1984
+y := 5.1 9.3 3 5.9 6.3 10.1 12.9 16.8 20.9 27.5 22.4
+gks set window 1973 1985 0 40
+gks set viewport 0.1 0.9 0.1 0.9
+gks set fill int solid
+gks set fill color blue
+gus bar_graph x  y
+gus axes_2d 1 1 1973 0 1 5
+delete variable *
+gosub closefigure
+
+figure = "guspmark"
+gosub openfigure
+read temp.dat x y
+gus autoscale_2d x y
+gks set text height 0.02
+gus axes_2d
+gks set pmark type circle
+gks set pmark color red
+gks set pmark size 3.0
+gus polymarker x y
+gosub closefigure
+
+figure = "contour"
+gosub openfigure
+gks set viewport 0.05 0.95 0.05 0.95
+gks set window 1 100 1 100
+gus set space 2800 4400 0 90
+read 'GLI_DEMO'xdemo5.dat z
+x := 1..100
+y := x
+h := 2400(100)4400
+gus contour x y h z
+gosub closefigure
+
+figure = "colorcontour"
+gosub openfigure
+gus surface x y z colored_mesh
+gosub closefigure
+
+figure = "colorcontour2"
+gosub openfigure
+gus surface x y z colored_mesh
+gus contour x y h z
+gosub closefigure
+
+figure = "gusxyzcurve"
+gosub openfigure
+gks set viewport 0.1 0.95 0.1 0.95
+t := 1(.1)40
+x := 40+t*cos(t)
+y := 40+t*sin(t)
+z := t
+gks set window min(x) max(x) min(y) max(y)
+gus set space 1 40 30 45
+gus axes_3d
+gus curve x y z
+delete variable *
+gosub closefigure
+
+figure = "surface"
+gosub openfigure
+gks set xform wc
+read 'GLI_DEMO'xdemo5.dat z
+x := 1..100
+y := x
+gks set viewport 0.09 0.9 0.13 0.87
+gks set window 1 100 1 100
+zmin = min(z)
+zmax = max(z)
+gus set space zmin zmax 30 45
+gus surface x y z mesh
+gus axes_3d
+delete variable *
+gosub closefigure
+
+return
+
+openfigure:
+    gks clear_ws
+    define logical GLI_FIG 'figure'.eps
+    return
+
+closefigure:
+    inquire answer Press Return to continue...
+    $ xwd -name "GLIgks V4.4" -out 'figure'.xwd
+    $ xwdtorf 'figure'.xwd 'figure'.rf
+    $ rm -f 'figure'.xwd
+    return

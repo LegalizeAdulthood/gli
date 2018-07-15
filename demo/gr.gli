@@ -1,0 +1,49 @@
+!
+! teslog
+!
+gr strt -1 -1
+l := 6
+m := 25
+n := l*m
+i := 1..150
+x := i/m
+y = log(2**x+sin(9*x))
+gr sclc 3 3 36.5 25.7
+gr chrc .5 0 18
+gr sclv 0 2 l 2**l
+gr dsh 1 .5 1
+gr axsl 0 1001 1
+gr sclv 0 2 l 2**l
+gr axsl 0 -12 1
+gr axs -1 "X=-1,F=(2),M=3.,U=1" -1 " " 0 " "
+gr axs -1 "X=-2,F=(2),M=3.,U=1,XLB=-2,I" -1 " " 0 " "
+gr clp 1
+gr nwpn 4
+gr dsh 1 0 1
+gr spts 22
+gr ln x y n
+gr clp 0
+gr font -51
+gr nwpn 1
+gr sclc 0 27.7 39.5 28.7
+gr sclv 0 0 1 1
+gr chrc .7 0
+gr gstxal 2 0
+gr txt .5 0 -1 "Lin. und log.(y) Achse in normaler Lage, Clipping (GRAXS(L), GRCLP)"
+gr gstxal 0 0
+del var l m n x
+del fun y
+gr nxtf
+!gr end
+!
+! tesax
+!
+!gr strt
+gr chrc .5 0 18
+gr sclc 0 0 39.5 28.7
+gr sclv 0 0 10 100
+gr nwpn 6
+gr axlin 1 10 9 90 1e5 1e9 0 1
+gr nwpn 2
+gr axlog 1 10 9 90 1e5 1e9 1 0
+gr end

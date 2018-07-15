@@ -1,0 +1,23 @@
+gks set window 0 10 0 10
+gks set viewport 0 1 0 1
+x := 0 0 10 10 0
+y := 0 10 10 0 0
+gks set fill int_style solid
+gks set color 7 .6 .8 .9
+gks set fill color magenta
+gks fill_area x y
+gks set text align center normal
+gks set text height 0.27
+gks text 5 9 This Demonstation Gives an Example
+gks Text 5 8 of 
+gks set text height 0.36
+gks text 5 6 GLI IMAGING
+gks set text height 0.21
+gks text 5 3.5 Speed is dependant on your workstation, its memory,
+gks text 5 3 and the other applications you have running.
+gks text 5 2.5 All commands that require arguments have been preset to
+gks text 5 2 arbitrarily selected values.
+gks set text height 0.21
+gks set text align normal normal
+gks set fill int_style hollow
+gks set fill color black

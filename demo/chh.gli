@@ -1,0 +1,22 @@
+gks set xform ndc
+!gks set ws_viewport 0 0.1905 0 0.1905
+grid 0.1 0.1 0 0 10 10
+gks set text align center base
+gks set text height 0.2
+gks text .5 .1 H=0.2
+gks set text height 0.1
+gks text .5 .4 H=0.1
+gks set text height 0.048
+gks text .5 .6 H=0.048 (32 pt)
+gks set text height 0.036
+gks text .5 .7 H=0.036 (24 pt)
+gks set text height 0.027
+gks text .5 .75 H=0.027 (18 pt)
+gks set text height 0.021
+gks text .5 .8 H=0.021 (14 pt)
+gks set text height 0.018
+gks text .5 .85 H=0.018 (12 pt)
+gks set text height 0.015
+gks text .5 .90 H=0.015 (10 pt)
+gks set text height 0.012
+gks text .5 .95 H=0.012 (8 pt)

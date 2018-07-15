@@ -1,0 +1,71 @@
+page
+gks set xform ndc
+gks set text height 0.027
+
+x := 0 1 1 0
+y := 0 0 1 1
+gks set fill int solid
+gks set fill color cyan
+gks fill x y
+
+gks set text font 5 string
+gks set text align center half
+gks text .5 .95 GKS Standard Fonts (X11, PostScript)
+
+gks set text align left bottom
+
+t:=0
+x:=0.05
+y:=0.5
+gks set text font t+2 string
+gks text x y+0.325 Courier
+gks set text font t+3 string
+gks text x y+0.25 Helvetica
+gks set text font t+5 string
+gks text x y+0.175 NC Schoolbook Roman
+gks set text font t+7 string
+gks text x y+0.1 Symbol
+gks set text font t+8 string
+gks text x y+0.025 Times-Roman
+
+t:=8
+y:=0.05
+gks set text font t+2 string
+gks text x y+0.325 Courier Bold
+gks set text font t+3 string
+gks text x y+0.25 Helvetica Bold
+gks set text font t+5 string
+gks text x y+0.175 NC Schoolbook Bold
+gks set text font t+7 string
+gks text x y+0.1 Symbol
+gks set text font t+8 string
+gks text x y+0.025 Times Bold
+
+t:=16
+x:=0.5
+y:=0.5
+gks set text font t+2 string
+gks text x y+0.325 Courier Oblique
+gks set text font t+3 string
+gks text x y+0.25 Helvetica  Oblique
+gks set text font t+5 string
+gks text x y+0.175 NC Schoolbook Italic
+gks set text font t+7 string
+gks text x y+0.1 Symbol
+gks set text font t+8 string
+gks text x y+0.025 Times Italic
+
+t:=24
+y:=0.05
+gks set text font t+2 string
+gks text x y+0.325 Courier Bold Oblique
+gks set text font t+3 string
+gks text x y+0.25 Helvetica Bold Oblique
+gks set text font t+5 string
+gks text x y+0.175 NC Schoolbook Bold Italic
+gks set text font t+7 string
+gks text x y+0.1 Symbol
+gks set text font t+8 string
+gks text x y+0.025 Times Bold Italic
+
+del var x y t

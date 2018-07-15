@@ -1,0 +1,37 @@
+    page
+    gks set xform ndc
+    gks set text align centre bottom
+    gks set text font 3 string
+    gks set pline color cyan
+    gks set text color cyan
+    gks set text height 0.021
+
+! Background
+    gks set fill int_style solid
+    gks set fill color blue
+    a := 0 1 1 0 0
+    b := 0 0 1 1 0 
+    gks fill a b 
+
+!Text
+    gks text 0.5 0.9  SINE WAVE GENERATION
+    gus text 0.5 0.82  {SIN X}/X
+    gks text 0.5 0.05  RANGE OF THE VALUE X
+    gks set text align left bottom
+    gks text 0.1 0.8  RANGE OF THE VALUE Y
+    gks set xform wc
+
+
+    gks set viewport  0.1,0.9  0.2,0.8
+    gks set window  -15,15  -0.3,1.1
+    gus axes_2d  5,0.1  0,0  1,2  0.01
+    x := -15(0.4)15
+    f = sin(x)/x
+    gks polyline  x f
+
+    gks set text font 3 string
+    gks set pline color black
+    gks set text color black
+
+    del var *
+    del fun *

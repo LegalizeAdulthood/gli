@@ -1,0 +1,523 @@
+module cgmview
+    names = case_sensitive
+
+value
+    k_arrow_color_table: color_table(background color = ' ', 
+        foreground color = '*');
+    k_button_offset: 10;
+    k_dir_mask: 
+    compound_string("*.cgm*");
+    k_fsb_title: 
+    compound_string("File Selection");
+    k_draw_cb: 0;
+    k_format_binary: 1;
+    k_format_clear_text: 2;
+    k_previous_picture: 3;
+    k_redraw_picture: 4;
+    k_next_picture: 5;
+    k_file_ok: 6;
+    k_file_cancel: 7;
+    k_open: 8;
+    k_quit: 9;
+    k_draw_width: 485;
+    k_draw_height: 485;
+    k_file_width: 256;
+    k_ok: 10;
+    k_cancel: 11;
+    k_help: 12;
+
+procedure
+    do_something(integer);
+
+object
+    main_window_widget: XmMainWindow 
+        {
+        controls
+            {
+            XmMenuBar menu_bar_widget;
+            XmForm form_widget;
+            };
+        };
+    file_menu_entry: XmCascadeButton 
+        {
+        arguments
+            {
+            XmNx = 17;
+            XmNy = 7;
+            XmNlabelString = 
+            compound_string("File");
+            XmNmnemonic = keysym("F");
+            };
+        controls
+            {
+            XmPulldownMenu 
+                {
+                arguments
+                    {
+                    XmNx = 14;
+                    XmNy = 10;
+                    XmNborderWidth = 1;
+                    };
+                controls
+                    {
+                    XmPushButton m_open_button;
+                    XmPushButton m_quit_button;
+                    };
+                };
+            };
+        };
+    m_open_button: XmPushButton 
+        {
+        arguments
+            {
+            XmNx = 8;
+            XmNy = 7;
+            XmNlabelString = 
+            compound_string("Open ...");
+            XmNmnemonic = keysym("O");
+            };
+        callbacks
+            {
+            XmNactivateCallback = procedures
+                {
+                do_something(k_open);
+                };
+            };
+        };
+    m_quit_button: XmPushButton 
+        {
+        arguments
+            {
+            XmNx = 12;
+            XmNy = 18;
+            XmNlabelString = 
+            compound_string("Quit");
+            };
+        callbacks
+            {
+            XmNactivateCallback = procedures
+                {
+                do_something(k_quit);
+                };
+            };
+        };
+    format_menu_entry: XmCascadeButton 
+        {
+        arguments
+            {
+            XmNx = 68;
+            XmNy = 14;
+            XmNlabelString = 
+            compound_string("Format");
+            XmNmnemonic = keysym("o");
+            };
+        controls
+            {
+            XmPulldownMenu 
+                {
+                arguments
+                    {
+                    XmNx = 25;
+                    XmNy = 11;
+                    XmNborderWidth = 1;
+                    XmNradioBehavior = true;
+                    };
+                controls
+                    {
+                    XmToggleButton m_binary_button;
+                    XmToggleButton m_clear_text_button;
+                    };
+                };
+            };
+        };
+    m_binary_button: XmToggleButton 
+        {
+        arguments
+            {
+            XmNx = 7;
+            XmNy = 5;
+            XmNlabelString = 
+            compound_string("Binary");
+            XmNset = true;
+            };
+        callbacks
+            {
+            XmNvalueChangedCallback = procedures
+                {
+                do_something(k_format_binary);
+                };
+            };
+        };
+    m_clear_text_button: XmToggleButton 
+        {
+        arguments
+            {
+            XmNx = 27;
+            XmNy = 18;
+            XmNlabelString = 
+            compound_string("Clear Text");
+            };
+        callbacks
+            {
+            XmNvalueChangedCallback = procedures
+                {
+                do_something(k_format_clear_text);
+                };
+            };
+        };
+    picture_menu_entry: XmCascadeButton 
+        {
+        arguments
+            {
+            XmNx = 147;
+            XmNy = 10;
+            XmNlabelString = 
+            compound_string("Picture");
+            XmNmnemonic = keysym("P");
+            };
+        controls
+            {
+            XmPulldownMenu 
+                {
+                arguments
+                    {
+                    XmNx = 29;
+                    XmNy = 20;
+                    XmNborderWidth = 1;
+                    };
+                controls
+                    {
+                    XmPushButton m_previous_button;
+                    XmPushButton m_redraw_button;
+                    XmPushButton m_next_button;
+                    };
+                };
+            };
+        };
+    m_previous_button: XmPushButton 
+        {
+        arguments
+            {
+            XmNx = 8;
+            XmNy = 6;
+            XmNlabelString = 
+            compound_string("Previous");
+            };
+        callbacks
+            {
+            XmNactivateCallback = procedures
+                {
+                do_something(k_previous_picture);
+                };
+            };
+        };
+    m_redraw_button: XmPushButton 
+        {
+        arguments
+            {
+            XmNx = 35;
+            XmNy = 19;
+            XmNlabelString = 
+            compound_string("Redraw");
+            };
+        callbacks
+            {
+            XmNactivateCallback = procedures
+                {
+                do_something(k_redraw_picture);
+                };
+            };
+        };
+    m_next_button: XmPushButton 
+        {
+        arguments
+            {
+            XmNx = 35;
+            XmNy = 46;
+            XmNlabelString = 
+            compound_string("Next");
+            };
+        callbacks
+            {
+            XmNactivateCallback = procedures
+                {
+                do_something(k_next_picture);
+                };
+            };
+        };
+    help_menu_entry: XmCascadeButton 
+        {
+        arguments
+            {
+            XmNx = 225;
+            XmNy = 11;
+            XmNlabelString = 
+            compound_string("Help");
+            XmNmnemonic = keysym("H");
+            };
+        controls
+            {
+            XmPulldownMenu 
+                {
+                arguments
+                    {
+                    XmNx = 18;
+                    XmNy = 10;
+                    XmNborderWidth = 1;
+                    };
+                controls
+                    {
+                    XmPushButton m_help_button;
+                    };
+                };
+            };
+        };
+    menu_bar_widget: XmMenuBar 
+        {
+        arguments
+            {
+            XmNmenuHelpWidget = XmCascadeButton help_menu_entry;
+            };
+        controls
+            {
+            XmCascadeButton file_menu_entry;
+            XmCascadeButton format_menu_entry;
+            XmCascadeButton picture_menu_entry;
+            XmCascadeButton help_menu_entry;
+            };
+        };
+    m_help_button: XmPushButton 
+        {
+        arguments
+            {
+            XmNx = 6;
+            XmNy = 6;
+            XmNlabelString = 
+            compound_string("Help");
+            };
+        callbacks
+            {
+            XmNactivateCallback = procedures
+                {
+                do_something(k_help);
+                };
+            };
+        };
+    form_widget: XmForm 
+        {
+        arguments
+            {
+            XmNwidth = k_draw_width + 4;
+            XmNheight = k_draw_height + 61;
+            };
+        controls
+            {
+            XmScrolledWindow scrolled_window_widget;
+            XmPushButton b_previous_button;
+            XmPushButton b_redraw_button;
+            XmPushButton b_next_button;
+            };
+        };
+    scrolled_window_widget: XmScrolledWindow 
+        {
+        arguments
+            {
+            XmNleftAttachment = XmATTACH_FORM;
+            XmNtopAttachment = XmATTACH_FORM;
+            XmNrightAttachment = XmATTACH_FORM;
+            XmNbottomAttachment = XmATTACH_WIDGET;
+            XmNbottomWidget = XmPushButton b_previous_button;
+            XmNbottomOffset = k_button_offset;
+            XmNscrollingPolicy = XmAUTOMATIC;
+            };
+        controls
+            {
+            XmDrawingArea drawing_area_widget;
+            };
+        };
+    drawing_area_widget: XmDrawingArea 
+        {
+        arguments
+            {
+            XmNwidth = k_draw_width;
+            XmNheight = k_draw_height;
+            };
+        controls
+            {
+            };
+        callbacks
+            {
+            MrmNcreateCallback = procedures
+                {
+                do_something(k_draw_cb);
+                };
+            };
+        };
+    b_previous_button: XmPushButton 
+        {
+        arguments
+            {
+            XmNleftAttachment = XmATTACH_FORM;
+            XmNleftOffset = k_button_offset;
+            XmNbottomAttachment = XmATTACH_FORM;
+            XmNbottomOffset = k_button_offset;
+            XmNlabelPixmap = icon(color_table = k_arrow_color_table, 
+                '                         ',
+                '                         ',
+                '                         ',
+                '                         ',
+                '                         ',
+                '          *              ',
+                '         **              ',
+                '        * *              ',
+                '       *  *              ',
+                '      *   *              ',
+                '     *    *              ',
+                '    *     ************** ',
+                '   *                   * ',
+                '    *                  * ',
+                '     *    ************** ',
+                '      *   *              ',
+                '       *  *              ',
+                '        * *              ',
+                '         **              ',
+                '          *              ',
+                '                         ',
+                '                         ',
+                '                         ',
+                '                         ',
+                '                         ');
+            XmNlabelType = XmPIXMAP;
+            };
+        callbacks
+            {
+            XmNactivateCallback = procedures
+                {
+                do_something(k_previous_picture);
+                };
+            };
+        };
+    b_redraw_button: XmPushButton 
+        {
+        arguments
+            {
+            XmNleftAttachment = XmATTACH_WIDGET;
+            XmNbottomAttachment = XmATTACH_FORM;
+            XmNleftWidget = XmPushButton b_previous_button;
+            XmNrightWidget = XmPushButton b_next_button;
+            XmNrightAttachment = XmATTACH_WIDGET;
+            XmNlabelType = XmPIXMAP;
+            XmNlabelPixmap = icon(color_table = k_arrow_color_table, 
+                '                         ',
+                '                         ',
+                '                         ',
+                '                         ',
+                '       ****   ****       ',
+                '       *  *   *  *       ',
+                '       *  *   *  *       ',
+                '       *  *   *  *       ',
+                '       *  *   *  *       ',
+                '       *  *   *  *       ',
+                '       *  *   *  *       ',
+                '       *  *   *  *       ',
+                '       *  *   *  *       ',
+                '       *  *   *  *       ',
+                '       *  *   *  *       ',
+                '       *  *   *  *       ',
+                '       *  *   *  *       ',
+                '       *  *   *  *       ',
+                '       *  *   *  *       ',
+                '       *  *   *  *       ',
+                '       ****   ****       ',
+                '                         ',
+                '                         ',
+                '                         ',
+                '                         ');
+            XmNbottomOffset = k_button_offset;
+            };
+        callbacks
+            {
+            XmNactivateCallback = procedures
+                {
+                do_something(k_redraw_picture);
+                };
+            };
+        };
+    b_next_button: XmPushButton 
+        {
+        arguments
+            {
+            XmNbottomAttachment = XmATTACH_FORM;
+            XmNbottomOffset = k_button_offset;
+            XmNlabelPixmap = icon(color_table = k_arrow_color_table, 
+                '                         ',
+                '                         ',
+                '                         ',
+                '                         ',
+                '              *          ',
+                '              **         ',
+                '              * *        ',
+                '              *  *       ',
+                '              *   *      ',
+                '              *    *     ',
+                ' **************     *    ',
+                ' *                   *   ',
+                ' *                  *    ',
+                ' **************    *     ',
+                '              *   *      ',
+                '              *  *       ',
+                '              * *        ',
+                '              **         ',
+                '              *          ',
+                '                         ',
+                '                         ',
+                '                         ',
+                '                         ',
+                '                         ',
+                '                         ');
+            XmNlabelType = XmPIXMAP;
+            XmNrightAttachment = XmATTACH_FORM;
+            XmNrightOffset = k_button_offset;
+            };
+        callbacks
+            {
+            XmNactivateCallback = procedures
+                {
+                do_something(k_next_picture);
+                };
+            };
+        };
+    file_box_widget: XmFileSelectionDialog 
+        {
+        arguments
+            {
+            XmNwidth = k_file_width;
+            XmNdirMask = 
+            k_dir_mask;
+            XmNmappedWhenManaged = true;
+            XmNdialogTitle = 
+            k_fsb_title;
+            };
+        callbacks
+            {
+            XmNokCallback = procedures
+                {
+                do_something(k_file_ok);
+                };
+            XmNcancelCallback = procedures
+                {
+                do_something(k_file_cancel);
+                };
+            };
+        };
+    information_widget: XmWarningDialog
+        {
+        arguments
+            {
+            XmNdefaultPosition = true;
+            XmNdialogTitle = 
+            compound_string("Information");
+            };
+        };
+
+end module;

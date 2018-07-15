@@ -1,0 +1,19 @@
+!N0(Copyright @ 1986-1996 by Josef Heinen,DO-PF1,,,EXIT-PF4)
+ 
+  Move the cursor to the desired item and then press the DO or the ENTER key.
+ 
+		Main Title    !^1	      Data Fitting  !^2
+		Columbia      !^3	      Enlargement   !^4
+		Sine Wave     !^5	      Earnings      !^6
+		Spectrometer  !^7	      Pyrolyzation  !^8
+		Y-log         !^9	      Regression    !^10
+		Surface       !^11	      Competition   !^12
+		FFT's         !^13	      3-D Curves    !^14
+		XY-Graph      !^15	      Text Title    !^16
+		Fonts         !^17	      Characters    !^18
+
+		Movie !^26			
+ 
+ Sun Users use ESC 1 and ESC 4
+ 
+ 

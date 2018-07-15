@@ -1,0 +1,53 @@
+
+	GLI V4.5
+	========
+
+This README file will explain how to set up GLI for UNIX systems.
+For UNIX systems, the basic instructions are as follows:
+
+  o First you must prepare to copy over the GLI distribution. From the root
+    account on your machine switch to a suitable working directory (other
+    than /usr/local), e.g.:
+
+        cd /tmp <RETURN>
+
+    This is where you will need extract the tar file containing GLI V4.5.
+    You will require about 16MB of disk space by the time you are finished.
+
+  o Now you should uncompress and extract the tar file. You should type:
+
+        gunzip gli-4.5.30.tar.gz
+        tar xv gli-4.5.30.tar
+
+  o Move to the "gli/src" dierctory:
+
+        cd gli/src
+
+  o Type "./configure". This will prepare the GLI source code to be
+    built on your platform.
+
+  o Type "make". This will create GLI's libraries and executables.
+
+  o Type "make install" to install GLI's binaries and script files in
+    standard places.
+
+  o You may now logout of the root account and log into a non-privileged
+    account. After logged into a new account you have to setup your user
+    environment. To do this type:
+
+	source /usr/local/gli/glisetup.csh
+
+  o To initialize the GLI program you should type:
+
+	gli <RETURN>
+
+  o To start the demonstration, at the gli> prompt you should type:
+
+	gli> demo <RETURN>
+	  or (if you are using an X display)
+	gli> xdemo <RETURN>
+	  or
+	gli> image_demo <RETURN>
+	  or (if you have Tcl/Tk installed on your system)
+	gli> tcldemo <RETURN>
+

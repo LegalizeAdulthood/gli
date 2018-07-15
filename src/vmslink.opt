@@ -1,0 +1,7 @@
+! Linker options to link with DW V1.0 shareable images
+sys$share:decw$xmlibshr/shareable
+sys$share:decw$dwtlibshr/shareable
+sys$share:decw$xlibshr/shareable
+sys$share:uisshr/shareable
+sys$share:vaxcrtl/shareable
+gsmatch=always,0,0

@@ -1,0 +1,27 @@
+gks set xform ndc
+!
+gks set text font -2 string
+gks set text height 0.022
+!
+gks text .05 .85 " !""#$%&'()*+,-./"
+gks text .05 .80 0123456789:;<=>?
+gks text .05 .75 @ABCDEFGHIJKLMNO
+gks text .05 .70 PQRSTUVWXYZ[\]^_
+gks text .05 .65 `abcdefghijklmno
+gks text .05 .60 "pqrstuvwxyz{|}~" 
+!
+gks text .5 .85  ¡¢£¤¥¦§¨©ª«¬­®¯
+gks text .5 .80 °±²³´µ¶·¸¹º»¼½¾¿
+gks text .5 .75 ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏ
+gks text .5 .70 ĞÑÒÓÔÕÖ×ØÙÚÛÜİŞß
+gks text .5 .65 àáâãäåæçèéêëìíîï
+gks text .5 .60 ğñòóôõö÷øùúûüışÿ
+!
+gks set text font 1 stroke
+!
+gks text .05 .45  " !""#$%&'()*+,-./"
+gks text .05 .40 0123456789:;<=>?
+gks text .05 .35 @ABCDEFGHIJKLMNO
+gks text .05 .30 PQRSTUVWXYZ[\]^_
+gks text .05 .25 `abcdefghijklmno
+gks text .05 .20 "pqrstuvwxyz{|}~"

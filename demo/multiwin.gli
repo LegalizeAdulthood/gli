@@ -1,0 +1,24 @@
+gks set xform ndc
+loop:
+x := 0.01
+c := 0..79
+gks open_ws term 210
+gks set ws_viewp x x+0.05 0 0.05
+gus set colormap grayscale
+gks cell c 8
+gks dea term
+i:=1
+x:=x+0.06
+gks open_ws wk'i' 210
+gks set ws_viewp x x+0.05 0 0.05
+gus set colormap glowing
+gks cell c 8
+gks dea wk'i'
+i:=i+1
+x:=x+0.06
+gks open_ws wk'i' 210
+gks set ws_viewp x x+0.05 0 0.05
+gus set colormap flame
+gks cell c 8
+gks dea wk'i'
+goto loop
